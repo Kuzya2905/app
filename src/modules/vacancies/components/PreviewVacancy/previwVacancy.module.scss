@@ -1,0 +1,173 @@
+@import "@/assets/core/_variables.scss";
+
+.modalPreviewVacancy {
+  z-index: 3;
+  position: fixed;
+  top: 160px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  max-width: 912px;
+  width: 100%;
+  max-height: 640px;
+  height: 100%;
+  background-color: $bg-main;
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 24px;
+}
+
+@media (max-width: 1024px) {
+  .modalPreviewVacancy {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.previewWrapper {
+  margin-top: 20px;
+  margin-right: 12px;
+  padding: 36px 44px 0px 56px;
+  overflow-y: scroll;
+  max-height: 617px;
+}
+
+@media (max-width: 500px) {
+  .previewWrapper {
+    padding: 20px;
+  }
+}
+
+.previewWrapper::-webkit-scrollbar {
+  width: 4px;
+  height: 8px;
+}
+
+.previewWrapper::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: $stroke-card;
+}
+
+.blockTop {
+  width: 100%;
+}
+
+.blockTopClose {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+}
+
+@media (max-width: 500px) {
+  .blockTopClose {
+    right: 25px;
+  }
+}
+
+.blockTopTitle {
+  margin-bottom: 16px;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 120%;
+  color: $text-primary;
+}
+
+@media (max-width: 500px) {
+  .blockTopTitle {
+    margin-right: 30px;
+  }
+}
+
+.blockTotalInfo {
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.blockTotalInfo li:first-child {
+  list-style-type: none;
+}
+
+.blockTotalInfo li:not(:first-child) {
+  margin-left: 20px;
+}
+
+.totalInfoItem {
+  color: $text-tertiary;
+}
+
+.blockInformation {
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+  color: $text-secondary;
+}
+
+@media (max-width: 1024px) {
+  .blockInformation {
+    max-width: 100%;
+  }
+}
+
+.section {
+  background-color: $bg-card;
+  padding: 32px;
+  border-radius: 16px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 120%;
+  color: $text-primary;
+  margin-bottom: 16px;
+}
+
+.sectionText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.sectionOther {
+  background-color: $bg-card;
+  padding: 32px;
+  border-radius: 16px;
+}
+
+.otherTitle {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 120%;
+  color: $text-primary;
+  margin-bottom: 16px;
+}
+
+.otherBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.otherItem {
+  display: flex;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.otherItemVector {
+  margin-right: 9px;
+  top: -3px;
+  position: relative;
+  display: inline-block;
+  min-width: 14px;
+  height: 14px;
+  border-bottom: 1px solid $text-secondary;
+}

@@ -59,7 +59,7 @@ export const Qualification = [
 export const Experience = [
   { value: "No experience", label: "No experience", icon: Check },
   { value: "1 to 3 years", label: "1 to 3 years", icon: Check },
-  { value: "3 to 5 years old", label: "3 to 5 years old", icon: Check },
+  { value: "3 to 5 years old", label: "3 to 5 years", icon: Check },
   { value: "Over 5 years", label: "Over 5 years", icon: Check },
 ];
 

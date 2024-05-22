@@ -10,4 +10,5 @@ export interface ButtonTypes
   size: "s" | "m" | "l" | "xl";
   typeBtn?: "button" | "submit" | "reset";
   iconPosition?: string;
+  iconСross?: boolean;
 }

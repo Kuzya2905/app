@@ -27,6 +27,7 @@ import {
 import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
+import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
 import { VacancyFormTypes } from "@/modules/vacancies/components/vacancyForm/VacancyFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
 
@@ -43,6 +44,8 @@ export const VacancyForm = () => {
     resolver: yupResolver(vacancyFormSchema),
     mode: "all",
   });
+
+  const [activePreview, setActivePreview] = useState(false);
 
   const [validBasicBlock, setValidBasicBlock] = useState(false);
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
@@ -105,8 +108,24 @@ export const VacancyForm = () => {
     console.log(data);
   };
 
+  useEffect(() => {
+    const htmlStyle = document.documentElement.style;
+    if (activePreview) {
+      htmlStyle.overflow = "hidden";
+    } else {
+      htmlStyle.overflow = "";
+    }
+  }, [activePreview]);
+
+  const changeActivePreview = () => setActivePreview((prev) => !prev);
+
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit, error)}>
+    <form
+      className={cn(styles.form, {
+        [styles.formBackgroundDark]: activePreview,
+      })}
+      onSubmit={handleSubmit(onSubmit, error)}
+    >
       <div className={styles.formData}>
         <div className={styles.baseInfo}>
           <h2 className={styles.title}>Basic information</h2>
@@ -332,6 +351,7 @@ export const VacancyForm = () => {
           size="l"
           className={styles.buttonPreview}
           disabled={disableButtonPreview()}
+          onClick={changeActivePreview}
         >
           Preview
         </Button>
@@ -344,6 +364,15 @@ export const VacancyForm = () => {
           Publish
         </Button>
       </div>
+      {activePreview ? (
+        <PreviewVacancy
+          basicInformation={valuesFieldsBasic as string[]}
+          closePreview={changeActivePreview}
+          specification={valuesFieldsDesctription as string[]}
+        />
+      ) : (
+        ""
+      )}
     </form>
   );
 };

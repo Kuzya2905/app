@@ -15,6 +15,12 @@
   background-color: $main-primary;
 }
 
+.primary.buttonCross {
+  border: 1px solid $stroke-card;
+  color: $text-primary;
+  background-color: $stroke-card;
+}
+
 .primary:hover {
   border: 1px solid #5483e6;
   background-color: #5483e6;
@@ -30,6 +36,13 @@
   color: $text-primary;
   background-color: $stroke-card;
   cursor: not-allowed;
+}
+
+.primary:disabled {
+  border: 1px solid $stroke-card;
+  color: $text-primary;
+  background-color: $stroke-card;
+  cursor: pointer;
 }
 
 .ghost {

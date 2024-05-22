@@ -1,5 +1,8 @@
 import React, { JSX } from "react";
 import cn from "classnames";
+import Image from "next/image";
+
+import CrossButton from "@/assets/svgs/CrossButton.svg";
 
 import { ButtonTypes } from "@/components/Button/Button.types";
 
@@ -15,6 +18,7 @@ const Button = ({
   type = "button",
   size,
   iconPosition = "",
+  iconСross = false,
   ...props
 }: ButtonTypes): JSX.Element => (
   <button
@@ -30,6 +34,7 @@ const Button = ({
       [styles.l]: size === "l",
       [styles.xl]: size === "xl",
       [styles.buttonWithIcon]: iconPosition,
+      [styles.buttonCross]: iconСross,
     })}
     {...props}
   >
@@ -40,7 +45,7 @@ const Button = ({
     >
       <IconButton />
     </div>
-    {children}
+    {iconСross ? <Image src={CrossButton} alt={"Cross-button"} /> : children}
     <div
       className={cn(styles.iconButton, className, {
         [styles.iconRight]: iconPosition === "right",
