@@ -12,6 +12,8 @@ import {
   SubmitHandler,
   useForm,
 } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useTonWallet } from "@tonconnect/ui-react";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -34,6 +36,9 @@ const CompanyEdit: React.FC = () => {
   const [acitveLogo, setActiveLogo] = useState<boolean>(false);
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
+
+  const router = useRouter();
+  const wallet = useTonWallet();
 
   const {
     register,
@@ -62,6 +67,13 @@ const CompanyEdit: React.FC = () => {
   }, [reset]);
 
   const linkLogoValue = watch("linkLogo");
+
+  useEffect(() => {
+    if(!wallet) {
+    router.push('/');
+  }
+  },[])
+  
 
   useEffect(() => {
     const changeActiveLogo = () => {

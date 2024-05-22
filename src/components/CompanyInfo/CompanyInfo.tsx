@@ -3,12 +3,19 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useTonWallet } from "@tonconnect/ui-react";
+import Button from "../Button/Button";
 
 import { CompanyInfoTypes } from "./CompanyInfo.types";
 
 import styles from "./CompanyInfo.module.scss";
 
-const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => (
+const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
+  const wallet = useTonWallet();
+  const router = useRouter();
+
+  return (
   <div className={styles.main}>
     <section className={styles.mainSection}>
       <div className={styles.sectionBlock}>
@@ -53,6 +60,19 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => (
             </Link>
           ))}
         </div>
+        { wallet ? (
+          <Button
+            appearance="secondary"
+            size="l"
+            onClick={() => router.push('/company-edit')}
+          >
+            Edit
+          </Button>
+        ) : (
+          <></>
+        )
+
+        }
       </div>
     </section>
     <section className={styles.sectionBot}>
@@ -60,6 +80,6 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => (
       <div className={styles.sectionBotText}>{dataCompany.description}</div>
     </section>
   </div>
-);
+)};
 
 export default CompanyInfo;
