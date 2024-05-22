@@ -141,7 +141,6 @@
 }
 
 .buttonAdd {
-  border-radius: 120px;
   padding: 16px 24px;
   background-color: #5b8cf3;
   color: #ffffff;
@@ -151,6 +150,12 @@
   border: none;
   border-radius: 14px;
   outline: none;
+}
+
+@media (max-width: 1024px) {
+  .buttonAdd {
+    margin-bottom: 10px;
+  }
 }
 
 .blockImg {

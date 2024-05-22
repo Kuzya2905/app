@@ -1,10 +1,21 @@
+'use client'
+
+import {useTonConnectUI, useTonWallet} from "@tonconnect/ui-react"
+
 import { FC } from "react";
+import Button from "../Button/Button";
+import { useRouter } from "next/navigation";
 
 import { LogoMain } from "@/assets/svgs/LogoMain";
 
 import styles from "./mainScreen.module.scss";
 
-const MainScreen: FC = () => (
+const MainScreen: FC = () => {
+  const router = useRouter();
+  const wallet = useTonWallet();
+  const [tonConnectUi] = useTonConnectUI(); 
+  
+  return (
   <main className={styles.mainContainer}>
     <div className={styles.pictureOne} />
     <div className={styles.blockHeader}>
@@ -17,9 +28,20 @@ const MainScreen: FC = () => (
         <h1 className={styles.blockMainText}>TON Ecosystem</h1>
       </div>
       <div>
-        <button className={styles.buttonAdd} disabled>
+        <Button
+          appearance="primary"
+          size="l"
+          className={styles.buttonAdd}
+          onClick={() => {
+            if (wallet) {
+              router.push('/company-creation')
+            } else {
+              tonConnectUi.openModal()
+            }              
+          }}
+        >
           Add company
-        </button>
+        </Button> 
       </div>
     </div>
     <div className={styles.blockImg}>
@@ -27,6 +49,6 @@ const MainScreen: FC = () => (
     </div>
     <div className={styles.pictureTwo} />
   </main>
-);
+)};
 
 export default MainScreen;
