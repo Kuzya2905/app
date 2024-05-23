@@ -8,6 +8,8 @@ import { vacancyInfo } from "./VacancyData";
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import { cardsCompanies } from "@/components/Companies/CompaniesData";
 import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
+import { useTonAddress } from "@tonconnect/ui-react";
+import VacancyInfo from "../VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
 import { CompanyTypes } from "./Vacancy.types";
 
@@ -15,6 +17,7 @@ import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
   const pathname = usePathname();
+  const userFriendlyAddress = useTonAddress();
 
   const matchedId = pathname.match(/\d+/);
   const idCompany = matchedId ? matchedId[0] : null;
@@ -109,7 +112,13 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 </div>
               </div>
               <aside className={styles.aside}>
-                <VacancyApply dataCompany={dataCompany} idCompany={idCompany} />
+                {
+                  dataCompany && userFriendlyAddress === dataCompany.walletAddress ? (
+                    <VacancyInfo dataVacancy={dataVacancy}></VacancyInfo>
+                  ) : (
+                   <VacancyApply dataCompany={dataCompany} idCompany={idCompany} /> 
+                  )
+                }              
               </aside>
             </div>
           </div>
