@@ -330,7 +330,7 @@ const Company: React.FC = () => {
           </div>
         </form>
       ) : (
-        <div className={styles.stub}>Wallet is loading, please wait...</div>
+        <div className={styles.stub}></div>
       )
     }</>
 

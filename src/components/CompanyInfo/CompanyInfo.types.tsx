@@ -10,6 +10,7 @@ export interface CompanyInfoTypes {
     industry: string;
     sizeCompany: string;
     description: string;
+    walletAddress: string;
     linksContact: {
       id: number;
       icon: ReactElement;

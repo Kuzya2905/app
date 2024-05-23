@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useTonWallet } from "@tonconnect/ui-react";
+import { useTonAddress } from "@tonconnect/ui-react";
 import Button from "../Button/Button";
 
 import { CompanyInfoTypes } from "./CompanyInfo.types";
@@ -12,8 +12,8 @@ import { CompanyInfoTypes } from "./CompanyInfo.types";
 import styles from "./CompanyInfo.module.scss";
 
 const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
-  const wallet = useTonWallet();
   const router = useRouter();
+  const userFriendlyAddress = useTonAddress();
 
   return (
   <div className={styles.main}>
@@ -60,7 +60,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             </Link>
           ))}
         </div>
-        { wallet ? (
+        { userFriendlyAddress === dataCompany.walletAddress ? (
           <Button
             appearance="secondary"
             size="l"
@@ -70,9 +70,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
           </Button>
         ) : (
           <></>
-        )
-
-        }
+        )}
       </div>
     </section>
     <section className={styles.sectionBot}>

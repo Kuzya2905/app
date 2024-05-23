@@ -14,6 +14,7 @@ export const cardsCompanies = [
     vacancyNumber: 1,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -37,6 +38,7 @@ export const cardsCompanies = [
     vacancyNumber: 8,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -60,6 +62,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -83,6 +86,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -106,6 +110,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -129,6 +134,7 @@ export const cardsCompanies = [
     vacancyNumber: 6,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -152,6 +158,7 @@ export const cardsCompanies = [
     vacancyNumber: 1,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -175,6 +182,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -198,6 +206,7 @@ export const cardsCompanies = [
     vacancyNumber: 6,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -221,6 +230,7 @@ export const cardsCompanies = [
     vacancyNumber: 7,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -244,6 +254,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
@@ -267,6 +278,7 @@ export const cardsCompanies = [
     vacancyNumber: 6,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
     linksContact: [
       {
         id: 1,
