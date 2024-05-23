@@ -8,6 +8,16 @@
   margin-top: 84px;
 }
 
+.stub {
+  width: 100%;
+  height: 100vh;
+  margin-top: 80px;
+  padding: 30px 80px;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: $bg-main;
+}
+
 @media (max-width: 1024px) and (min-width: 500px) {
   .creation {
     padding: 0 20px;
