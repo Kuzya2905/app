@@ -6,7 +6,7 @@ import styles from "@/app/page.module.css";
 
 const PageVacancy: React.FC<PageCompanyTypes> = ({ params }) => (
   <main className={styles.main}>
-    <Layout wide={true}>
+    <Layout>
       <Vacancy vacancyId={params.idVacancy} />
     </Layout>
   </main>

@@ -15,11 +15,7 @@ import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
 
-const HeaderDemo: React.FC<HeaderDemoTypes> = ({
-  wide = false,
-  className,
-  ...props
-}) => {
+const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
 
   const toggleBurger = () => {
@@ -40,17 +36,12 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({
 
   return (
     <header className={styles.headerDemoMain}>
-      <div
-        className={cn(className, styles.headerDemoWrapper, {
-          [styles.wide]: wide,
-        })}
-        {...props}
-      >
+      <div className={styles.headerDemoWrapper} {...props}>
         <LinkNext href="/">
           <div className={styles.headerDemoLogoContainer}>
-            <div className= {styles.logoWrapper}>
+            <div className={styles.logoWrapper}>
               <Logo />
-            </div>            
+            </div>
             <span className={styles.logoText}>decentral job</span>
           </div>
         </LinkNext>
@@ -71,7 +62,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({
             ))}
           </div>
           <div className={styles.buttonConnectWalletWrapper}>
-            <TonConnectButton/>      
+            <TonConnectButton />
           </div>
         </div>
         {activeBurger ? (

@@ -5,7 +5,7 @@ import styles from "@/app/page.module.css";
 
 const PageVacancie = () => (
   <main className={styles.main}>
-    <Layout wide={true}>
+    <Layout>
       <CreationVacancy />
     </Layout>
   </main>

@@ -376,7 +376,7 @@
     "@tonconnect/isomorphic-fetch" "^0.0.3"
     "@tonconnect/protocol" "^2.2.6"
 
-"@tonconnect/ui-react@^2.0.2":
+"@tonconnect/ui-react@2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@tonconnect/ui-react/-/ui-react-2.0.2.tgz#917956381c66ab3a1f891a9291e4ec760cc6a841"
   integrity sha512-nNsaB8DzQsVfBRtKli4KTC4Nj1WwJ+gHP4j9FOgjqNylf+VRYH5mpDkpRw/vRVwOYNMsZ4k8ZznreccWqFJRXg==

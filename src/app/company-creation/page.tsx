@@ -5,7 +5,7 @@ import styles from "@/app/page.module.css";
 
 const PageCompanyCreation = () => (
   <main className={styles.main}>
-    <Layout wide={true}>
+    <Layout>
       <CompanyCreation />
     </Layout>
   </main>

@@ -14,7 +14,7 @@ import { Logo } from "@/assets/svgs/Logo";
 
 import styles from "./footerDemo.module.scss";
 
-const FooterDemo: React.FC<FooterDemoTypes> = ({ wide = false }) => {
+const FooterDemo: React.FC<FooterDemoTypes> = () => {
   const [selectedLinkId, setSelectedLinkId] = useState<number | null>(null);
 
   let timerId: ReturnType<typeof setTimeout> | null = null;
@@ -40,7 +40,7 @@ const FooterDemo: React.FC<FooterDemoTypes> = ({ wide = false }) => {
 
   return (
     <footer className={styles.footerDemoMain}>
-      <div className={cn(styles.footerDemo, { [styles.wide]: wide })}>
+      <div className={styles.footerDemo}>
         <div className={styles.footerDemoLogoContainer}>
           <div className={styles.logoWrapper}>
             <Logo />

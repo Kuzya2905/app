@@ -10,7 +10,7 @@
 
 .headerDemoWrapper {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1216px;
   text-align: end;
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,7 @@
   z-index: 1;
 }
 
-.headerDemoWrapper.wide {
+.headerDemoWrapper {
   max-width: 1216px;
 }
 
@@ -43,12 +43,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F1F1F1;
-  border-radius: 5px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
   box-sizing: border-box;
   width: 40px;
   height: 40px;
   padding: 6px;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 @media (max-width: 1216px) {
