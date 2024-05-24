@@ -19,6 +19,7 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyCreationSchemaYup";
 import { city, industry, size } from "./CompanyCreationData";
+
 import { CompanyCreationFormTypes } from "./CompanyCreationFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
 
@@ -32,7 +33,7 @@ const Company: React.FC = () => {
     []
   );
 
-  const [acitveLogo, setActiveLogo] = useState<boolean>(false);
+  const [activeLogo, setActiveLogo] = useState<boolean>(false);
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
@@ -258,7 +259,7 @@ const Company: React.FC = () => {
                   onClick={addLink}
                   size={"s"}
                   appearance={"ghost"}
-                  iconPosition="left"
+                  plusPosition="left"
                 >
                   Add a link
                 </Button>
@@ -266,7 +267,7 @@ const Company: React.FC = () => {
             </section>
           </main>
           <aside className={styles.asideCreationLogo}>
-            {!acitveLogo ? (
+            {!activeLogo ? (
               <Image
                 className={styles.logoEmpty}
                 src={LogoEmpty}

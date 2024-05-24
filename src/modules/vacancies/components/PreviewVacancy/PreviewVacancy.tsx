@@ -1,9 +1,11 @@
 import React from "react";
 
-import styles from "./previwVacancy.module.scss";
 import Button from "@/components/Button/Button";
 import { convertISOToDate } from "@/helpers/helpers";
+
 import { PreviewVacancyTypes } from "./PreviewVacancyTypes";
+
+import styles from "./previewVacancy.module.scss";
 
 const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
   closePreview,
@@ -11,6 +13,10 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
   basicInformation,
 }) => {
   const currentDateISO = new Date().toISOString();
+
+  function isFirstCharDigit(str: string) {
+    return /^\d/.test(str);
+  }
   return (
     <div className={styles.modalPreviewVacancy}>
       <div className={styles.previewWrapper}>
@@ -21,7 +27,7 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
             size="s"
             className={styles.blockTopClose}
             disabled={false}
-            iconСross={true}
+            iconСross="iconCross"
           >
             Test
           </Button>
@@ -32,7 +38,11 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
             </li>
             <li className={styles.totalInfoItem}>{basicInformation[5]}</li>
             <li className={styles.totalInfoItem}>
-              Experience from {basicInformation[3]}
+              {isFirstCharDigit(basicInformation[3]) ? (
+                <>Experience from {basicInformation[3]}</>
+              ) : (
+                <>{basicInformation[3]}</>
+              )}
             </li>
             <li className={styles.totalInfoItem}>{basicInformation[4]}</li>
             <li className={styles.totalInfoItem}>London</li>

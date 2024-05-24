@@ -66,3 +66,26 @@ export const Experience = [
 export const Remote = [
   { id: 1, nameSection: "Remote", disabled: false, active: false },
 ];
+
+export const cardsOption = [
+  {
+    id: 1,
+    nameGroup: "publishingSettings",
+    title: "Single occupancy",
+    description: "Vacancy placement for a period of one month",
+    price: 10,
+    value: "single",
+    numberVacancies: 1,
+    buttonSale: false,
+  },
+  {
+    id: 2,
+    nameGroup: "publishingSettings",
+    title: "Job package",
+    description: "Package of ten vacancies with auto-renewal option",
+    price: 35,
+    value: "package",
+    numberVacancies: 10,
+    buttonSale: true,
+  },
+];

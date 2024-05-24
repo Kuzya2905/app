@@ -20,6 +20,7 @@ import Button from "@/components/Button/Button";
 import { schema } from "./CompanyEditSchemaYup";
 import { city, industry, size } from "./CompanyEditData";
 import { CompanyEditFormTypes } from "./CompanyEditFormTypes";
+import { VARIANT } from "@/components/Select/Select.types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
@@ -163,7 +164,7 @@ const CompanyEdit: React.FC = () => {
                         <div>
                           <Select
                             color="#1B1E27"
-                            height="59px"
+                            variant={VARIANT.BIG}
                             onChange={onChange}
                             objValue={value}
                             data={industry}
@@ -186,7 +187,7 @@ const CompanyEdit: React.FC = () => {
                         <div>
                           <Select
                             color="#1B1E27"
-                            height="59px"
+                            variant={VARIANT.BIG}
                             onChange={onChange}
                             objValue={value}
                             data={size}
@@ -222,7 +223,7 @@ const CompanyEdit: React.FC = () => {
                       return (
                         <div>
                           <Select
-                            height="59px"
+                            variant={VARIANT.BIG}
                             color="#1B1E27"
                             onChange={onChange}
                             objValue={value}
@@ -273,7 +274,7 @@ const CompanyEdit: React.FC = () => {
                   onClick={addLink}
                   size={"s"}
                   appearance={"ghost"}
-                  iconPosition="left"
+                  plusPosition="left"
                 >
                   Add a link
                 </Button>

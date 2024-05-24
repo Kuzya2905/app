@@ -25,11 +25,10 @@
 }
 
 .previewWrapper {
-  margin-top: 20px;
-  margin-right: 12px;
+  margin-right: 14px;
   padding: 36px 44px 0px 56px;
   overflow-y: scroll;
-  max-height: 617px;
+  max-height: 638px;
 }
 
 @media (max-width: 500px) {
@@ -40,7 +39,7 @@
 
 .previewWrapper::-webkit-scrollbar {
   width: 4px;
-  height: 8px;
+
 }
 
 .previewWrapper::-webkit-scrollbar-thumb {

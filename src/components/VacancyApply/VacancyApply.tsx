@@ -11,6 +11,7 @@ import { schema } from "./VacancySchemaYup";
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
 import Checkbox from "@/components/Checkbox/Checkbox";
+
 import { VacancyForm } from "./VacancyForm.types";
 import { VacancyApplyTypes } from "./VacancyApply.types";
 
@@ -32,11 +33,11 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
   const router = useRouter();
   const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
+  const buttonDisabled = watch("agree") ? false : true;
+
   const onSubmit: SubmitHandler<VacancyForm> = (data) => console.log(data);
 
   const error: SubmitErrorHandler<VacancyForm> = (data) => console.log(data);
-
-  const buttonDisabled = watch("agree") ? false : true;
 
   return (
     <div className={styles.asideBlock}>

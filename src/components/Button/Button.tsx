@@ -2,10 +2,9 @@ import React, { JSX } from "react";
 import cn from "classnames";
 import Image from "next/image";
 
-import CrossButton from "@/assets/svgs/CrossButton.svg";
-
 import { ButtonTypes } from "@/components/Button/Button.types";
 
+import CrossButton from "@/assets/svgs/CrossButton.svg";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./Button.module.scss";
@@ -17,7 +16,7 @@ const Button = ({
   disabled = false,
   type = "button",
   size,
-  iconPosition = "",
+  plusPosition = "no plus",
   iconСross = false,
   ...props
 }: ButtonTypes): JSX.Element => (
@@ -33,22 +32,25 @@ const Button = ({
       [styles.m]: size === "m",
       [styles.l]: size === "l",
       [styles.xl]: size === "xl",
-      [styles.buttonWithIcon]: iconPosition,
       [styles.buttonCross]: iconСross,
     })}
     {...props}
   >
     <div
       className={cn(styles.iconButton, className, {
-        [styles.iconLeft]: iconPosition === "left",
+        [styles.iconLeft]: plusPosition === "left",
       })}
     >
       <IconButton />
     </div>
-    {iconСross ? <Image src={CrossButton} alt={"Cross-button"} /> : children}
+    {iconСross ? (
+      <Image src={CrossButton} alt="Cross-button" width={20} height={20} />
+    ) : (
+      children
+    )}
     <div
       className={cn(styles.iconButton, className, {
-        [styles.iconRight]: iconPosition === "right",
+        [styles.iconRight]: plusPosition === "right",
       })}
     >
       <IconButton />

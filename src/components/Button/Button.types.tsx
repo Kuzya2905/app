@@ -9,6 +9,6 @@ export interface ButtonTypes
   appearance: "primary" | "ghost" | "secondary" | "tertiary";
   size: "s" | "m" | "l" | "xl";
   typeBtn?: "button" | "submit" | "reset";
-  iconPosition?: string;
-  iconСross?: boolean;
+  plusPosition?: string;
+  iconСross?: boolean | string;
 }
