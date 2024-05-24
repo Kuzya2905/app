@@ -13,7 +13,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
     expirationDate: "2025-04-04T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 2,
@@ -29,7 +28,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 3,
@@ -45,7 +43,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 4,
@@ -61,7 +58,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 5,
@@ -77,7 +73,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
     date: "2024-04-10T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 6,
@@ -93,7 +88,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 7,
@@ -109,7 +103,6 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-02-10T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
   {
     idVacancy: 8,
@@ -125,6 +118,5 @@ export const cardsVacancies = [
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-09T01:30:00.000-05:00",
     expirationDate: "2025-04-20T01:30:00.000-05:00",
-    walletAddress: 'UQA5Uj9cA3UP3gwXkAR71P90c0vqXe5QOcEUvWEHCBGPkIqF',
   },
 ];

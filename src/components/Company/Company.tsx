@@ -20,11 +20,11 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const dataCompany = cardsCompanies.find(
     (company) => company.id === Number(companyId)
   );
-
+  
   const dataVacancies = cardsVacancies.slice(0, dataCompany?.vacancyNumber);
 
   const userFriendlyAddress = useTonAddress();
-
+  
   const router = useRouter();
   const pathname = usePathname();
   const handleClickVacancy = (id: number) =>
@@ -52,7 +52,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               <main>
                 <div className={styles.mainTitleWrapper}>
                   <h1 className={styles.mainTitle}>Active jobs</h1>
-                  { userFriendlyAddress === dataCompany.walletAddress ? (
+                  { userFriendlyAddress && userFriendlyAddress === {...dataCompany, walletAddress: userFriendlyAddress}.walletAddress ? (
                     <Button
                       appearance="primary"
                       size="m"
@@ -107,7 +107,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={dataCompany} />}</aside>
+              <aside>{<CompanyInfo dataCompany={{...dataCompany, walletAddress: userFriendlyAddress}} />}</aside>
             </div>
           </div>
         </div>

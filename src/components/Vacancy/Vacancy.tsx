@@ -113,7 +113,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               </div>
               <aside className={styles.aside}>
                 {
-                  dataCompany && userFriendlyAddress === dataCompany.walletAddress ? (
+                  dataCompany && userFriendlyAddress && userFriendlyAddress === {...dataCompany, walletAddress: userFriendlyAddress}.walletAddress ? (
                     <VacancyInfo dataVacancy={dataVacancy}></VacancyInfo>
                   ) : (
                    <VacancyApply dataCompany={dataCompany} idCompany={idCompany} /> 

@@ -60,7 +60,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             </Link>
           ))}
         </div>
-        { userFriendlyAddress === dataCompany.walletAddress ? (
+        { userFriendlyAddress && userFriendlyAddress === dataCompany.walletAddress ? (
           <Button
             appearance="secondary"
             size="l"

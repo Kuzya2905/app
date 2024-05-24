@@ -12,6 +12,5 @@ export default interface VacancyInfoTypes {
         logo: string;
         date: string;
         expirationDate: string;
-        walletAddress: string;
     } 
 }
