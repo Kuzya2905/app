@@ -29,6 +29,7 @@
   padding: 36px 44px 0px 56px;
   overflow-y: scroll;
   max-height: 638px;
+  padding-bottom: 56px;
 }
 
 @media (max-width: 500px) {
@@ -39,7 +40,6 @@
 
 .previewWrapper::-webkit-scrollbar {
   width: 4px;
-
 }
 
 .previewWrapper::-webkit-scrollbar-thumb {

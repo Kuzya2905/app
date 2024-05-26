@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "@/components/Button/Button";
-import { convertISOToDate } from "@/helpers/helpers";
+import { convertISOToDate, isFirstCharDigit } from "@/helpers/helpers";
 
 import { PreviewVacancyTypes } from "./PreviewVacancyTypes";
 
@@ -14,9 +14,6 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
 }) => {
   const currentDateISO = new Date().toISOString();
 
-  function isFirstCharDigit(str: string) {
-    return /^\d/.test(str);
-  }
   return (
     <div className={styles.modalPreviewVacancy}>
       <div className={styles.previewWrapper}>
