@@ -32,7 +32,7 @@ const Button = ({
       [styles.m]: size === "m",
       [styles.l]: size === "l",
       [styles.xl]: size === "xl",
-      [styles.buttonCross]: iconСross,
+      [styles.buttonCross]: iconСross === "iconCross",
     })}
     {...props}
   >
