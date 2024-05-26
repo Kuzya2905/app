@@ -5,7 +5,7 @@ import StoreProvider from "@/app/StoreProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-const ds = "стул";
+
 export const metadata: Metadata = {
   title: "Decentral job | $DCJ",
   description:
@@ -18,7 +18,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <StoreProvider>
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <meta name="siteUrl" content="https://decentraljob.org/" />
         <meta name="og:url" content="https://decentraljob.org/" />
@@ -37,10 +37,7 @@ const RootLayout = ({
           content="Ready to ride the crypto wave? Explore endless opportunities in the exciting realm of cryptocurrency careers. Dive into the innovative world of blockchain technology, where your potential knows no bounds. Join us on this thrilling journey and unlock your path to success in the fast-paced world of crypto."
         />
       </head>
-      <body className={inter.className}>
-        <div id="modal-root" />
-        {children}
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   </StoreProvider>
 );
