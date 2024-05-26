@@ -15,8 +15,7 @@ const RegisteredCompanies: React.FC = () => {
 
   const cards = cardsCompanies.slice(0, 6);
 
-  const handleClickCompany = (id: number) =>
-    router.push(`/companies/company/${id}`);
+  const handleClickCompany = (id: number) => router.push(`/company/${id}`);
 
   return (
     <section className={styles.section}>

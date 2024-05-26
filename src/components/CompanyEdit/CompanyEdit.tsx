@@ -118,11 +118,11 @@ const CompanyEdit: React.FC = () => {
             Companies
           </Link>
           <span className={styles.blockSlash}>/</span>
-          <Link className={styles.blockLink} href="/company-edit">
+          <Link className={styles.blockLink} href="">
             Stellar
           </Link>
           <span className={styles.blockSlash}>/</span>
-          <Link className={styles.blockLinkCurrent} href="/company-edit">
+          <Link className={styles.blockLinkCurrent} href="">
             Edit
           </Link>
         </div>

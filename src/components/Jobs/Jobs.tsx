@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import Input from "@/components/Input/Input";
 import FiltersJobs from "@/components/FiltersJobs/FilterJobs";
-import { cardsVacancies } from "./JobsData";
+import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 
 import { Vector } from "@/assets/svgs/Vector";
@@ -18,8 +18,8 @@ const Jobs = () => {
 
   const router = useRouter();
 
-  const handleClickVacancy = (idCompany: number, idVacancy: number) =>
-    router.push(`/companies/company/${idCompany}/vacancy/${idVacancy}`);
+  const handleClickVacancy = (idVacancy: number) =>
+    router.push(`/vacancy/${idVacancy}`);
 
   return (
     <main className={styles.main}>
@@ -47,7 +47,6 @@ const Jobs = () => {
               {cardsVacancies.map(
                 ({
                   idVacancy,
-                  idCompany,
                   name,
                   experience,
                   mode,
@@ -59,7 +58,7 @@ const Jobs = () => {
                   date,
                 }) => (
                   <VacancyCard
-                    onClick={() => handleClickVacancy(idCompany, idVacancy)}
+                    onClick={() => handleClickVacancy(idVacancy)}
                     key={idVacancy}
                     name={name}
                     experience={experience}

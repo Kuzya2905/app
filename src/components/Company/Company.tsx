@@ -19,12 +19,12 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     (company) => company.id === Number(companyId)
   );
 
-  const dataVacancies = cardsVacancies.slice(0, dataCompany?.vacancyNumber);
+  const dataVacancies = cardsVacancies.filter(
+    ({ idCompany }) => idCompany === Number(companyId)
+  );
 
   const router = useRouter();
-  const pathname = usePathname();
-  const handleClickVacancy = (id: number) =>
-    router.push(`${pathname}/vacancy/${id}`);
+  const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
 
   return (
     <>

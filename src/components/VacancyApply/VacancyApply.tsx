@@ -30,8 +30,7 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
   });
 
   const router = useRouter();
-  const handleClickCompany = (id: string) =>
-    router.push(`/companies/company/${id}`);
+  const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
   const onSubmit: SubmitHandler<VacancyForm> = (data) => console.log(data);
 
