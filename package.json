@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "3.3.4",
     "@reduxjs/toolkit": "2.2.4",
+    "@tonconnect/ui-react": "2.0.2",
     "classnames": "2.5.1",
     "date-fns": "3.6.0",
     "next": "14.2.1",

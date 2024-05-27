@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
@@ -70,9 +71,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({
             ))}
           </div>
           <div className={styles.buttonConnectWalletWrapper}>
-            <button className={styles.buttonConnectWallet} disabled>
-              Connect wallet
-            </button>
+            <TonConnectButton/>      
           </div>
         </div>
         {activeBurger ? (
