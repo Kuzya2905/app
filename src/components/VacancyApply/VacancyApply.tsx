@@ -33,11 +33,9 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
   const router = useRouter();
   const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
-  const buttonDisabled = watch("agree") ? false : true;
+  const buttonDisabled = !watch("agree");
 
   const onSubmit: SubmitHandler<VacancyForm> = (data) => console.log(data);
-
-  const error: SubmitErrorHandler<VacancyForm> = (data) => console.log(data);
 
   return (
     <div className={styles.asideBlock}>
@@ -55,10 +53,7 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
       )}
       <section className={styles.sectionApply}>
         <h2 className={styles.sectionApplyTitle}>Apply</h2>
-        <form
-          onSubmit={handleSubmit(onSubmit, error)}
-          className={styles.applyForm}
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.applyForm}>
           <div className={styles.blockInput}>
             <Input<VacancyForm>
               name="firstName"

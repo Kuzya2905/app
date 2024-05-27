@@ -115,16 +115,12 @@ export const VacancyForm = () => {
 
   const onSubmit: SubmitHandler<VacancyFormTypes> = (data) => console.log(data);
 
-  const error: SubmitErrorHandler<VacancyFormTypes> = (data) => {
-    console.error(data);
-  };
-
   return (
     <form
       className={cn(styles.form, {
         [styles.formBackgroundDark]: activePreview,
       })}
-      onSubmit={handleSubmit(onSubmit, error)}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <div className={styles.formData}>
         <div className={styles.baseInfo}>

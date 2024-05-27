@@ -15,12 +15,6 @@
   background-color: $main-primary;
 }
 
-.primary.buttonCross {
-  border: 1px solid $stroke-card;
-  color: $text-primary;
-  background-color: $stroke-card;
-}
-
 .primary:hover {
   border: 1px solid #5483e6;
   background-color: #5483e6;
@@ -43,28 +37,6 @@
   color: $text-primary;
   background-color: $stroke-card;
   cursor: pointer;
-}
-
-.ghost {
-  border: none;
-  color: $main-primary;
-  background-color: transparent;
-}
-
-.ghost:hover {
-  color: #5483e6;
-  background-color: transparent;
-}
-
-.ghost:active {
-  color: #507cd8;
-  background-color: transparent;
-}
-
-.ghost:disabled {
-  color: $text-tertiary;
-  background-color: transparent;
-  cursor: not-allowed;
 }
 
 .secondary {
@@ -141,11 +113,57 @@
   line-height: 24px;
 }
 
-.iconButton {
-  display: none;
-  height: 20px;
+.close {
+  border: none;
+  background-color: $stroke-card;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 }
-.iconButton:hover {
+
+.ghost {
+  border: none;
+  color: $main-primary;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.ghost:hover {
+  color: #5483e6;
+  background-color: transparent;
+}
+
+.ghost:active {
+  color: #507cd8;
+  background-color: transparent;
+}
+
+.ghost:disabled {
+  color: $text-tertiary;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+.endIcon {
+  display: block;
+  margin-left: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.endIcon:hover {
+  svg {
+    path {
+      fill: #5483e6;
+    }
+  }
+}
+
+.endIcon:active {
   svg {
     path {
       fill: #507cd8;
@@ -153,17 +171,45 @@
   }
 }
 
-.iconRight {
-  display: block;
-  margin-left: 8px;
+.button:disabled {
+  .endIcon {
+    svg {
+      path {
+        fill: $text-tertiary;
+      }
+    }
+  }
 }
 
-.iconLeft {
+.startIcon {
   display: block;
   margin-right: 8px;
+  display: flex;
+  align-items: center;
 }
 
-.buttonWithIcon {
-  padding: 0;
-  align-items: center;
+.startIcon:hover {
+  svg {
+    path {
+      fill: #5483e6;
+    }
+  }
+}
+
+.startIcon:active {
+  svg {
+    path {
+      fill: #507cd8;
+    }
+  }
+}
+
+.button:disabled {
+  .startIcon {
+    svg {
+      path {
+        fill: $text-tertiary;
+      }
+    }
+  }
 }

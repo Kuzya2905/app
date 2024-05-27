@@ -6,12 +6,7 @@ import Link from "next/link";
 import { v4 as uuid } from "uuid";
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Controller,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -25,6 +20,7 @@ import { VARIANT } from "@/components/Select/Select.types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
+import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./companyCreation.module.scss";
 
@@ -96,12 +92,8 @@ const Company: React.FC = () => {
     localStorage.setItem("formDataCompany", JSON.stringify(data));
   };
 
-  const error: SubmitErrorHandler<CompanyCreationFormTypes> = (data) => {
-    console.log(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit, error)} className={styles.canvas}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>
       <div className={styles.canvasWrapper}>
         <div className={styles.wrapperBlockLinks}>
           <Link className={styles.blockLink} href="/">
@@ -259,7 +251,7 @@ const Company: React.FC = () => {
                   onClick={addLink}
                   size={"s"}
                   appearance={"ghost"}
-                  plusPosition="left"
+                  startIcon={<IconButton />}
                 >
                   Add a link
                 </Button>
