@@ -25,3 +25,5 @@ export const priceRu = (price: number): string =>
     .concat(" $");
 
 export const getYear = () => new Date().getFullYear();
+
+export const isFirstCharDigit = (str: string) => /^\d/.test(str);
