@@ -24,7 +24,7 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
             size="xl"
             className={styles.blockTopClose}
             disabled={false}
-          ></Button>
+          />
           <h1 className={styles.blockTopTitle}>{basicInformation[0]}</h1>
           <ul className={styles.blockTotalInfo}>
             <li className={styles.totalInfoItem}>

@@ -10,7 +10,6 @@ export interface ButtonTypes
   appearance: "primary" | "ghost" | "secondary" | "tertiary" | "close";
   size: "s" | "m" | "l" | "xl";
   typeBtn?: "button" | "submit" | "reset";
-  plusPosition?: string;
   startIcon?: React.ReactElement | string | StaticImport;
   endIcon?: React.ReactElement | string | StaticImport;
 }

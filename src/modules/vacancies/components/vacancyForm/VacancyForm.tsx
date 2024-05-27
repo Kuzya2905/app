@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  SubmitErrorHandler,
   SubmitHandler,
   useForm,
   Controller,
