@@ -32,6 +32,8 @@ import { IconButton } from "@/assets/svgs/IconButton";
 import styles from "./CompanyEdit.module.scss";
 
 const CompanyEdit: React.FC = () => {
+  const [formDefaultData, setFormDefaultData] =
+    useState<CompanyEditFormTypes>();
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
@@ -57,18 +59,13 @@ const CompanyEdit: React.FC = () => {
   } = useForm<CompanyEditFormTypes>({
     resolver: yupResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      industry: "IT",
-      size: "1 - 50",
-      city: "Los-Angeles",
-      linkLogo: null,
-    },
   });
 
   useEffect(() => {
     const formDataCompany = localStorage.getItem("formDataCompany");
     if (formDataCompany) {
       reset(JSON.parse(formDataCompany));
+      setFormDefaultData(JSON.parse(formDataCompany));
     }
   }, [reset]);
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useIsConnectionRestored, useTonWallet } from '@tonconnect/ui-react';
-import { VacancyForm } from "@/modules/vacancies/components/vacancyForm/VacancyForm";
+import { VacancyFormCreate } from "@/modules/vacancies/components/vacancyFormCreation";
 
 import styles from "./styles.module.scss";
 
@@ -46,7 +46,7 @@ export const CreationVacancy = () => {
             </Link>
           </div>
           <h1 className={styles.title}>Job creation</h1>
-          <VacancyForm />
+          <VacancyFormCreate />
         </div>
       </div>
       ) : (

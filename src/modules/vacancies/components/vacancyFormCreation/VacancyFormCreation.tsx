@@ -23,25 +23,25 @@ import {
   cardsOption,
   dataTags,
   dataTextareas,
-} from "./VacancyFormData";
+} from "./VacancyFormCreationData";
 import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
 import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
 
-import { VacancyFormTypes } from "@/modules/vacancies/components/vacancyForm/VacancyFormTypes";
+import { VacancyFormCreationTypes } from "@/modules/vacancies/components/vacancyFormCreation/VacancyFormCreationTypes";
 import { VARIANT } from "@/components/Select/Select.types";
 
 import styles from "./styles.module.scss";
 
-export const VacancyForm = () => {
+export const VacancyFormCreate = () => {
   const {
     register,
     handleSubmit,
     watch,
     control,
     formState: { errors },
-  } = useForm<VacancyFormTypes>({
+  } = useForm<VacancyFormCreationTypes>({
     resolver: yupResolver(vacancyFormSchema),
     mode: "all",
   });
@@ -52,7 +52,7 @@ export const VacancyForm = () => {
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
   const [validSettingsBlock, setValidSettingsBlock] = useState(false);
 
-  const fieldsBasic: (keyof VacancyFormTypes)[] = useMemo(
+  const fieldsBasic: (keyof VacancyFormCreationTypes)[] = useMemo(
     () => [
       "name",
       "other",
@@ -73,7 +73,7 @@ export const VacancyForm = () => {
     setValidBasicBlock(basicFieldsValid);
   }, [fieldsBasic, valuesFieldsBasic, errors]);
 
-  const fieldsDescription: (keyof VacancyFormTypes)[] = useMemo(
+  const fieldsDescription: (keyof VacancyFormCreationTypes)[] = useMemo(
     () => ["jobDescription", "requirements", "responsibilities", "terms"],
     []
   );
@@ -93,13 +93,9 @@ export const VacancyForm = () => {
 
   useEffect(() => {
     const settingFieldValid =
-      !errors["publishingSettings"] && valueFieldSettings ? true : false;
+      !errors["publishingSettings"] && !!valueFieldSettings;
     setValidSettingsBlock(settingFieldValid);
   }, [valueFieldSettings, errors.publishingSettings, errors]);
-
-  const disableButtonPreview = () => {
-    return !(validBasicBlock && validDescriptionBlock && validSettingsBlock);
-  };
 
   useEffect(() => {
     const htmlStyle = document.documentElement.style;
@@ -110,9 +106,16 @@ export const VacancyForm = () => {
     }
   }, [activePreview]);
 
+  const disableButtonPreview = () => {
+    return !(validBasicBlock && validDescriptionBlock && validSettingsBlock);
+  };
+
   const changeActivePreview = () => setActivePreview((prev) => !prev);
 
-  const onSubmit: SubmitHandler<VacancyFormTypes> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<VacancyFormCreationTypes> = (data) => {
+    console.log(data);
+    localStorage.setItem("formDataVacancy", JSON.stringify(data));
+  };
 
   return (
     <form
@@ -126,7 +129,7 @@ export const VacancyForm = () => {
           <h2 className={styles.title}>Basic information</h2>
           <div className={styles.labeledField}>
             <p className={styles.label}>Job title</p>
-            <Input<VacancyFormTypes>
+            <Input<VacancyFormCreationTypes>
               name="name"
               placeholder="Full-stack Engineer"
               register={register}
@@ -156,7 +159,7 @@ export const VacancyForm = () => {
           </div>
           <div className={styles.filedTags}>
             {dataTags?.map(({ nameSection, id, disabled, active }) => (
-              <CheckboxTag<VacancyFormTypes>
+              <CheckboxTag<VacancyFormCreationTypes>
                 register={register}
                 key={id}
                 disabled={disabled}
@@ -227,7 +230,7 @@ export const VacancyForm = () => {
             </div>
             <div className={styles.checkboxWrapper}>
               <label className={styles.checkbox}>
-                <Checkbox<VacancyFormTypes>
+                <Checkbox<VacancyFormCreationTypes>
                   nameGroup="remote"
                   register={register}
                 />
@@ -237,7 +240,7 @@ export const VacancyForm = () => {
           </div>
           <div className={styles.labeledField}>
             <p className={styles.label}>Income level</p>
-            <Input<VacancyFormTypes>
+            <Input<VacancyFormCreationTypes>
               name="incomeLevel"
               isIcon={false}
               placeholder="from $10,000"
@@ -252,11 +255,13 @@ export const VacancyForm = () => {
           {dataTextareas.map(({ title, nameFiledForm, placeholder, id }) => (
             <div key={id} className={styles.textarea}>
               <h2 className={styles.textAreaTitle}>{title}</h2>
-              <Textarea<VacancyFormTypes>
-                name={nameFiledForm as keyof VacancyFormTypes}
+              <Textarea<VacancyFormCreationTypes>
+                name={nameFiledForm as keyof VacancyFormCreationTypes}
                 placeholder={placeholder}
                 error={
-                  errors[nameFiledForm as keyof VacancyFormTypes] as FieldError
+                  errors[
+                    nameFiledForm as keyof VacancyFormCreationTypes
+                  ] as FieldError
                 }
                 register={register}
               />
@@ -284,10 +289,10 @@ export const VacancyForm = () => {
                 value,
                 buttonSale,
               }) => (
-                <CardOption<VacancyFormTypes>
+                <CardOption<VacancyFormCreationTypes>
                   key={id}
                   numberVacancies={numberVacancies}
-                  nameGroup={nameGroup as keyof VacancyFormTypes}
+                  nameGroup={nameGroup as keyof VacancyFormCreationTypes}
                   title={title}
                   description={description}
                   price={price}

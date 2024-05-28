@@ -1,0 +1,1 @@
+export { VacancyFormEdit } from "./VacancyFormEdit";

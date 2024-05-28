@@ -1,4 +1,4 @@
-export interface VacancyFormTypes {
+export interface VacancyFormEditTypes {
   tags?: string[];
   publishingSettings: string;
   jobDescription: string;

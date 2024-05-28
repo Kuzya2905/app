@@ -51,12 +51,6 @@ const Company: React.FC = () => {
   } = useForm<CompanyCreationFormTypes>({
     resolver: yupResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      industry: "IT",
-      size: "1 - 50",
-      city: "Los-Angeles",
-      linkLogo: null,
-    },
   });
 
   const linkLogoValue = watch("linkLogo");

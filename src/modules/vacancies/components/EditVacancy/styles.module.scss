@@ -1,0 +1,65 @@
+@import "@/assets/core/_variables.scss";
+
+.creation {
+  color: $text-primary;
+  width: 100%;
+  background-color: $bg-main;
+  padding: 0 10px;
+  margin-top: 84px;
+}
+
+@media (max-width: 1024px) and (min-width: 500px) {
+  .creation {
+    padding: 0 20px;
+  }
+}
+
+.creationWrapper {
+  flex-direction: column;
+  max-width: 1216px;
+  margin: 0 auto;
+  padding-bottom: 127px;
+  gap: 32px 32px;
+}
+
+@media (max-width: 1024px) {
+  .creationWrapper {
+    padding-bottom: 40px;
+  }
+}
+
+.wrapperBlockLinks {
+  display: flex;
+  padding-top: 40px;
+  gap: 0 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 130%;
+  color: $text-secondary;
+}
+
+.blockLinkCurrent {
+  color: $text-primary;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.blockSlash {
+  width: 20px;
+  height: 16px;
+  text-align: center;
+}
+
+.title {
+  padding-top: 56px;
+  padding-bottom: 40px;
+  font-size: 40px;
+  line-height: 48px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    padding-top: 30px;
+  }
+}
