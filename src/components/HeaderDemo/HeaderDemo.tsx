@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
-import { TonConnectButton, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import { TonConnectButton, useIsConnectionRestored, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
@@ -20,11 +20,24 @@ import styles from "./headerDemo.module.scss";
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
   const [tonConnectUi] = useTonConnectUI();
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
+
+  const connectionRestored = useIsConnectionRestored();
   const wallet = useTonWallet();
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
   };
+
+  useEffect(() => {
+    if(connectionRestored) {
+      if(wallet) {
+        setIsWalletLoaded(true);
+      } else {
+        setIsWalletLoaded(false);
+      }
+    }    
+  },[connectionRestored,wallet]);
 
   useEffect(() => {
     const changeBodyPosition = () => {
@@ -66,17 +79,26 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
             ))}
           </div>
           <div className={styles.buttonConnectWalletWrapper}>
-            <Button
-              appearance="secondary"
-              size="l"
-              type="submit"
-              onClick={()=> {
-                //tonConnectUi.openModal()
-                //console.log(wallet)
-              }}
-            > 
-              Connect wallet</Button>
-            <TonConnectButton /> 
+            {
+              !isWalletLoaded ? (
+                <Button
+                appearance="secondary"
+                size="l"
+                type="submit"
+                onClick={()=> {
+                  tonConnectUi.openModal();
+                }}
+              > 
+                Connect wallet</Button>
+              ) : (
+                <div className={styles.userAuthorizedWrapper} onClick={() => {tonConnectUi.disconnect()}}>
+                  <Logo />
+                  <Burger />
+                </div>
+              )
+            }
+
+            {/* <TonConnectButton />  */}
           </div>
         </div>
         {activeBurger ? (
