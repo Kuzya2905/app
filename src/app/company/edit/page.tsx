@@ -5,7 +5,7 @@ import styles from "@/app/page.module.css";
 
 const PageCompanyEdit = () => (
   <main className={styles.main}>
-    <Layout wide={true}>
+    <Layout>
       <CompanyEdit />
     </Layout>
   </main>

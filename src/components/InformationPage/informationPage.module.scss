@@ -1,24 +1,24 @@
 @import "@/assets/core/_variables.scss";
 
 .main {
-    width: 100%;
-    margin-top: 40px;
-    background-color: $bg-main;
-    padding: 0 10px;
+  width: 100%;
+  margin-top: 40px;
+  background-color: $bg-main;
+  padding: 0 10px;
 }
-  
+
 @media (max-width: 1024px) and (min-width: 500px) {
   .main {
     padding: 0 20px;
   }
 }
-  
+
 .mainWrapper {
   margin: 0 auto;
   margin-top: 40px;
-  max-width: 1080px;
+  max-width: 1216px;
 }
-  
+
 .mainTitle {
   color: black;
   font-weight: 600;
@@ -45,21 +45,21 @@
     padding-bottom: 30px;
   }
 }
-  
+
 @media (max-width: 500px) {
   .wrapperBlockLinks {
     padding-top: 20px;
     padding-bottom: 20px;
   }
 }
-  
+
 .blockLinkCurrent {
   color: $text-primary;
   font-size: 12px;
   font-weight: 400;
   line-height: 130%;
 }
-  
+
 .cards {
   display: flex;
   flex-direction: column;
@@ -71,7 +71,7 @@
   padding: 32px;
   width: 100%;
   max-width: 800px;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -83,7 +83,7 @@
   font-weight: 600;
   line-height: 24px;
   text-align: left;
-} 
+}
 
 .cardText {
   display: flex;

@@ -3,12 +3,12 @@ import Layout from "@/components/Layout/Layout";
 
 import styles from "@/app/page.module.css";
 
-const PageVacancie = () => (
+const PageVacancy = () => (
   <main className={styles.main}>
-    <Layout wide={true}>
+    <Layout>
       <CreationVacancy />
     </Layout>
   </main>
 );
 
-export default PageVacancie;
+export default PageVacancy;

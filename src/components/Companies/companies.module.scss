@@ -19,11 +19,22 @@
   margin-top: 72.5px;
 }
 
+@media (max-width: 500px) {
+  .main {
+    margin-top: 40px;
+  }
+}
+
 .mainTitle {
   color: black;
   font-size: 48px;
   font-weight: 600;
   margin-bottom: 45.5px;
+}
+@media (max-width: 500px) {
+  .mainTitle {
+    margin-bottom: 20px;
+  }
 }
 
 .mainSection {
@@ -85,6 +96,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
+  margin-bottom: 120px;
+}
+
+@media (max-width: 1024px) {
+  .blockCards {
+    margin-bottom: 50px;
+  }
 }
 
 @media (max-width: 768px) {
