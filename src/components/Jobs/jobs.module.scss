@@ -19,11 +19,23 @@
   margin-top: 72.5px;
 }
 
+@media (max-width: 500px) {
+  .main {
+    margin-top: 40px;
+  }
+}
+
 .mainTitle {
   color: black;
   font-size: 48px;
   font-weight: 600;
   margin-bottom: 45.5px;
+}
+
+@media (max-width: 500px) {
+  .mainTitle {
+    margin-bottom: 20px;
+  }
 }
 
 .mainSection {
