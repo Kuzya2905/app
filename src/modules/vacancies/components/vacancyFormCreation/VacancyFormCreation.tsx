@@ -27,11 +27,12 @@ import {
 import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
+import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
+
 import { VacancyFormCreationTypes } from "@/modules/vacancies/components/vacancyFormCreation/VacancyFormCreationTypes";
 import { VARIANT } from "@/components/Select/Select.types";
 
 import styles from "./styles.module.scss";
-import PreviewVacancy from "../PreviewVacancy/PreviewVacancy";
 
 export const VacancyFormCreate = () => {
   const {
@@ -92,7 +93,7 @@ export const VacancyFormCreate = () => {
 
   useEffect(() => {
     const settingFieldValid =
-      !errors["publishingSettings"] && valueFieldSettings ? true : false;
+      !errors["publishingSettings"] && !!valueFieldSettings;
     setValidSettingsBlock(settingFieldValid);
   }, [valueFieldSettings, errors.publishingSettings, errors]);
 

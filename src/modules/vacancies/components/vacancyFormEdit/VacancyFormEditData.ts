@@ -49,7 +49,7 @@ export const Other = [
 ];
 
 export const Qualification = [
-  { value: "Traine", label: "Traine", icon: Check },
+  { value: "Trainer", label: "Trainer", icon: Check },
   { value: "Junior", label: "Junior", icon: Check },
   { value: "Middle", label: "Middle", icon: Check },
   { value: "Senior", label: "Senior", icon: Check },

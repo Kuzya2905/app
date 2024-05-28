@@ -105,7 +105,7 @@ export const VacancyFormEdit = () => {
 
   useEffect(() => {
     const settingFieldValid =
-      !errors["publishingSettings"] && valueFieldSettings ? true : false;
+      !errors["publishingSettings"] && !!valueFieldSettings;
     setValidSettingsBlock(settingFieldValid);
   }, [valueFieldSettings, errors.publishingSettings, errors]);
 
