@@ -121,14 +121,10 @@ const CompanyEdit: React.FC = () => {
     localStorage.setItem("formDataCompany", JSON.stringify(data));
   };
 
-  const error: SubmitErrorHandler<CompanyEditFormTypes> = (data) => {
-    console.log(data);
-  };
-
   return (
     <>{
       isWalletLoaded ? (
-        <form onSubmit={handleSubmit(onSubmit, error)} className={styles.canvas}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
               <Link className={styles.blockLink} href="/">
@@ -183,12 +179,13 @@ const CompanyEdit: React.FC = () => {
                           return (
                             <div>
                               <Select
+                                valueDefault={formDefaultData?.industry}
                                 color="#1B1E27"
                                 variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={industry}
-                                placeholder="IT"
+                                placeholder="Choose a industry"
                               />
                             </div>
                           );
@@ -206,12 +203,13 @@ const CompanyEdit: React.FC = () => {
                           return (
                             <div>
                               <Select
+                                valueDefault={formDefaultData?.size}
                                 color="#1B1E27"
                                 variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={size}
-                                placeholder="1 - 50"
+                                placeholder="Choose a size"
                               />
                             </div>
                           );
@@ -243,12 +241,13 @@ const CompanyEdit: React.FC = () => {
                           return (
                             <div>
                               <Select
+                                valueDefault={formDefaultData?.city}
                                 color="#1B1E27"
                                 variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={city}
-                                placeholder="Los-Angeles"
+                                placeholder="Choose a city"
                               />
                             </div>
                           );
