@@ -34,7 +34,7 @@ const MainScreen: FC = () => {
           className={styles.buttonAdd}
           onClick={() => {
             if (wallet) {
-              router.push('/company-creation')
+              router.push('/company/create')
             } else {
               tonConnectUi.openModal()
             }              

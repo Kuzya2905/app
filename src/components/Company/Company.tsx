@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
 
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
@@ -56,7 +56,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     <Button
                       appearance="primary"
                       size="m"
-                      onClick={() => router.push('/vacancies/create')}
+                      onClick={() => router.push('/vacancy/create')}
                     >
                       Publish
                     </Button>

@@ -64,7 +64,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
           <Button
             appearance="secondary"
             size="l"
-            onClick={() => router.push('/company-edit')}
+            onClick={() => router.push('/company/edit')}
           >
             Edit
           </Button>

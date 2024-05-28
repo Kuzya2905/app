@@ -15,12 +15,7 @@ import { CompanyTypes } from "./Vacancy.types";
 import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
-  const pathname = usePathname();
   const userFriendlyAddress = useTonAddress();
-
-  const matchedId = pathname.match(/\d+/);
-  const idCompany = matchedId ? matchedId[0] : null;
-
   const dataVacancy = cardsVacancies.find(
     (vacancy) => vacancy.idVacancy === Number(vacancyId)
   );
