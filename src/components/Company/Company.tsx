@@ -25,9 +25,6 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     ({ idCompany }) => idCompany === Number(companyId)
   );
 
-  
-  const dataVacancies = cardsVacancies.slice(0, dataCompany?.vacancyNumber);
-
   const userFriendlyAddress = useTonAddress();
   
   const router = useRouter();

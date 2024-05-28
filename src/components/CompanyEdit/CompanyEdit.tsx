@@ -6,7 +6,6 @@ import Link from "next/link";
 import { v4 as uuid } from "uuid";
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Controller,
   SubmitErrorHandler,
@@ -123,6 +122,10 @@ const CompanyEdit: React.FC = () => {
   const onSubmit: SubmitHandler<CompanyEditFormTypes> = (data) => {
     console.log(data);
     localStorage.setItem("formDataCompany", JSON.stringify(data));
+  };
+
+  const error: SubmitErrorHandler<CompanyEditFormTypes> = (data) => {
+    console.log(data);
   };
 
   return (
