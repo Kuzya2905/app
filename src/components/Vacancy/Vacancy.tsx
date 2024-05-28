@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { vacancyInfo } from "./VacancyData";
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
@@ -14,14 +13,11 @@ import { CompanyTypes } from "./Vacancy.types";
 import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
-  const pathname = usePathname();
-
-  const matchedId = pathname.match(/\d+/);
-  const idCompany = matchedId ? matchedId[0] : null;
-
   const dataVacancy = cardsVacancies.find(
     (vacancy) => vacancy.idVacancy === Number(vacancyId)
   );
+
+  const idCompany = String(dataVacancy?.idCompany);
 
   const dataCompany = cardsCompanies.find(({ id }) => id === Number(idCompany));
 
@@ -41,7 +37,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               <span className={styles.blockSlash}>/</span>
               <Link
                 className={styles.blockLinkCurrent}
-                href={`/companies/company/${idCompany}`}
+                href={`/company/${idCompany}`}
               >
                 {dataCompany?.title}
               </Link>

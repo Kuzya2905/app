@@ -13,8 +13,10 @@ const RegisteredVacancies: React.FC = () => {
 
   const handleClickJobsButton = () => router.push("/vacancies");
 
-  const handleClickCompany = (idCompany: number, idVacancy: number) =>
-    router.push(`/companies/company/${idCompany}/vacancy/${idVacancy}`);
+  const handleClickCompany = (idVacancy: number) =>
+    router.push(`/vacancy/${idVacancy}`);
+
+  const vacancies = cardsVacancies.slice(0, 8);
 
   return (
     <section className={styles.section}>
@@ -31,9 +33,8 @@ const RegisteredVacancies: React.FC = () => {
           </Button>
         </div>
         <div className={styles.sectionCards}>
-          {cardsVacancies.map(
+          {vacancies.map(
             ({
-              idCompany,
               idVacancy,
               name,
               experience,
@@ -46,7 +47,7 @@ const RegisteredVacancies: React.FC = () => {
               date,
             }) => (
               <VacancyCard
-                onClick={() => handleClickCompany(idCompany, idVacancy)}
+                onClick={() => handleClickCompany(idVacancy)}
                 key={idVacancy}
                 name={name}
                 experience={experience}

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler, SubmitErrorHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Checkbox from "@/components/Checkbox/Checkbox";
@@ -31,14 +31,8 @@ const FiltersCompanies = () => {
   const onSubmit: SubmitHandler<FilterCompaniesForm> = (data) =>
     console.log(data);
 
-  const error: SubmitErrorHandler<FilterCompaniesForm> = (data) =>
-    console.log(data);
-
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit, error)}
-      className={styles.sectionFilters}
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.sectionFilters}>
       <h2 className={styles.filtersTitle}>Filters</h2>
       <div className={styles.block}>
         <h2 className={styles.blockTitle}>Industry</h2>
