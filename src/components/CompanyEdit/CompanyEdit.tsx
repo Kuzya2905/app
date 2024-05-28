@@ -6,6 +6,7 @@ import Link from "next/link";
 import { v4 as uuid } from "uuid";
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   Controller,
   SubmitErrorHandler,
@@ -21,10 +22,13 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyEditSchemaYup";
 import { city, industry, size } from "./CompanyEditData";
+
 import { CompanyEditFormTypes } from "./CompanyEditFormTypes";
+import { VARIANT } from "@/components/Select/Select.types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
+import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./CompanyEdit.module.scss";
 
@@ -33,7 +37,7 @@ const CompanyEdit: React.FC = () => {
     []
   );
 
-  const [acitveLogo, setActiveLogo] = useState<boolean>(false);
+  const [activeLogo, setActiveLogo] = useState<boolean>(false);
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
@@ -121,10 +125,6 @@ const CompanyEdit: React.FC = () => {
     localStorage.setItem("formDataCompany", JSON.stringify(data));
   };
 
-  const error: SubmitErrorHandler<CompanyEditFormTypes> = (data) => {
-    console.log(data);
-  };
-
   return (
     <>{
       isWalletLoaded ? (
@@ -139,11 +139,11 @@ const CompanyEdit: React.FC = () => {
                 Companies
               </Link>
               <span className={styles.blockSlash}>/</span>
-              <Link className={styles.blockLink} href="/company-edit">
+              <Link className={styles.blockLink} href="">
                 Stellar
               </Link>
               <span className={styles.blockSlash}>/</span>
-              <Link className={styles.blockLinkCurrent} href="/company-edit">
+              <Link className={styles.blockLinkCurrent} href="">
                 Edit
               </Link>
             </div>
@@ -184,6 +184,7 @@ const CompanyEdit: React.FC = () => {
                             <div>
                               <Select
                                 color="#1B1E27"
+                                variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={industry}
@@ -206,6 +207,7 @@ const CompanyEdit: React.FC = () => {
                             <div>
                               <Select
                                 color="#1B1E27"
+                                variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={size}
@@ -242,6 +244,7 @@ const CompanyEdit: React.FC = () => {
                             <div>
                               <Select
                                 color="#1B1E27"
+                                variant={VARIANT.BIG}
                                 onChange={onChange}
                                 objValue={value}
                                 data={city}
@@ -291,7 +294,7 @@ const CompanyEdit: React.FC = () => {
                       onClick={addLink}
                       size={"s"}
                       appearance={"ghost"}
-                      iconPosition="left"
+                      startIcon={<IconButton />}
                     >
                       Add a link
                     </Button>
@@ -299,7 +302,7 @@ const CompanyEdit: React.FC = () => {
                 </section>
               </main>
               <aside className={styles.asideCreationLogo}>
-                {!acitveLogo ? (
+                {!activeLogo ? (
                   <Image
                     className={styles.logoEmpty}
                     src={LogoEmpty}

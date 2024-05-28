@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
 import FiltersCompanies from "@/components/FiltersCompanies/FiltersCompanies";
-import { cardsCompanies } from "./CompaniesData";
+import { cardsCompanies } from "@/components/RegisteredСompanies/RegisteredСompaniesData";
 
 import { Vector } from "@/assets/svgs/Vector";
 

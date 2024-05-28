@@ -16,7 +16,6 @@ export const metadata: Metadata = {
 
 
 const Home = () => (
-
   <main className={styles.main}>
     <Layout>
       <MainScreen />

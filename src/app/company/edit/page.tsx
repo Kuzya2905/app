@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout/Layout";
 import CompanyEdit from "@/components/CompanyEdit/CompanyEdit";
 
-
 import styles from "@/app/page.module.css";
 
 const PageCompanyEdit = () => (

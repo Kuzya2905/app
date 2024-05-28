@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import { vacancyInfo } from "./VacancyData";
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
@@ -25,6 +24,8 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
   const dataVacancy = cardsVacancies.find(
     (vacancy) => vacancy.idVacancy === Number(vacancyId)
   );
+
+  const idCompany = String(dataVacancy?.idCompany);
 
   const dataCompany = cardsCompanies.find(({ id }) => id === Number(idCompany));
 

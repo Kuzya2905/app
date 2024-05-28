@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  SubmitErrorHandler,
   SubmitHandler,
   useForm,
   Controller,
@@ -21,12 +20,15 @@ import {
   Experience,
   Other,
   Qualification,
+  cardsOption,
   dataTags,
   dataTextareas,
 } from "./VacancyFormData";
 import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
+import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
+
 import { VacancyFormTypes } from "@/modules/vacancies/components/vacancyForm/VacancyFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
 
@@ -44,6 +46,8 @@ export const VacancyForm = () => {
     mode: "all",
   });
 
+  const [activePreview, setActivePreview] = useState(false);
+
   const [validBasicBlock, setValidBasicBlock] = useState(false);
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
   const [validSettingsBlock, setValidSettingsBlock] = useState(false);
@@ -54,7 +58,7 @@ export const VacancyForm = () => {
       "other",
       "qualification",
       "experience",
-      "typeOfEmloyment",
+      "typeOfEmployment",
       "incomeLevel",
     ],
     []
@@ -69,21 +73,21 @@ export const VacancyForm = () => {
     setValidBasicBlock(basicFieldsValid);
   }, [fieldsBasic, valuesFieldsBasic, errors]);
 
-  const fieldsDesctription: (keyof VacancyFormTypes)[] = useMemo(
+  const fieldsDescription: (keyof VacancyFormTypes)[] = useMemo(
     () => ["jobDescription", "requirements", "responsibilities", "terms"],
     []
   );
 
-  const valuesFieldsDesctription = watch(fieldsDesctription);
+  const valuesFieldsDescription = watch(fieldsDescription);
 
   useEffect(() => {
-    const descriptionFieldsValid = valuesFieldsDesctription.every(
+    const descriptionFieldsValid = valuesFieldsDescription.every(
       (field, index) => {
-        return !errors[fieldsDesctription[index]] && field;
+        return !errors[fieldsDescription[index]] && field;
       }
     );
     setValidDescriptionBlock(descriptionFieldsValid);
-  }, [fieldsDesctription, valuesFieldsDesctription, errors]);
+  }, [fieldsDescription, valuesFieldsDescription, errors]);
 
   const valueFieldSettings = watch("publishingSettings");
 
@@ -94,19 +98,29 @@ export const VacancyForm = () => {
   }, [valueFieldSettings, errors.publishingSettings, errors]);
 
   const disableButtonPreview = () => {
-    return validBasicBlock && validDescriptionBlock && validSettingsBlock
-      ? false
-      : true;
+    return !(validBasicBlock && validDescriptionBlock && validSettingsBlock);
   };
+
+  useEffect(() => {
+    const htmlStyle = document.documentElement.style;
+    if (activePreview) {
+      htmlStyle.overflow = "hidden";
+    } else {
+      htmlStyle.overflow = "";
+    }
+  }, [activePreview]);
+
+  const changeActivePreview = () => setActivePreview((prev) => !prev);
 
   const onSubmit: SubmitHandler<VacancyFormTypes> = (data) => console.log(data);
 
-  const error: SubmitErrorHandler<VacancyFormTypes> = (data) => {
-    console.log(data);
-  };
-
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit, error)}>
+    <form
+      className={cn(styles.form, {
+        [styles.formBackgroundDark]: activePreview,
+      })}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className={styles.formData}>
         <div className={styles.baseInfo}>
           <h2 className={styles.title}>Basic information</h2>
@@ -114,7 +128,6 @@ export const VacancyForm = () => {
             <p className={styles.label}>Job title</p>
             <Input<VacancyFormTypes>
               name="name"
-              isIcon={false}
               placeholder="Full-stack Engineer"
               register={register}
               error={errors.name}
@@ -197,7 +210,7 @@ export const VacancyForm = () => {
             <p className={styles.label}>Type of Employment</p>
             <div className={styles.fieldWrapper}>
               <Controller
-                name="typeOfEmloyment"
+                name="typeOfEmployment"
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Select
@@ -205,9 +218,9 @@ export const VacancyForm = () => {
                     onChange={onChange}
                     objValue={value}
                     data={EmploymentType}
-                    placeholder="Choose a type of emlpoyment"
+                    placeholder="Choose a type of employment"
                     enteredValueColor="#1B1E27"
-                    error={errors.typeOfEmloyment}
+                    error={errors.typeOfEmployment}
                   />
                 )}
               />
@@ -260,27 +273,31 @@ export const VacancyForm = () => {
             Select the required type of accommodation
           </p>
           <div className={styles.settingsCards}>
-            <CardOption<VacancyFormTypes>
-              numberVacancies={1}
-              nameGroup="publishingSettings"
-              title="Single occupancy"
-              description="Vacancy placement for a period of one month"
-              price={10}
-              watch={watch}
-              value="single"
-              register={register}
-            />
-            <CardOption<VacancyFormTypes>
-              numberVacancies={10}
-              title="Job package"
-              description="Package of ten vacancies with auto-renewal option"
-              price={35}
-              buttonSale={true}
-              watch={watch}
-              nameGroup="publishingSettings"
-              value="package"
-              register={register}
-            />
+            {cardsOption.map(
+              ({
+                id,
+                numberVacancies,
+                nameGroup,
+                title,
+                description,
+                price,
+                value,
+                buttonSale,
+              }) => (
+                <CardOption<VacancyFormTypes>
+                  key={id}
+                  numberVacancies={numberVacancies}
+                  nameGroup={nameGroup as keyof VacancyFormTypes}
+                  title={title}
+                  description={description}
+                  price={price}
+                  watch={watch}
+                  value={value}
+                  register={register}
+                  buttonSale={buttonSale}
+                />
+              )
+            )}
           </div>
           {errors.publishingSettings && (
             <span role="alert" className={styles.settingsErrorMessage}>
@@ -332,6 +349,7 @@ export const VacancyForm = () => {
           size="l"
           className={styles.buttonPreview}
           disabled={disableButtonPreview()}
+          onClick={changeActivePreview}
         >
           Preview
         </Button>
@@ -344,6 +362,13 @@ export const VacancyForm = () => {
           Publish
         </Button>
       </div>
+      {activePreview && (
+        <PreviewVacancy
+          basicInformation={valuesFieldsBasic as string[]}
+          closePreview={changeActivePreview}
+          specification={valuesFieldsDescription as string[]}
+        />
+      )}
     </form>
   );
 };
