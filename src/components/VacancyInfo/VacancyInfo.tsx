@@ -27,7 +27,7 @@ const VacancyInfo:React.FC<VacancyInfoTypes>= ({dataVacancy}) => {
                 <Button
                     appearance="secondary"
                     size="l"
-                    onClick={() => console.log('Edit')}
+                    onClick={() => router.push('./edit')}
                 >
                     Edit
                 </Button>
