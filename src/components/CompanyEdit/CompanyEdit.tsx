@@ -6,12 +6,7 @@ import Link from "next/link";
 import { v4 as uuid } from "uuid";
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Controller,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -19,19 +14,24 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyEditSchemaYup";
 import { city, industry, size } from "./CompanyEditData";
+
 import { CompanyEditFormTypes } from "./CompanyEditFormTypes";
+import { VARIANT } from "@/components/Select/Select.types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
+import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./CompanyEdit.module.scss";
 
 const CompanyEdit: React.FC = () => {
+  const [formDefaultData, setFormDefaultData] =
+    useState<CompanyEditFormTypes>();
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
 
-  const [acitveLogo, setActiveLogo] = useState<boolean>(false);
+  const [activeLogo, setActiveLogo] = useState<boolean>(false);
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
@@ -46,18 +46,13 @@ const CompanyEdit: React.FC = () => {
   } = useForm<CompanyEditFormTypes>({
     resolver: yupResolver(schema),
     mode: "onChange",
-    defaultValues: {
-      industry: "IT",
-      size: "1 - 50",
-      city: "Los-Angeles",
-      linkLogo: null,
-    },
   });
 
   useEffect(() => {
     const formDataCompany = localStorage.getItem("formDataCompany");
     if (formDataCompany) {
       reset(JSON.parse(formDataCompany));
+      setFormDefaultData(JSON.parse(formDataCompany));
     }
   }, [reset]);
 
@@ -102,12 +97,8 @@ const CompanyEdit: React.FC = () => {
     localStorage.setItem("formDataCompany", JSON.stringify(data));
   };
 
-  const error: SubmitErrorHandler<CompanyEditFormTypes> = (data) => {
-    console.log(data);
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit, error)} className={styles.canvas}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>
       <div className={styles.canvasWrapper}>
         <div className={styles.wrapperBlockLinks}>
           <Link className={styles.blockLink} href="/">
@@ -118,11 +109,11 @@ const CompanyEdit: React.FC = () => {
             Companies
           </Link>
           <span className={styles.blockSlash}>/</span>
-          <Link className={styles.blockLink} href="/company-edit">
+          <Link className={styles.blockLink} href="">
             Stellar
           </Link>
           <span className={styles.blockSlash}>/</span>
-          <Link className={styles.blockLinkCurrent} href="/company-edit">
+          <Link className={styles.blockLinkCurrent} href="">
             Edit
           </Link>
         </div>
@@ -162,11 +153,13 @@ const CompanyEdit: React.FC = () => {
                       return (
                         <div>
                           <Select
+                            valueDefault={formDefaultData?.industry}
                             color="#1B1E27"
+                            variant={VARIANT.BIG}
                             onChange={onChange}
                             objValue={value}
                             data={industry}
-                            placeholder="IT"
+                            placeholder="Choose a industry"
                           />
                         </div>
                       );
@@ -184,11 +177,13 @@ const CompanyEdit: React.FC = () => {
                       return (
                         <div>
                           <Select
+                            valueDefault={formDefaultData?.size}
                             color="#1B1E27"
+                            variant={VARIANT.BIG}
                             onChange={onChange}
                             objValue={value}
                             data={size}
-                            placeholder="1 - 50"
+                            placeholder="Choose a size"
                           />
                         </div>
                       );
@@ -220,11 +215,13 @@ const CompanyEdit: React.FC = () => {
                       return (
                         <div>
                           <Select
+                            valueDefault={formDefaultData?.city}
+                            variant={VARIANT.BIG}
                             color="#1B1E27"
                             onChange={onChange}
                             objValue={value}
                             data={city}
-                            placeholder="Los-Angeles"
+                            placeholder="Choose a city"
                           />
                         </div>
                       );
@@ -270,7 +267,7 @@ const CompanyEdit: React.FC = () => {
                   onClick={addLink}
                   size={"s"}
                   appearance={"ghost"}
-                  iconPosition="left"
+                  startIcon={<IconButton />}
                 >
                   Add a link
                 </Button>
@@ -278,7 +275,7 @@ const CompanyEdit: React.FC = () => {
             </section>
           </main>
           <aside className={styles.asideCreationLogo}>
-            {!acitveLogo ? (
+            {!activeLogo ? (
               <Image
                 className={styles.logoEmpty}
                 src={LogoEmpty}

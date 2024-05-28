@@ -49,7 +49,7 @@ export const Other = [
 ];
 
 export const Qualification = [
-  { value: "Traine", label: "Traine", icon: Check },
+  { value: "Trainer", label: "Trainer", icon: Check },
   { value: "Junior", label: "Junior", icon: Check },
   { value: "Middle", label: "Middle", icon: Check },
   { value: "Senior", label: "Senior", icon: Check },
@@ -59,10 +59,33 @@ export const Qualification = [
 export const Experience = [
   { value: "No experience", label: "No experience", icon: Check },
   { value: "1 to 3 years", label: "1 to 3 years", icon: Check },
-  { value: "3 to 5 years old", label: "3 to 5 years old", icon: Check },
+  { value: "3 to 5 years old", label: "3 to 5 years", icon: Check },
   { value: "Over 5 years", label: "Over 5 years", icon: Check },
 ];
 
 export const Remote = [
   { id: 1, nameSection: "Remote", disabled: false, active: false },
+];
+
+export const cardsOption = [
+  {
+    id: 1,
+    nameGroup: "publishingSettings",
+    title: "Single occupancy",
+    description: "Vacancy placement for a period of one month",
+    price: 10,
+    value: "single",
+    numberVacancies: 1,
+    buttonSale: false,
+  },
+  {
+    id: 2,
+    nameGroup: "publishingSettings",
+    title: "Job package",
+    description: "Package of ten vacancies with auto-renewal option",
+    price: 35,
+    value: "package",
+    numberVacancies: 10,
+    buttonSale: true,
+  },
 ];

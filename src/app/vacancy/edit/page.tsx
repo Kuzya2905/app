@@ -1,14 +1,14 @@
-import { CreationVacancy } from "@/modules/vacancies/components/CreationVacancy";
+import { EditVacancy } from "@/modules/vacancies/components/EditVacancy";
 import Layout from "@/components/Layout/Layout";
 
 import styles from "@/app/page.module.css";
 
-const PageVacancie = () => (
+const PageVacancy = () => (
   <main className={styles.main}>
     <Layout>
-      <CreationVacancy />
+      <EditVacancy />
     </Layout>
   </main>
 );
 
-export default PageVacancie;
+export default PageVacancy;

@@ -17,4 +17,5 @@ export interface SelectTypes
   variant?: string;
   enteredValueColor?: string;
   error?: any;
+  valueDefault?: string;
 }

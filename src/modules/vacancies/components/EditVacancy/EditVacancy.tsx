@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-import { VacancyFormCreate } from "@/modules/vacancies/components/vacancyFormCreation";
+import { VacancyFormEdit } from "@/modules/vacancies/components/vacancyFormEdit";
 
 import styles from "./styles.module.scss";
 
-export const CreationVacancy = () => (
+export const EditVacancy = () => (
   <div className={styles.creation}>
     <div className={styles.creationWrapper}>
       <div className={styles.wrapperBlockLinks}>
@@ -20,8 +20,8 @@ export const CreationVacancy = () => (
           Stellar
         </Link>
       </div>
-      <h1 className={styles.title}>Job creation</h1>
-      <VacancyFormCreate />
+      <h1 className={styles.title}>Job editing</h1>
+      <VacancyFormEdit />
     </div>
   </div>
 );
