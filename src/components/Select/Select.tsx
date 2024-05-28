@@ -15,6 +15,7 @@ const Select: React.FC<SelectTypes> = ({
   onChange,
   objValue,
   data,
+  valueDefault,
   placeholder,
   variant = VARIANT.SMALL,
   enteredValueColor = "#666666",
@@ -37,6 +38,7 @@ const Select: React.FC<SelectTypes> = ({
   return (
     <div className={styles.selectWrapper}>
       <ReactSelect
+        defaultValue={{ value: valueDefault, label: valueDefault }}
         placeholder={placeholder}
         styles={preparedStyles}
         options={data}

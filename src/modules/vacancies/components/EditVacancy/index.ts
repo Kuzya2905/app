@@ -1,0 +1,1 @@
+export { EditVacancy } from "./EditVacancy";
