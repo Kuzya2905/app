@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
-import { TonConnectButton, useIsConnectionRestored, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import { useIsConnectionRestored, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
 import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
 import Button from "../Button/Button";
+import AuthorizedUserMenu from "@/modules/authorizedUserMenu/components/AuthorizedUserMenu/AuthorizedUserMenu";
 
 import { Logo } from "@/assets/svgs/Logo";
 import { Burger } from "@/assets/svgs/Burger";
@@ -91,14 +92,9 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
               > 
                 Connect wallet</Button>
               ) : (
-                <div className={styles.userAuthorizedWrapper} onClick={() => {tonConnectUi.disconnect()}}>
-                  <Logo />
-                  <Burger />
-                </div>
+                <AuthorizedUserMenu/>
               )
             }
-
-            {/* <TonConnectButton />  */}
           </div>
         </div>
         {activeBurger ? (

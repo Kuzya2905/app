@@ -1,0 +1,21 @@
+.dropdownMenu {
+    position: absolute;
+    top: 50px;
+    max-width: 380px;
+    min-width: 150px;
+    right: 0px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #E6E6E6;
+    opacity: 0;
+    visibility: hidden;    
+    border-radius: 24px;
+    transform: translateY(-10px);
+    transition: 0.3s;
+}
+
+.dropdownMenu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
