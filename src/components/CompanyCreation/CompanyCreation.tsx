@@ -35,7 +35,7 @@ const Company: React.FC = () => {
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
-  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(true);
   
   const wallet = useTonWallet();
   const router = useRouter();
@@ -55,7 +55,7 @@ const Company: React.FC = () => {
 
   const linkLogoValue = watch("linkLogo");
 
-  useEffect(() => {
+  /*useEffect(() => {
     if(connectionRestored) {
       if(!wallet) {
         router.push('/')
@@ -63,7 +63,7 @@ const Company: React.FC = () => {
         setIsWalletLoaded(true)
       }
     }    
-  },[connectionRestored,wallet]);
+  },[connectionRestored,wallet]);*/
 
 
   useEffect(() => {

@@ -11,21 +11,7 @@ import styles from "./styles.module.scss";
 
 export const CreationVacancy = () => {
 
-  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
-
-  const wallet = useTonWallet();
-  const router = useRouter();
-  const connectionRestored = useIsConnectionRestored();
-
-  useEffect(() => {
-    if(connectionRestored) {
-      if(!wallet) {
-        router.push('/')
-      } else {
-        setIsWalletLoaded(true)
-      }
-    }    
-  },[connectionRestored,wallet]);
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(true);
 
   return (
     <>{

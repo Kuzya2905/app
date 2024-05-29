@@ -42,11 +42,7 @@ const CompanyEdit: React.FC = () => {
 
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
-  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
-
-  const wallet = useTonWallet();
-  const router = useRouter();
-  const connectionRestored = useIsConnectionRestored();
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(true);
 
   const {
     register,
@@ -71,16 +67,6 @@ const CompanyEdit: React.FC = () => {
 
   const linkLogoValue = watch("linkLogo");
 
-  useEffect(() => {
-    if(connectionRestored) {
-      if(!wallet) {
-        router.push('/')
-      } else {
-        setIsWalletLoaded(true)
-      }
-    }    
-  },[connectionRestored,wallet]);
-  
 
   useEffect(() => {
     const changeActiveLogo = () => {

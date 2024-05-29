@@ -12,21 +12,8 @@ import styles from "./styles.module.scss";
 
 
 export const EditVacancy = () => {
-  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(true);
   
-  const wallet = useTonWallet();
-  const router = useRouter();
-  const connectionRestored = useIsConnectionRestored();
-  
-  useEffect(() => {
-    if(connectionRestored) {
-      if(!wallet) {
-        router.push('/')
-      } else {
-        setIsWalletLoaded(true)
-      }
-    }    
-  },[connectionRestored,wallet]);
   return (
     <>{
       isWalletLoaded ? (
