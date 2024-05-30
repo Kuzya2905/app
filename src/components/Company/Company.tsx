@@ -25,7 +25,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     ({ idCompany }) => idCompany === Number(companyId)
   );
 
-  const userFriendlyAddress = useTonAddress();
+  const userAddress = useTonAddress();
   
   const router = useRouter();
   const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
@@ -52,7 +52,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               <main>
                 <div className={styles.mainTitleWrapper}>
                   <h1 className={styles.mainTitle}>Active jobs</h1>
-                  { userFriendlyAddress && userFriendlyAddress === {...dataCompany, walletAddress: userFriendlyAddress}.walletAddress ? (
+                  { userAddress && userAddress === {...dataCompany, walletAddress: userAddress}.walletAddress && (
                     <Button
                       appearance="primary"
                       size="m"
@@ -60,8 +60,6 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     >
                       Publish
                     </Button>
-                  ) : (
-                    <></>
                   )}
                 </div>
                 
@@ -107,7 +105,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={{...dataCompany, walletAddress: userFriendlyAddress}} />}</aside>
+              <aside>{<CompanyInfo dataCompany={{...dataCompany, walletAddress: userAddress}} />}</aside>
             </div>
           </div>
         </div>

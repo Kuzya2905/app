@@ -15,7 +15,7 @@ import { CompanyTypes } from "./Vacancy.types";
 import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
-  const userFriendlyAddress = useTonAddress();
+  const userAddress = useTonAddress();
   const dataVacancy = cardsVacancies.find(
     (vacancy) => vacancy.idVacancy === Number(vacancyId)
   );
@@ -109,7 +109,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               </div>
               <aside className={styles.aside}>
                 {
-                  dataCompany && userFriendlyAddress && userFriendlyAddress === {...dataCompany, walletAddress: userFriendlyAddress}.walletAddress ? (
+                  dataCompany && userAddress && userAddress === {...dataCompany, walletAddress: userAddress}.walletAddress ? (
                     <VacancyInfo dataVacancy={dataVacancy}></VacancyInfo>
                   ) : (
                    <VacancyApply dataCompany={dataCompany} idCompany={idCompany} /> 

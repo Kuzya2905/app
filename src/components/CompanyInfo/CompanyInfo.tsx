@@ -13,7 +13,7 @@ import styles from "./CompanyInfo.module.scss";
 
 const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
   const router = useRouter();
-  const userFriendlyAddress = useTonAddress();
+  const userAddress = useTonAddress();
 
   return (
   <div className={styles.main}>
@@ -60,7 +60,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             </Link>
           ))}
         </div>
-        { userFriendlyAddress && userFriendlyAddress === dataCompany.walletAddress ? (
+        { userAddress && userAddress === dataCompany.walletAddress && (
           <Button
             appearance="secondary"
             size="l"
@@ -68,8 +68,6 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
           >
             Edit
           </Button>
-        ) : (
-          <></>
         )}
       </div>
     </section>

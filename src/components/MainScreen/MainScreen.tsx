@@ -14,6 +14,10 @@ const MainScreen: FC = () => {
   const router = useRouter();
   const wallet = useTonWallet();
   const [tonConnectUi] = useTonConnectUI(); 
+
+  const clickOnButton = () => {
+    wallet ? router.push('/company/create') : tonConnectUi.openModal();
+  }
   
   return (
   <main className={styles.mainContainer}>
@@ -32,13 +36,7 @@ const MainScreen: FC = () => {
           appearance="primary"
           size="l"
           className={styles.buttonAdd}
-          onClick={() => {
-            if (wallet) {
-              router.push('/company/create')
-            } else {
-              tonConnectUi.openModal()
-            }              
-          }}
+          onClick={clickOnButton}
         >
           Add company
         </Button> 
