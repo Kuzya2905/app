@@ -78,8 +78,14 @@
   }
 }
 
-.mainTitle {
+.mainTitleWrapper {
+  display: flex; 
+  align-items: center;
+  justify-content: space-between; 
   margin-bottom: 32px;
+}
+
+.mainTitle {
   font-size: 32px;
   font-weight: 600;
   line-height: 120%;

@@ -7,12 +7,15 @@ import { vacancyInfo } from "./VacancyData";
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import { cardsCompanies } from "@/components/Companies/CompaniesData";
 import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
+import { useTonAddress } from "@tonconnect/ui-react";
+import VacancyInfo from "../VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
 import { CompanyTypes } from "./Vacancy.types";
 
 import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
+  const userAddress = useTonAddress();
   const dataVacancy = cardsVacancies.find(
     (vacancy) => vacancy.idVacancy === Number(vacancyId)
   );
@@ -105,7 +108,13 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 </div>
               </div>
               <aside className={styles.aside}>
-                <VacancyApply dataCompany={dataCompany} idCompany={idCompany} />
+                {
+                  dataCompany && userAddress && userAddress === dataCompany.walletAddress ? (
+                    <VacancyInfo dataVacancy={dataVacancy} />
+                  ) : (
+                   <VacancyApply dataCompany={dataCompany} idCompany={idCompany} /> 
+                  )
+                }              
               </aside>
             </div>
           </div>

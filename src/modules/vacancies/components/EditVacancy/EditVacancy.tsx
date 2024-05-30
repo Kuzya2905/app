@@ -5,7 +5,7 @@ import { VacancyFormEdit } from "@/modules/vacancies/components/vacancyFormEdit"
 import styles from "./styles.module.scss";
 
 export const EditVacancy = () => (
-  <div className={styles.creation}>
+    <div className={styles.creation}>
     <div className={styles.creationWrapper}>
       <div className={styles.wrapperBlockLinks}>
         <Link className={styles.blockLink} href="/">
