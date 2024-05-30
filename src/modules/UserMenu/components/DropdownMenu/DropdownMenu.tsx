@@ -10,6 +10,7 @@ import cn from "classnames";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Publish from "@/assets/svgs/Publish.svg"
+import LogOut from "@/assets/svgs/LogOut.svg"
 
 import styles from './dropdownMenu.module.scss';
 import Button from '@/components/Button/Button';
@@ -61,7 +62,7 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuTypes>(({menuIsOpen}
                     appearance="menu"
                     size="xs"
                     type="button"
-                    startIcon={Publish}
+                    startIcon={LogOut}
                     iconSize={24}
                     onClick={() => tonConnectUi.disconnect()}
                 >
