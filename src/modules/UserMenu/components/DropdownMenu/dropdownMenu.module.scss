@@ -1,0 +1,85 @@
+.dropdownMenu {
+    position: absolute;
+    top: 50px;
+    min-width: 380px;
+    right: 0px;
+    padding: 24px;
+    background-color: #fff;
+    border: 1px solid #E6E6E6;
+    opacity: 0;
+    visibility: hidden;    
+    border-radius: 24px;
+    transform: translateY(-10px);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.dropdownMenu.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.header {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.imgWrapper {
+    width: 64px;
+    height: 64px;
+}
+
+.logoEmpty {
+    border: 1px solid #E6E6E6;
+    border-radius: 16px;
+}
+
+.userAddressWapper{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.userAddress {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+}
+
+.headerLink {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.01em;
+    text-align: left;   
+    color: #666666;
+}
+
+.balancyWrapper {
+    padding: 16px;
+    border: 1px solid #E6E6E6;
+    border-radius: 16px;
+}
+
+.balancyTitle {
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    color: #666666;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+

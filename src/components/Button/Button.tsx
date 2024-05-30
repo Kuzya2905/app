@@ -18,6 +18,7 @@ const Button = ({
   size,
   startIcon,
   endIcon,
+  iconSize=20,
   ...props
 }: ButtonTypes): JSX.Element => {
   const renderIcon = (icon?: React.ReactElement | string | StaticImport) => {
@@ -25,7 +26,7 @@ const Button = ({
       return icon;
     }
     if (typeof icon === "object" && "src" in icon) {
-      return <Image src={icon} alt="icon" width={20} height={20} />;
+      return <Image src={icon} alt="icon" width={iconSize} height={iconSize} />;
     }
     return null;
   };
@@ -40,6 +41,8 @@ const Button = ({
         [styles.secondary]: appearance === "secondary",
         [styles.tertiary]: appearance === "tertiary",
         [styles.close]: appearance === "close",
+        [styles.menu] : appearance === "menu",
+        [styles.xs]: size === "xs",
         [styles.s]: size === "s",
         [styles.m]: size === "m",
         [styles.l]: size === "l",

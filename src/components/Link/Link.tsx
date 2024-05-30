@@ -1,6 +1,7 @@
 import React from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
+import Image from "next/image";
 
 import { LinkTypes } from "@/components/Link/Link.types";
 
@@ -12,6 +13,7 @@ const Link: React.FC<LinkTypes> = ({
   disabled = false,
   count,
   children,
+  logoUrl = "",
   link = "",
   ...props
 }) => (
@@ -21,7 +23,19 @@ const Link: React.FC<LinkTypes> = ({
         [styles.disabled]: disabled,
       })}
       {...props}
-    >
+    > 
+      {
+        logoUrl && (
+          <Image
+            className={styles.logo}
+            src={logoUrl}
+            priority
+            alt="LogoLink" 
+            width={24}
+            height={24}
+          />
+        )
+      }
       <span
         className={cn(styles.headerLinkText, {
           [styles.disabled]: disabled,

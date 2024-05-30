@@ -9,7 +9,7 @@ import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
 import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
 import Button from "../Button/Button";
-import AuthorizedUserMenu from "@/modules/authorizedUserMenu/components/AuthorizedUserMenu/AuthorizedUserMenu";
+import UserMenu from "@/modules/UserMenu/components/UserMenu/UserMenu";
 
 import { Logo } from "@/assets/svgs/Logo";
 import { Burger } from "@/assets/svgs/Burger";
@@ -92,7 +92,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
               > 
                 Connect wallet</Button>
               ) : (
-                <AuthorizedUserMenu/>
+                <UserMenu/>
               )
             }
           </div>

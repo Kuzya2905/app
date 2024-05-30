@@ -7,9 +7,10 @@ export interface ButtonTypes
     HTMLButtonElement
   > {
   children?: ReactNode;
-  appearance: "primary" | "ghost" | "secondary" | "tertiary" | "close";
-  size: "s" | "m" | "l" | "xl";
+  appearance: "primary" | "ghost" | "secondary" | "tertiary" | "close" | "menu";
+  size: 'xs' | "s" | "m" | "l" | "xl";
   typeBtn?: "button" | "submit" | "reset";
+  iconSize?: number
   startIcon?: React.ReactElement | string | StaticImport;
   endIcon?: React.ReactElement | string | StaticImport;
 }
