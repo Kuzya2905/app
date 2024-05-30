@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import StoreProvider from "@/app/StoreProvider";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
+import ProtectedRoutes from "@/hoc/ProtectedRoutes/ProtectedRoutes";
 
 import "./globals.css";
 
@@ -40,7 +41,7 @@ const RootLayout = ({
             content="Ready to ride the crypto wave? Explore endless opportunities in the exciting realm of cryptocurrency careers. Dive into the innovative world of blockchain technology, where your potential knows no bounds. Join us on this thrilling journey and unlock your path to success in the fast-paced world of crypto."
           />
         </head>
-        <body className={inter.className}>{children}</body>
+        <ProtectedRoutes><body className={inter.className}>{children}</body></ProtectedRoutes>
       </html>
     </StoreProvider>
   </TonConnectUIProvider>

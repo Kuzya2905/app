@@ -1,4 +1,4 @@
-export interface VacancyFormTypes {
+export interface VacancyFormEditTypes {
   tags?: string[];
   publishingSettings: string;
   jobDescription: string;
@@ -9,7 +9,7 @@ export interface VacancyFormTypes {
   other: string;
   qualification: string;
   experience: string;
-  typeOfEmloyment: string;
+  typeOfEmployment: string;
   remote?: string;
   incomeLevel: string;
 }

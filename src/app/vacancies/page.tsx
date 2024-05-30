@@ -1,13 +1,13 @@
-import LayoutHeader from "@/components/LayoutHeader/LayoutHeader";
+import Layout from "@/components/Layout/Layout";
 import Jobs from "@/components/Jobs/Jobs";
 
 import styles from "@/app/page.module.css";
 
 const PageVacancies = () => (
   <main className={styles.main}>
-    <LayoutHeader>
+    <Layout>
       <Jobs />
-    </LayoutHeader>
+    </Layout>
   </main>
 );
 

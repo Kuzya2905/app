@@ -11,9 +11,10 @@ export const cardsCompanies = [
     description:
       "Get yields securely, equally and transparently at best rates on the market. Keep access to your staked asset at all times. Deposit TON, we'll do the rest.",
     city: "Dubai",
-    vacancyNumber: 1,
+    vacancyNumber: 7,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -34,9 +35,10 @@ export const cardsCompanies = [
     description:
       "Bemo is the first liquid staking app on TON. We are building a stake-to-earn platform to change how users manage their TON holdings.",
     city: "London",
-    vacancyNumber: 8,
+    vacancyNumber: 9,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -57,9 +59,10 @@ export const cardsCompanies = [
     description:
       "Instantly swap Toncoin for any coin or token at the best rate. STON.fi is a decentralized automated market maker (AMM) built on the TON blockchain providing virtually zero fees, low slippage, an extremely easy interface.",
     city: "London",
-    vacancyNumber: 5,
+    vacancyNumber: 8,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -83,6 +86,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -106,6 +110,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -118,7 +123,7 @@ export const cardsCompanies = [
     ],
   },
   {
-    id: 6,
+    id: 5,
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     title: "Evaa Protocol",
     nameLink: "evaa.finance",
@@ -126,9 +131,10 @@ export const cardsCompanies = [
     description:
       "The team we are recruiting for is implementing a software framework for developing data products based on Apache Spark technology. This framework is intended to replace the historically established heterogeneous solutions of application teams, thanks to which it will be achieved. This framework is designed to replace the historically established heterogeneous solutions of application teams, thanks to which it will be achieved",
     city: "London",
-    vacancyNumber: 6,
+    vacancyNumber: 8,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -152,6 +158,7 @@ export const cardsCompanies = [
     vacancyNumber: 1,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -175,6 +182,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -198,6 +206,7 @@ export const cardsCompanies = [
     vacancyNumber: 6,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -221,6 +230,7 @@ export const cardsCompanies = [
     vacancyNumber: 7,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -244,6 +254,7 @@ export const cardsCompanies = [
     vacancyNumber: 5,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,
@@ -267,6 +278,7 @@ export const cardsCompanies = [
     vacancyNumber: 6,
     sizeCompany: "1 - 50",
     industry: "IT",
+    walletAddress: '',
     linksContact: [
       {
         id: 1,

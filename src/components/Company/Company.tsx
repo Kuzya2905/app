@@ -2,11 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useTonAddress } from "@tonconnect/ui-react";
 
 import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
+import Button from "../Button/Button";
 import { cardsCompanies } from "@/components/Companies/CompaniesData";
 import { CompanyTypes } from "./Company.types";
 
@@ -19,12 +21,14 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     (company) => company.id === Number(companyId)
   );
 
-  const dataVacancies = cardsVacancies.slice(0, dataCompany?.vacancyNumber);
+  const dataVacancies = cardsVacancies.filter(
+    ({ idCompany }) => idCompany === Number(companyId)
+  );
 
+  const userAddress = useTonAddress();
+  
   const router = useRouter();
-  const pathname = usePathname();
-  const handleClickVacancy = (id: number) =>
-    router.push(`${pathname}/vacancy/${id}`);
+  const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
 
   return (
     <>
@@ -46,7 +50,19 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
             </div>
             <div className={styles.wrapperBlockMain}>
               <main>
-                <h1 className={styles.mainTitle}>Active jobs</h1>
+                <div className={styles.mainTitleWrapper}>
+                  <h1 className={styles.mainTitle}>Active jobs</h1>
+                  { userAddress && userAddress === {...dataCompany, walletAddress: userAddress}.walletAddress && (
+                    <Button
+                      appearance="primary"
+                      size="m"
+                      onClick={() => router.push('/vacancy/create')}
+                    >
+                      Publish
+                    </Button>
+                  )}
+                </div>
+                
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
                     <span className={styles.blockTotal}>
