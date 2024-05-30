@@ -12,6 +12,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-04T01:30:00.000-05:00",
   },
   {
     idVacancy: 2,
@@ -26,6 +27,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 3,
@@ -40,6 +42,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 4,
@@ -54,6 +57,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 5,
@@ -68,6 +72,7 @@ export const cardsVacancies = [
     company: "Tribute",
     logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
     date: "2024-04-10T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 6,
@@ -82,6 +87,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 8,
@@ -96,6 +102,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 9,
@@ -110,6 +117,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 10,
@@ -124,6 +132,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 11,
@@ -138,6 +147,7 @@ export const cardsVacancies = [
     company: "Tribute",
     logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
     date: "2024-04-10T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 12,
@@ -152,6 +162,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 14,
@@ -166,6 +177,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 16,
@@ -180,6 +192,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 18,
@@ -194,6 +207,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 19,
@@ -208,6 +222,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 20,
@@ -222,6 +237,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 21,
@@ -236,6 +252,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 22,
@@ -250,6 +267,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 24,
@@ -264,6 +282,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 25,
@@ -278,6 +297,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 26,
@@ -292,6 +312,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 27,
@@ -306,6 +327,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 28,
@@ -320,6 +342,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 30,
@@ -334,6 +357,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 31,
@@ -348,6 +372,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 32,
@@ -362,6 +387,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 33,
@@ -376,6 +402,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 34,
@@ -390,6 +417,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 37,
@@ -404,6 +432,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 38,
@@ -418,6 +447,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 39,
@@ -432,6 +462,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 40,
@@ -445,21 +476,8 @@ export const cardsVacancies = [
     salary: 5000,
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
-    date: "2024-04-15T01:30:00.000-05:00",
-  },
-  {
-    idVacancy: 41,
-    idCompany: 4,
-    name: "Product Analyst",
-    experience: 1,
-    mode: "Full day",
-    city: "London",
-    description:
-      "Tribute is the leading content monetization platform on Telegram, renowned for its swift, product-led growth.",
-    salary: 5000,
-    company: "Tribute",
-    logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
-    date: "2024-04-10T01:30:00.000-05:00",
+    date: "2024-02-10T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 42,
@@ -474,6 +492,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 43,
@@ -488,6 +507,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 44,
@@ -502,6 +522,7 @@ export const cardsVacancies = [
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
     date: "2024-04-20T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 45,
@@ -516,6 +537,7 @@ export const cardsVacancies = [
     company: "Ston Fi",
     logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
     date: "2024-04-07T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 46,
@@ -530,6 +552,7 @@ export const cardsVacancies = [
     company: "Wallet",
     logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
     date: "2024-04-15T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 47,
@@ -544,6 +567,7 @@ export const cardsVacancies = [
     company: "Tribute",
     logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
     date: "2024-04-10T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 48,
@@ -558,6 +582,7 @@ export const cardsVacancies = [
     company: "Evaa Protocol",
     logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
     date: "2024-04-19T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 49,
@@ -572,6 +597,7 @@ export const cardsVacancies = [
     company: "Tonstakers",
     logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
     date: "2024-04-04T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
     idVacancy: 50,
@@ -585,62 +611,7 @@ export const cardsVacancies = [
     salary: 6000,
     company: "Bemo",
     logo: "https://cdn.getro.com/companies/2da1be3c-a9cd-5af9-8ec5-e67430ea3196",
-    date: "2024-04-20T01:30:00.000-05:00",
-  },
-  {
-    idVacancy: 51,
-    idCompany: 3,
-    name: "Product Analyst",
-    experience: 7,
-    mode: "Full day",
-    city: "London",
-    description:
-      "Develop and execute detailed, comprehensive, and well-structured test plans and test cases. Evaluate and select appropriate automation tools and frameworks to best meet the team's needs and project requirements.",
-    salary: 5000,
-    company: "Ston Fi",
-    logo: "https://cdn.getro.com/companies/6bfa7e8b-1e80-5138-bb45-a24e979020d1",
-    date: "2024-04-07T01:30:00.000-05:00",
-  },
-  {
-    idVacancy: 52,
-    idCompany: 6,
-    name: "Product Manager",
-    experience: 5,
-    mode: "Full day",
-    city: "London",
-    description:
-      "Wallet on Telegram is your gateway to the world of digital currencies, specially tailored for individuals in emerging markets.",
-    salary: 7000,
-    company: "Wallet",
-    logo: "https://cdn.getro.com/companies/9e381daf-fc2b-5372-ac8f-722a6036da61",
-    date: "2024-04-15T01:30:00.000-05:00",
-  },
-  {
-    idVacancy: 53,
-    idCompany: 4,
-    name: "Product Manager",
-    experience: 1,
-    mode: "Full day",
-    city: "London",
-    description:
-      "Tribute is the leading content monetization platform on Telegram, renowned for its swift, product-led growth.",
-    salary: 8000,
-    company: "Tribute",
-    logo: "https://cdn.getro.com/companies/a0173d30-1318-5e6d-ac7c-f83e10df0fd5",
-    date: "2024-04-10T01:30:00.000-05:00",
-  },
-  {
-    idVacancy: 54,
-    idCompany: 5,
-    name: "Lead QA Engineer",
-    experience: 7,
-    mode: "Full day",
-    city: "London",
-    description:
-      "The team we are recruiting for is implementing a software framework for developing data products based on Apache Spark technology. This framework is intended to replace the historically established heterogeneous solutions of application teams, thanks to which it will be achieved. This framework is designed to replace the historically established heterogeneous solutions of application teams, thanks to which it will be achieved",
-    salary: 5000,
-    company: "Evaa Protocol",
-    logo: "https://cdn.getro.com/companies/80f93b3f-41b7-5a4b-96ff-ac1007c9d65c",
-    date: "2024-04-19T01:30:00.000-05:00",
+    date: "2024-04-09T01:30:00.000-05:00",
+    expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
 ];
