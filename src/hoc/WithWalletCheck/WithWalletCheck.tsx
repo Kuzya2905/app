@@ -2,36 +2,38 @@
 import { useIsConnectionRestored, useTonWallet } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
+
+import { PROTECTED_ROUTES } from '@/constants';
 
 const WithWalletCheck:React.FC<{
     children: JSX.Element 
-    }> = ({children}) => {
-        
-        const wallet = useTonWallet();
-        const router = useRouter();
-        const pathname = usePathname()
-        const connectionRestored = useIsConnectionRestored();
-        const [loading, setloading] = useState(true)
-
-        const URLList = ['/company/create', '/company/edit', 'vacancy/create', 'vacancy/edit'];
+    }> = ({children}) => {        
+      const wallet = useTonWallet();
+      const router = useRouter();
+      const pathname = usePathname();
+      const connectionRestored = useIsConnectionRestored();
+      const [loading, setloading] = useState(true);
 
         useEffect(() => {
-            if (connectionRestored) {  
+            if (connectionRestored) { 
                 if (!wallet) {
-                  const flag = URLList.some((e) => e === pathname)
-                  if(flag) {
-                    router.push('/');
+                  const isProtected = Object(PROTECTED_ROUTES)[pathname];
+                  if(isProtected) { 
+                    router.push('/');  
                   } else {
                     setloading(false);
                   }
-                }                
+                } else {
+                  setloading(false);
+                }               
             }
         }, [wallet, pathname, loading, connectionRestored]);
 
         if (loading){
           return (
-          <body></body>
+          <body>
+          </body>
           )
         }
 
