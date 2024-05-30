@@ -1,30 +1,30 @@
 'use client'
-import { useIsConnectionRestored, useTonWallet } from "@tonconnect/ui-react";
+import { useIsConnectionRestored, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { PROTECTED_ROUTES } from '@/constants';
 
-const WithWalletCheck:React.FC<{
+const ProtectedRoutes:React.FC<{
     children: JSX.Element 
-    }> = ({children}) => {        
-      const wallet = useTonWallet();
+    }> = ({children}) => {     
       const router = useRouter();
       const pathname = usePathname();
+
+      const wallet = useTonWallet();
       const connectionRestored = useIsConnectionRestored();
+      const [tonConnectUi] = useTonConnectUI();
+      
       const [loading, setloading] = useState(true);
 
         useEffect(() => {
             if (connectionRestored) { 
                 if (!wallet) {
                   const isProtected = Object(PROTECTED_ROUTES)[pathname];
-                  if(isProtected) { 
-                    router.push('/');  
-                  } else {
-                    setloading(false);
-                  }
+                  isProtected ? router.push('/') : setloading(false);
                 } else {
+                  tonConnectUi.account?.chain === '-3' ? tonConnectUi.disconnect() : null;
                   setloading(false);
                 }               
             }
@@ -40,5 +40,5 @@ const WithWalletCheck:React.FC<{
         return children;
     };
 
-export default WithWalletCheck
+export default ProtectedRoutes
 

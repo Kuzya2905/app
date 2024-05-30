@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
-import { TonConnectButton, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
@@ -21,19 +21,10 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({
   ...props
 }) => {
   const [activeBurger, setActiveBurger] = useState(false);
-  const [tonConnectUi] = useTonConnectUI(); 
-  const wallet = useTonWallet();
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
   };
-
-  useEffect(()=> {
-    if(tonConnectUi.account) {
-      const chain = tonConnectUi.account.chain;
-      chain === '-3' ? tonConnectUi.disconnect() : null;
-    }
-  }, [wallet])
 
   useEffect(() => {
     const changeBodyPosition = () => {
