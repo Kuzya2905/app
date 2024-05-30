@@ -105,7 +105,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={{...dataCompany, walletAddress: userAddress}} />}</aside>
+              <aside>{<CompanyInfo dataCompany={dataCompany} />}</aside>
             </div>
           </div>
         </div>
