@@ -64,7 +64,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
           </div>
         </LinkNext>
         <div
-          className={cn(styles.headerDemo, { [styles.active]: activeBurger })}
+          className={cn(styles.headerDemo, { [styles.active]: activeBurger && !isWalletLoaded })}
         >
           <div className={styles.headerLinks}>
             {LinksArr.map(({ id, text, withCount, disabled, count, link }) => (
@@ -81,7 +81,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
           </div>
           <div className={styles.buttonConnectWalletWrapper}>
             {
-              !isWalletLoaded ? (
+              !isWalletLoaded && (
                 <Button
                 appearance="secondary"
                 size="l"
@@ -89,23 +89,32 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
                 onClick={()=> {
                   tonConnectUi.openModal();
                 }}
-              > 
-                Connect wallet</Button>
-              ) : (
-                <UserMenu/>
+                > 
+                  Connect wallet
+                </Button>
               )
             }
           </div>
         </div>
         {activeBurger ? (
-          <div onClick={toggleBurger} className={styles.headerDemoCross}>
-            <Cross />
-          </div>
+          <>
+            { isWalletLoaded ? (<UserMenu/>) :
+              (<div onClick={toggleBurger} className={styles.headerDemoCross}>
+                <Cross />
+              </div>)
+            }
+          </>
         ) : (
-          <div className={styles.headerDemoBurger} onClick={toggleBurger}>
-            <Burger />
-          </div>
+          <>{
+            isWalletLoaded ? (<UserMenu/>) : (
+                <div className={styles.headerDemoBurger} onClick={toggleBurger}>
+                  <Burger />
+                </div>
+            ) 
+          }</>
+          
         )}
+        
       </div>
     </header>
   );

@@ -1,36 +1,52 @@
 "use client"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
-import { Burger } from "@/assets/svgs/Burger"
-import { Logo } from "@/assets/svgs/Logo"
-import { CrossMenu } from "@/assets/svgs/CrossMenu";
-
-import styles from './UserMenu.module.scss'
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import { useClickOutside } from "@/modules/hooks/useClickOutside";
 
+import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
+import { Burger } from "@/assets/svgs/Burger";
+import { CrossMenu } from "@/assets/svgs/CrossMenu";
 
-const UserMenu: React.FC = () => {
+import styles from './UserMenu.module.scss';
+
+
+const UserMenu: React.FC = ({...props}) => {
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+  const userMenuRef = useRef(null);
 
-  const dropDownMenuRef = useRef(null);
-  useClickOutside(dropDownMenuRef, () => {
+  useClickOutside(userMenuRef, () => {
     setMenuIsOpen(false);
   })
 
   const toggleMenu = () => {
-    setMenuIsOpen(!menuIsOpen);
+    setMenuIsOpen(prev => !prev);
   }
   
     return (
-        <div className={styles.userAuthorizedWrapper} >
-        <Logo />
+        <div 
+          className={styles.userMenuWrapper} 
+          onClick={toggleMenu}
+          ref={userMenuRef}
+          {...props}
+        >
+          <div className={styles.imgWrapper}>
+            <Image
+              className={styles.logoEmpty}
+              src={LogoEmpty}
+              priority
+              alt="LogoEmpty" 
+              width={32}
+              height={32}
+            />
+          </div>
         {          
-          <div className={!menuIsOpen ? styles.burgerMenu : styles.crossMenu} onClick={toggleMenu}>
+          <div className={!menuIsOpen ? styles.burgerMenu : styles.crossMenu} >
             {!menuIsOpen ? <Burger /> : <CrossMenu />}
           </div>         
         }
-        <DropdownMenu ref={dropDownMenuRef} menuIsOpen={menuIsOpen}/>        
+        <DropdownMenu menuIsOpen={menuIsOpen}/>        
       </div>
     )
 }

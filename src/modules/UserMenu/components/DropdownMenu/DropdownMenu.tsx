@@ -15,7 +15,7 @@ import LogOut from "@/assets/svgs/LogOut.svg"
 import styles from './dropdownMenu.module.scss';
 import Button from '@/components/Button/Button';
 
-const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuTypes>(({menuIsOpen}, ref: Ref<HTMLDivElement>) => {
+const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
     const userAddress = useTonAddress();
     const [tonConnectUi] = useTonConnectUI();
 
@@ -23,7 +23,9 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuTypes>(({menuIsOpen}
         <div 
             className={cn(styles.dropdownMenu, {
             [styles.active] : menuIsOpen})}
-            ref={ref}
+            onClick={(e)=> {
+                e.stopPropagation();
+            }}
         >
             <div className={styles.header}>
                 <div className={styles.imgWrapper}>
@@ -72,7 +74,6 @@ const DropdownMenu = forwardRef<HTMLDivElement, DropdownMenuTypes>(({menuIsOpen}
             </div>
         </div>
     )
-})
-DropdownMenu.displayName = 'DropdownMenu';
+}
 
 export default DropdownMenu
