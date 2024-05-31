@@ -1,5 +1,5 @@
 "use client"
-import { forwardRef, Ref } from 'react';
+import { useEffect, useState } from 'react';
 
 import { DropdownMenuTypes } from './dropdownMenu.types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
@@ -11,6 +11,7 @@ import cn from "classnames";
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Publish from "@/assets/svgs/Publish.svg"
 import LogOut from "@/assets/svgs/LogOut.svg"
+import TonIcon from '@/assets/svgs//TonIcon.svg'
 
 import styles from './dropdownMenu.module.scss';
 import Button from '@/components/Button/Button';
@@ -18,6 +19,24 @@ import Button from '@/components/Button/Button';
 const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
     const userAddress = useTonAddress();
     const [tonConnectUi] = useTonConnectUI();
+    const [balancy, setBalancy] = useState(0);
+
+    useEffect(() => {
+        const getBalancy = async () => {
+            try {
+                const response = await fetch(`https://testnet.toncenter.com/api/v2/getAddressBalance?address=${userAddress}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json(); 
+                console.log(data);  
+            } catch (err) {
+                console.error('Failed to fetch rate:', err);
+                return null;
+            }
+        }
+        getBalancy()
+    }, [])
 
     return (
         <div 
@@ -47,6 +66,17 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
             </div>
             <div className={styles.balancyWrapper }>
                 <h3 className={styles.balancyTitle}>Ваш баланс</h3>
+                <div className={styles.balancy}>
+                    <Image
+                        className={styles.balancyIcon}
+                        src={TonIcon}
+                        priority
+                        alt="TonIcon" 
+                        width={16}
+                        height={16}
+                    />
+                    <p className={styles.balancyTon}>{balancy}</p>
+                </div>
             </div>
             <div className={styles.menuList}>
                 <Link
