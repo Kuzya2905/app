@@ -10,7 +10,7 @@
 }
 
 .headerLinkText {
-  color: #1a1d26;
+  color: #1B1E27;
   font-size: 16px;
   line-height: 24px;
   font-weight: 600;
@@ -24,6 +24,9 @@
 @media (max-width: 1024px) {
   .headerLinkText {
     font-size: 22px;
+  }
+  .s {
+    font-size: 16px;
   }
 }
 

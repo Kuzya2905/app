@@ -15,6 +15,7 @@ const Link: React.FC<LinkTypes> = ({
   children,
   logoUrl = "",
   link = "",
+  size = "",
   ...props
 }) => (
   <LinkNext href={`${link}`}>
@@ -40,6 +41,7 @@ const Link: React.FC<LinkTypes> = ({
         className={cn(styles.headerLinkText, {
           [styles.disabled]: disabled,
           [styles.withCount]: withCount,
+          [styles.s]: size === "s",
         })}
       >
         {children}

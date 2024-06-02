@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { DropdownMenuTypes } from './dropdownMenu.types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import Link from "@/components/Link/Link";
+import { getAddressBalance } from '@/utils/api'
 import LinkNext from "next/link";
 import Image from "next/image";
 import cn from "classnames";
@@ -16,27 +17,21 @@ import TonIcon from '@/assets/svgs//TonIcon.svg'
 import styles from './dropdownMenu.module.scss';
 import Button from '@/components/Button/Button';
 
+
+
 const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
     const userAddress = useTonAddress();
     const [tonConnectUi] = useTonConnectUI();
-    const [balancy, setBalancy] = useState(0);
+    const [balancy, setBalancy] = useState<number | null>(0);
 
     useEffect(() => {
-        const getBalancy = async () => {
-            try {
-                const response = await fetch(`https://testnet.toncenter.com/api/v2/getAddressBalance?address=${userAddress}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json(); 
-                console.log(data);  
-            } catch (err) {
-                console.error('Failed to fetch rate:', err);
-                return null;
-            }
-        }
-        getBalancy()
+        getBalancy();
     }, [])
+ 
+    const getBalancy = async () => {
+        const data = await getAddressBalance(userAddress);
+       setBalancy(data && data.ok === 'ok' ? Number(data.result) / 1000000000 : null)
+    }
 
     return (
         <div 
@@ -80,12 +75,14 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
             </div>
             <div className={styles.menuList}>
                 <Link
+                    className={styles.menuListItem}
                     key={null}
                     count={0}
                     withCount={false}
                     disabled={false}
                     link={'/vacancy/create'}
                     logoUrl={Publish}
+                    size='s'
                 >
                     Publish
                 </Link>
