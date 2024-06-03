@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { DropdownMenuTypes } from './dropdownMenu.types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import Link from "@/components/Link/Link";
-import { getAddressBalance } from '@/utils/api'
+import { getAddressBalance, getDollarExchangeRate } from '@/utils/api'
 import LinkNext from "next/link";
 import Image from "next/image";
 import cn from "classnames";
@@ -22,15 +22,27 @@ import Button from '@/components/Button/Button';
 const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
     const userAddress = useTonAddress();
     const [tonConnectUi] = useTonConnectUI();
+
     const [balancy, setBalancy] = useState<number | null>(0);
+    const [dollarExchangeRate, setDollarExchangeRate] = useState<number | null>(0)
+
 
     useEffect(() => {
         getBalancy();
     }, [])
+
+    useEffect(() => {
+        getDollar();
+    }, [balancy])
  
     const getBalancy = async () => {
         const data = await getAddressBalance(userAddress);
-       setBalancy(data && data.ok === 'ok' ? Number(data.result) / 1000000000 : null)
+        setBalancy(data && data.ok ? Number(data.result) / 1000000000: null)
+    }
+
+    const getDollar = async () => {
+        const data =  await getDollarExchangeRate();
+        setDollarExchangeRate(data && data.ok ? Number(data.result) : null)
     }
 
     return (
@@ -70,7 +82,8 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
                         width={16}
                         height={16}
                     />
-                    <p className={styles.balancyTon}>{balancy}</p>
+                    <span className={styles.balancyTon}>{balancy ? balancy.toFixed(2) : 0}</span>
+                    <span className={styles.exchangeRates}>{`≈ ${balancy && dollarExchangeRate ? (balancy * dollarExchangeRate).toFixed(2) : 0} $` }</span>
                 </div>
             </div>
             <div className={styles.menuList}>
