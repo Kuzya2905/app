@@ -5,9 +5,11 @@ import { DropdownMenuTypes } from './dropdownMenu.types';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import Link from "@/components/Link/Link";
 import { getAddressBalance, getDollarExchangeRate } from '@/utils/api'
+import { LinksArr } from "@/components/HeaderDemo/HeaderData";
 import LinkNext from "next/link";
 import Image from "next/image";
 import cn from "classnames";
+import useIsScreenWidthLessThan from '@/modules/hooks/useIsScreenWidthLessThan';
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Publish from "@/assets/svgs/Publish.svg"
@@ -24,8 +26,9 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
     const [tonConnectUi] = useTonConnectUI();
 
     const [balancy, setBalancy] = useState<number | null>(0);
-    const [dollarExchangeRate, setDollarExchangeRate] = useState<number | null>(0)
+    const [dollarExchangeRate, setDollarExchangeRate] = useState<number | null>(0);
 
+    const IsScreenMobile = useIsScreenWidthLessThan(1025);
 
     useEffect(() => {
         getBalancy();
@@ -83,7 +86,7 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
                         height={16}
                     />
                     <span className={styles.balancyTon}>{balancy ? balancy.toFixed(2) : 0}</span>
-                    <span className={styles.exchangeRates}>{`≈ ${balancy && dollarExchangeRate ? (balancy * dollarExchangeRate).toFixed(2) : 0} $` }</span>
+                    <span className={styles.exchangeRates}>{`≈ ${balancy && dollarExchangeRate ? (balancy * dollarExchangeRate).toFixed(1) : 0} $` }</span>
                 </div>
             </div>
             <div className={styles.menuList}>
@@ -95,10 +98,27 @@ const DropdownMenu:React.FC<DropdownMenuTypes> = ({menuIsOpen}) => {
                     disabled={false}
                     link={'/vacancy/create'}
                     logoUrl={Publish}
-                    size='s'
+                    fontSize='s'
                 >
                     Publish
                 </Link>
+
+                {
+                    IsScreenMobile && LinksArr.map(({ id, text, withCount, disabled, count, link, logoUrl}) => (
+                        <Link
+                            className={styles.menuListItem}
+                            key={id}
+                            count={count}
+                            withCount={withCount}
+                            disabled={disabled}
+                            link={link}
+                            logoUrl={logoUrl}
+                            fontSize='s'
+                        >
+                            {text}
+                        </Link> 
+                    ))
+                }
                 
                 <Button
                     appearance="menu"

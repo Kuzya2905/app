@@ -1,4 +1,12 @@
-import { ApiEndpoints, TON_CENTER_URL, IAddressBalance, COINGENCKO_URL, IDollarExchangeRateData, IDollarExchangeRate} from './types';
+import { 
+    ApiEndpoints, 
+    TON_CENTER_URL, 
+    TON_CENTER_URL_TESTNET,
+    IAddressBalance, 
+    COINGENCKO_URL, 
+    IDollarExchangeRateData, 
+    IDollarExchangeRate
+} from './types';
 
 export const getAddressBalance = async (userAddress: string) : Promise<IAddressBalance> => {     
     try {

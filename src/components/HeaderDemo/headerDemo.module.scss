@@ -66,6 +66,13 @@
   .headerDemoLogoContainer {
     padding-left: 20px;
   }
+
+  .linkItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 @media (max-width: 500px) {
@@ -91,13 +98,15 @@
   flex-grow: 1;
 }
 
-.buttonConnectWalletWrapper {
-  padding-right: 10px;
+@media (max-width: 1024px)  {
+  .headerLinks {
+    width: 100%;
+  }
 }
 
-@media (max-width: 1024px) and (min-width: 500px) {
+@media (max-width: 1025px) {
   .buttonConnectWalletWrapper {
-    padding-right: 20px;
+    width: 100%;
   }
 }
 
@@ -119,6 +128,17 @@
 .headerDemoBurger {
   display: none;
   text-align: end;
+  background-color: #F3F3F6;
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+}
+
+@media (min-width: 1025px) and (max-width: 1216px) {
+  .headerDemo {
+    padding-right: 10px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -169,8 +189,9 @@
   }
 
   .headerDemoBurger {
-    display: inline-block;
-    padding: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
@@ -178,6 +199,7 @@
   .headerDemo {
     align-items: start;
     padding-left: 20px;
+    padding-right: 20px;
   }
 
   .headerLinks {
@@ -197,7 +219,8 @@
   }
 
   .headerDemoBurger {
-    display: inline-block;
-    padding: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

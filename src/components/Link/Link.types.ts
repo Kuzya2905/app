@@ -9,5 +9,5 @@ export interface LinkTypes
   logoUrl?: string
   count: number | null;
   children: ReactNode;
-  size?: "s" | "m" | "l" | "xl";
+  fontSize?: "s" | "m" | "l" | "xl" | null;
 }

@@ -10,6 +10,7 @@ import { LinksArr } from "./HeaderData";
 import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
 import Button from "../Button/Button";
 import UserMenu from "@/modules/UserMenu/components/UserMenu/UserMenu";
+import useIsScreenWidthLessThan from "@/modules/hooks/useIsScreenWidthLessThan";
 
 import { Logo } from "@/assets/svgs/Logo";
 import { Burger } from "@/assets/svgs/Burger";
@@ -25,6 +26,8 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   const connectionRestored = useIsConnectionRestored();
   const wallet = useTonWallet();
+
+  const IsScreenMobile = useIsScreenWidthLessThan(1025);
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
@@ -67,13 +70,16 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
           className={cn(styles.headerDemo, { [styles.active]: activeBurger && !isWalletLoaded })}
         >
           <div className={styles.headerLinks}>
-            {LinksArr.map(({ id, text, withCount, disabled, count, link }) => (
+            {LinksArr.map(({ id, text, withCount, disabled, count, link, logoUrl }) => (
               <Link
+                className={styles.linkItem}
                 key={id}
                 count={count}
                 withCount={withCount}
                 disabled={disabled}
                 link={link}
+                logoUrl={IsScreenMobile ? logoUrl : ''}
+                fontSize={IsScreenMobile ? 's' : null}
               >
                 {text}
               </Link>
@@ -99,7 +105,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
         {activeBurger ? (
           <>
             { isWalletLoaded ? (<UserMenu/>) :
-              (<div onClick={toggleBurger} className={styles.headerDemoCross}>
+              (<div onClick={toggleBurger} className={styles.headerDemoBurger}>
                 <Cross />
               </div>)
             }

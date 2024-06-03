@@ -17,14 +17,26 @@
   white-space: nowrap;
 }
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .logo {
   margin-right: 12px;
 }
 
 @media (max-width: 1024px) {
+  .headerLink {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .headerLinkText {
     font-size: 22px;
   }
+
   .s {
     font-size: 16px;
   }

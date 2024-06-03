@@ -24,7 +24,7 @@ const ProtectedRoutes:React.FC<{
                   const isProtected = Object(PROTECTED_ROUTES)[pathname];
                   isProtected ? router.push('/') : setloading(false);
                 } else {
-                  //tonConnectUi.account?.chain === '-3' ? tonConnectUi.disconnect() : null;
+                  tonConnectUi.account?.chain === '-3' ? tonConnectUi.disconnect() : null;
                   setloading(false);
                 }               
             }
