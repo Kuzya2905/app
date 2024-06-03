@@ -2,7 +2,7 @@ export const vacancyInfo = {
   description:
     "The team being recruited is implementing a software framework for developing data products on Apache Spark technology. This framework is intended to replace the historical heterogeneous solutions of application teams, through which will be achieved. This framework is intended to replace the historical heterogeneous solutions of application teams, which will be achieved.",
   requirements: [
-    "Coordination of team interaction within the framework of platform development projects",
+    "Coordination of team interaction within the framework of platform development projects.",
     "Increasing the efficiency of the development process, minimizing technical debt",
     "Making architectural decisions, maintaining a high level of engineering culture",
     "Coordination of team interaction within the framework of platform development projects.",

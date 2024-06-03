@@ -11,5 +11,5 @@ export interface VacancyFormCreationTypes {
   experience: string;
   typeOfEmployment: string;
   remote?: string;
-  incomeLevel: string;
+  incomeLevel: number;
 }

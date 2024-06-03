@@ -4,7 +4,6 @@ export interface VacancyCardTypes
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   name: string;
   experience: number;
-  mode: string;
   city: string;
   description: string;
   salary: number;
@@ -12,4 +11,5 @@ export interface VacancyCardTypes
   logo: string;
   date: string;
   className?: string;
+  typeOfEmployment: string;
 }

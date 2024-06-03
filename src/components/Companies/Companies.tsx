@@ -5,13 +5,18 @@ import { useRouter } from "next/navigation";
 
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
 import FiltersCompanies from "@/components/FiltersCompanies/FiltersCompanies";
-import { cardsCompanies } from "@/components/RegisteredСompanies/RegisteredСompaniesData";
+
+import { CompanyCardType } from "./compaines.types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./companies.module.scss";
 
 const Companies = () => {
+  const companiesJSON = localStorage.getItem("CardsCompanies");
+  const companies: CompanyCardType[] =
+    companiesJSON && JSON.parse(companiesJSON);
+
   const router = useRouter();
   const handleClickCompany = (id: number) => router.push(`/company/${id}`);
 
@@ -31,7 +36,7 @@ const Companies = () => {
               </span>
             </div>
             <div className={styles.blockCards}>
-              {cardsCompanies.map(
+              {companies.map(
                 ({ id, logo, title, description, city, vacancyNumber }) => (
                   <CompanyCard
                     onClick={() => handleClickCompany(id)}

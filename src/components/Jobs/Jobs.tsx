@@ -6,14 +6,20 @@ import { useRouter } from "next/navigation";
 
 import Input from "@/components/Input/Input";
 import FiltersJobs from "@/components/FiltersJobs/FilterJobs";
-import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
+
+import { VacancyCardType } from "./Jobs.types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./jobs.module.scss";
 
 const Jobs = () => {
+  const vacanciesJSON = localStorage.getItem("CardsVacancies");
+
+  const vacancies: VacancyCardType[] =
+    vacanciesJSON && JSON.parse(vacanciesJSON);
+
   const { register } = useForm();
 
   const router = useRouter();
@@ -44,12 +50,12 @@ const Jobs = () => {
               </span>
             </div>
             <div className={styles.blockCards}>
-              {cardsVacancies.map(
+              {vacancies.map(
                 ({
                   idVacancy,
                   name,
                   experience,
-                  mode,
+                  typeOfEmployment,
                   city,
                   description,
                   salary,
@@ -62,7 +68,7 @@ const Jobs = () => {
                     key={idVacancy}
                     name={name}
                     experience={experience}
-                    mode={mode}
+                    typeOfEmployment={typeOfEmployment}
                     city={city}
                     description={description}
                     salary={salary}

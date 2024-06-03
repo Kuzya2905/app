@@ -9,6 +9,12 @@ import {
 } from "react-hook-form";
 import cn from "classnames";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {
+  useTonAddress,
+  useTonConnectUI,
+  useTonWallet,
+} from "@tonconnect/ui-react";
+import { useRouter } from "next/navigation";
 
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -28,6 +34,7 @@ import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
 import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
+import { createNewVacancy } from "./createNewVacancy";
 
 import { VacancyFormCreationTypes } from "@/modules/vacancies/components/vacancyFormCreation/VacancyFormCreationTypes";
 import { VARIANT } from "@/components/Select/Select.types";
@@ -64,14 +71,16 @@ export const VacancyFormCreate = () => {
     []
   );
 
-  const valuesFieldsBasic = watch(fieldsBasic);
+  const wallet = useTonWallet();
+  const [tonConnectUi] = useTonConnectUI();
+  const userAddress = useTonAddress();
 
-  useEffect(() => {
-    const basicFieldsValid = valuesFieldsBasic.every((field, index) => {
-      return !errors[fieldsBasic[index]] && field;
-    });
-    setValidBasicBlock(basicFieldsValid);
-  }, [fieldsBasic, valuesFieldsBasic, errors]);
+  const vacanciesJSON = localStorage.getItem("CardsVacancies");
+  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+
+  const router = useRouter();
+
+  const valuesFieldsBasic = watch(fieldsBasic);
 
   const fieldsDescription: (keyof VacancyFormCreationTypes)[] = useMemo(
     () => ["jobDescription", "requirements", "responsibilities", "terms"],
@@ -79,6 +88,15 @@ export const VacancyFormCreate = () => {
   );
 
   const valuesFieldsDescription = watch(fieldsDescription);
+
+  const valueFieldSettings = watch("publishingSettings");
+
+  useEffect(() => {
+    const basicFieldsValid = valuesFieldsBasic.every((field, index) => {
+      return !errors[fieldsBasic[index]] && field;
+    });
+    setValidBasicBlock(basicFieldsValid);
+  }, [fieldsBasic, valuesFieldsBasic, errors]);
 
   useEffect(() => {
     const descriptionFieldsValid = valuesFieldsDescription.every(
@@ -88,8 +106,6 @@ export const VacancyFormCreate = () => {
     );
     setValidDescriptionBlock(descriptionFieldsValid);
   }, [fieldsDescription, valuesFieldsDescription, errors]);
-
-  const valueFieldSettings = watch("publishingSettings");
 
   useEffect(() => {
     const settingFieldValid =
@@ -112,9 +128,39 @@ export const VacancyFormCreate = () => {
 
   const changeActivePreview = () => setActivePreview((prev) => !prev);
 
-  const onSubmit: SubmitHandler<VacancyFormCreationTypes> = (data) => {
+  const goToVacancy = () => {
+    router.push(`/vacancy/${vacancies[vacancies.length - 1].idVacancy + 1}`);
+  };
+
+  const sendTransaction = async () => {
+    if (!wallet) return;
+
+    try {
+      await tonConnectUi.sendTransaction({
+        messages: [
+          {
+            address: userAddress,
+            amount: "45000000",
+          },
+        ],
+        validUntil: Math.floor(Date.now() / 1000) + 60,
+      });
+      goToVacancy();
+      return "Success";
+    } catch (error) {
+      console.error("Transaction failed", error);
+    }
+  };
+
+  const onSubmit: SubmitHandler<VacancyFormCreationTypes> = async (data) => {
     console.log(data);
     localStorage.setItem("formDataVacancy", JSON.stringify(data));
+
+    const transactionSuccessful = await sendTransaction();
+
+    if (transactionSuccessful) {
+      createNewVacancy(data);
+    }
   };
 
   return (

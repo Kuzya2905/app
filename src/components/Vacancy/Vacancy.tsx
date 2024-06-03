@@ -2,27 +2,34 @@
 
 import React from "react";
 import Link from "next/link";
-
-import { vacancyInfo } from "./VacancyData";
-import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
-import { cardsCompanies } from "@/components/Companies/CompaniesData";
-import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
 import { useTonAddress } from "@tonconnect/ui-react";
-import VacancyInfo from "../VacancyInfo/VacancyInfo";
+
+import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
+import VacancyInfo from "@/components/VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
+
 import { CompanyTypes } from "./Vacancy.types";
 
 import styles from "./vacancy.module.scss";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
   const userAddress = useTonAddress();
-  const dataVacancy = cardsVacancies.find(
-    (vacancy) => vacancy.idVacancy === Number(vacancyId)
+
+  const vacanciesJSON = localStorage.getItem("CardsVacancies");
+  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+
+  const dataVacancy = vacancies.find(
+    (vacancy: { idVacancy: number }) => vacancy.idVacancy === Number(vacancyId)
   );
 
   const idCompany = String(dataVacancy?.idCompany);
 
-  const dataCompany = cardsCompanies.find(({ id }) => id === Number(idCompany));
+  const companiesJSON = localStorage.getItem("CardsCompanies");
+  const dataCompany =
+    companiesJSON &&
+    JSON.parse(companiesJSON).find(
+      (company: { id: number }) => company.id === Number(idCompany)
+    );
 
   return (
     <>
@@ -61,60 +68,50 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 <li className={styles.totalInfoItem}>
                   Experience from {yearDeclensionEn(dataVacancy.experience)}
                 </li>
-                <li className={styles.totalInfoItem}>{dataVacancy.mode}</li>
+                <li className={styles.totalInfoItem}>
+                  {dataVacancy.typeOfEmployment}
+                </li>
                 <li className={styles.totalInfoItem}>{dataVacancy.city}</li>
               </ul>
             </div>
             <div className={styles.wrapperBlockMain}>
               <div className={styles.blockInformation}>
-                <div className={styles.sectionDescription}>
-                  <h2 className={styles.descriptionTitle}>Description</h2>
-                  <div className={styles.descriptionText}>
-                    {vacancyInfo.description}
+                <div className={styles.section}>
+                  <h2 className={styles.sectionTitle}>Description</h2>
+                  <div className={styles.sectionText}>
+                    {dataVacancy.description}
                   </div>
                 </div>
-                <div className={styles.sectionOther}>
-                  <h3 className={styles.otherTitle}>Requirements</h3>
-                  <div className={styles.otherBlock}>
-                    {vacancyInfo.requirements.map((item) => (
-                      <span key={item} className={styles.otherItem}>
-                        <span className={styles.otherItemVector}></span>
-                        {item}
-                      </span>
-                    ))}
+                <div className={styles.section}>
+                  <h3 className={styles.sectionTitle}>Requirements</h3>
+                  <div className={styles.sectionText}>
+                    {dataVacancy.requirements}
                   </div>
                 </div>
-                <div className={styles.sectionOther}>
-                  <h3 className={styles.otherTitle}>Responsibilities</h3>
-                  <div className={styles.otherBlock}>
-                    {vacancyInfo.responsibilities.map((item) => (
-                      <span key={item} className={styles.otherItem}>
-                        <span className={styles.otherItemVector}></span>
-                        {item}
-                      </span>
-                    ))}
+                <div className={styles.section}>
+                  <h3 className={styles.sectionTitle}>Responsibilities</h3>
+                  <div className={styles.sectionText}>
+                    {dataVacancy.responsibilities}
                   </div>
                 </div>
-                <div className={styles.sectionOther}>
-                  <h3 className={styles.otherTitle}>TermsAndConditions</h3>
-                  <div className={styles.otherBlock}>
-                    {vacancyInfo.termsAndConditions.map((item) => (
-                      <span key={item} className={styles.otherItem}>
-                        <span className={styles.otherItemVector}></span>
-                        {item}
-                      </span>
-                    ))}
+                <div className={styles.section}>
+                  <h3 className={styles.sectionTitle}>TermsAndConditions</h3>
+                  <div className={styles.sectionText}>
+                    {dataVacancy.termsAndConditions}
                   </div>
                 </div>
               </div>
               <aside className={styles.aside}>
-                {
-                  dataCompany && userAddress && userAddress === dataCompany.walletAddress ? (
-                    <VacancyInfo dataVacancy={dataVacancy} />
-                  ) : (
-                   <VacancyApply dataCompany={dataCompany} idCompany={idCompany} /> 
-                  )
-                }              
+                {dataCompany &&
+                userAddress &&
+                userAddress === dataCompany.walletAddress ? (
+                  <VacancyInfo dataVacancy={dataVacancy} />
+                ) : (
+                  <VacancyApply
+                    dataCompany={dataCompany}
+                    idCompany={idCompany}
+                  />
+                )}
               </aside>
             </div>
           </div>

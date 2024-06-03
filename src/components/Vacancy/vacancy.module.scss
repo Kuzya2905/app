@@ -136,13 +136,13 @@
   }
 }
 
-.sectionDescription {
+.section {
   background-color: $bg-card;
   padding: 32px;
   border-radius: 16px;
 }
 
-.descriptionTitle {
+.sectionTitle {
   font-size: 20px;
   font-weight: 600;
   line-height: 120%;
@@ -150,45 +150,8 @@
   margin-bottom: 16px;
 }
 
-.descriptionText {
+.sectionText {
   font-size: 14px;
   font-weight: 400;
   line-height: 140%;
-}
-
-.sectionOther {
-  background-color: $bg-card;
-  padding: 32px;
-  border-radius: 16px;
-}
-
-.otherTitle {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 120%;
-  color: $text-primary;
-  margin-bottom: 16px;
-}
-
-.otherBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.otherItem {
-  display: flex;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 140%;
-}
-
-.otherItemVector {
-  margin-right: 9px;
-  top: -3px;
-  position: relative;
-  display: inline-block;
-  min-width: 14px;
-  height: 14px;
-  border-bottom: 1px solid $text-secondary;
 }

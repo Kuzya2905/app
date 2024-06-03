@@ -5,28 +5,33 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
 
-import { cardsVacancies } from "@/components/RegisteredVacancies/RegisteredVacanciesDate";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import Button from "../Button/Button";
-import { cardsCompanies } from "@/components/Companies/CompaniesData";
-import { CompanyTypes } from "./Company.types";
+
+import { CompanyTypes, VacancyCardType } from "./Company.types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
-  const dataCompany = cardsCompanies.find(
-    (company) => company.id === Number(companyId)
-  );
+  const companiesJSON = localStorage.getItem("CardsCompanies");
+  const dataCompany =
+    companiesJSON &&
+    JSON.parse(companiesJSON).find(
+      (company: { id: number }) => company.id === Number(companyId)
+    );
 
-  const dataVacancies = cardsVacancies.filter(
-    ({ idCompany }) => idCompany === Number(companyId)
+  const vacanciesJSON = localStorage.getItem("CardsVacancies");
+  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+
+  const vacanciesCompany: VacancyCardType[] = vacancies.filter(
+    (vacancy: VacancyCardType) => vacancy.idCompany === Number(companyId)
   );
 
   const userAddress = useTonAddress();
-  
+
   const router = useRouter();
   const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
 
@@ -49,24 +54,27 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               </Link>
             </div>
             <div className={styles.wrapperBlockMain}>
-              <main>
+              <main className={styles.main}>
                 <div className={styles.mainTitleWrapper}>
                   <h1 className={styles.mainTitle}>Active jobs</h1>
-                  { userAddress && userAddress === {...dataCompany, walletAddress: userAddress}.walletAddress && (
-                    <Button
-                      appearance="primary"
-                      size="m"
-                      onClick={() => router.push('/vacancy/create')}
-                    >
-                      Publish
-                    </Button>
-                  )}
+                  {userAddress &&
+                    userAddress ===
+                      { ...dataCompany, walletAddress: userAddress }
+                        .walletAddress && (
+                      <Button
+                        appearance="primary"
+                        size="m"
+                        onClick={() => router.push("/vacancy/create")}
+                      >
+                        Publish
+                      </Button>
+                    )}
                 </div>
-                
+
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
                     <span className={styles.blockTotal}>
-                      Total vacancies: {dataVacancies.length}
+                      Total vacancies: {vacanciesCompany.length}
                     </span>
                     <span className={styles.blockSort}>
                       By date of posting
@@ -76,12 +84,12 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     </span>
                   </div>
                   <div className={styles.blockCards}>
-                    {dataVacancies.map(
+                    {vacanciesCompany.map(
                       ({
                         idVacancy,
                         name,
                         experience,
-                        mode,
+                        typeOfEmployment,
                         city,
                         description,
                         salary,
@@ -92,7 +100,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                           key={idVacancy}
                           name={name}
                           experience={experience}
-                          mode={mode}
+                          typeOfEmployment={typeOfEmployment}
                           city={city}
                           description={description}
                           salary={salary}

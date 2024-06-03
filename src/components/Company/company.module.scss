@@ -78,6 +78,10 @@
   }
 }
 
+.main {
+  flex-grow: 1;
+}
+
 .mainTitleWrapper {
   display: flex; 
   align-items: center;

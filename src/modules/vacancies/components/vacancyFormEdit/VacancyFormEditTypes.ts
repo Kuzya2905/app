@@ -1,5 +1,6 @@
 export interface VacancyFormEditTypes {
   tags?: string[];
+  remote?: string;
   publishingSettings: string;
   jobDescription: string;
   requirements: string;
@@ -10,6 +11,5 @@ export interface VacancyFormEditTypes {
   qualification: string;
   experience: string;
   typeOfEmployment: string;
-  remote?: string;
-  incomeLevel: string;
+  incomeLevel: number;
 }
