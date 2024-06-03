@@ -35,6 +35,11 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const router = useRouter();
   const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
 
+  const isOwner =
+    userAddress &&
+    userAddress ===
+      { ...dataCompany, walletAddress: userAddress }.walletAddress;
+
   return (
     <>
       {dataCompany ? (
@@ -57,18 +62,15 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               <main className={styles.main}>
                 <div className={styles.mainTitleWrapper}>
                   <h1 className={styles.mainTitle}>Active jobs</h1>
-                  {userAddress &&
-                    userAddress ===
-                      { ...dataCompany, walletAddress: userAddress }
-                        .walletAddress && (
-                      <Button
-                        appearance="primary"
-                        size="m"
-                        onClick={() => router.push("/vacancy/create")}
-                      >
-                        Publish
-                      </Button>
-                    )}
+                  {isOwner && (
+                    <Button
+                      appearance="primary"
+                      size="m"
+                      onClick={() => router.push("/vacancy/create")}
+                    >
+                      Publish
+                    </Button>
+                  )}
                 </div>
 
                 <div className={styles.mainBlock}>

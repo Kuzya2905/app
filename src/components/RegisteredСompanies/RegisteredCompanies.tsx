@@ -19,16 +19,17 @@ const RegisteredCompanies: React.FC = () => {
 
   const handleClickCompany = (id: number) => router.push(`/company/${id}`);
 
+  const addCardsCompanies = () => {
+    const cards = localStorage.getItem("CardsCompanies");
+    if (cards) {
+      setCards(JSON.parse(cards).slice(-6));
+    } else {
+      localStorage.setItem("CardsCompanies", JSON.stringify(cardsCompanies));
+      setCards(cardsCompanies.slice(-6));
+    }
+  };
+
   useEffect(() => {
-    const addCardsCompanies = () => {
-      const cards = localStorage.getItem("CardsCompanies");
-      if (cards) {
-        setCards(JSON.parse(cards).slice(-6));
-      } else {
-        localStorage.setItem("CardsCompanies", JSON.stringify(cardsCompanies));
-        setCards(cardsCompanies.slice(-6));
-      }
-    };
     addCardsCompanies();
   }, []);
 

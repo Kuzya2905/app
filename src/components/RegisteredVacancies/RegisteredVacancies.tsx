@@ -20,16 +20,17 @@ const RegisteredVacancies: React.FC = () => {
   const handleClickVacancy = (idVacancy: number) =>
     router.push(`/vacancy/${idVacancy}`);
 
+  const addCardsVacancies = () => {
+    const cards = localStorage.getItem("CardsVacancies");
+    if (cards) {
+      setVacancies(JSON.parse(cards).slice(-8));
+    } else {
+      localStorage.setItem("CardsVacancies", JSON.stringify(cardsVacancies));
+      setVacancies(cardsVacancies);
+    }
+  };
+
   useEffect(() => {
-    const addCardsVacancies = () => {
-      const cards = localStorage.getItem("CardsVacancies");
-      if (cards) {
-        setVacancies(JSON.parse(cards).slice(-8));
-      } else {
-        localStorage.setItem("CardsVacancies", JSON.stringify(cardsVacancies));
-        setVacancies(cardsVacancies);
-      }
-    };
     addCardsVacancies();
   }, []);
 

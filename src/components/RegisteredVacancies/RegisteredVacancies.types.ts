@@ -1,5 +1,4 @@
 export interface VacancyCardType {
-  typeOfEmployment: string;
   idVacancy: number;
   idCompany: number;
   name: string;
@@ -13,5 +12,6 @@ export interface VacancyCardType {
   company: string;
   logo: string;
   date: string;
+  typeOfEmployment: string;
   expirationDate: string;
 }

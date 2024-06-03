@@ -30,7 +30,8 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
     JSON.parse(companiesJSON).find(
       (company: { id: number }) => company.id === Number(idCompany)
     );
-
+  const isOwner =
+    dataCompany && userAddress && userAddress === dataCompany.walletAddress;
   return (
     <>
       {dataVacancy ? (
@@ -102,9 +103,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 </div>
               </div>
               <aside className={styles.aside}>
-                {dataCompany &&
-                userAddress &&
-                userAddress === dataCompany.walletAddress ? (
+                {isOwner ? (
                   <VacancyInfo dataVacancy={dataVacancy} />
                 ) : (
                   <VacancyApply
