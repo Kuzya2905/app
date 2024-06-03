@@ -6,10 +6,7 @@ export const vacancyFormSchema = yup.object().shape({
   qualification: yup.string().required("Field is required"),
   experience: yup.string().required("Field is required"),
   typeOfEmployment: yup.string().required("Field is required"),
-  incomeLevel: yup
-    .string()
-    .required("Field is required")
-    .min(2, "Minimum 2 symbols"),
+  incomeLevel: yup.number().required("Field is required"),
   jobDescription: yup
     .string()
     .required("Field is required")

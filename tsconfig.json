@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/app/company/[idCompany]/page.tsx", "src/app/[id].js", "src/app/company/[idCompany]/page.tsx"  ],
+, "src/app/company/[idCompany]/page.tsx", "src/app/[id].js", "src/app/company/[idCompany]/page.tsx", "src/modules/vacancies/components/vacancyFormCreation/HandleSendTransaction.ts"  ],
   "exclude": [
     "node_modules"
   ]

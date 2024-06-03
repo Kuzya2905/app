@@ -10,7 +10,7 @@ import styles from "./VacancyCard.module.scss";
 const VacancyCard: React.FC<VacancyCardTypes> = ({
   name,
   experience,
-  mode,
+  typeOfEmployment,
   city,
   description,
   salary,
@@ -30,7 +30,7 @@ const VacancyCard: React.FC<VacancyCardTypes> = ({
         Experience from {yearDeclensionEn(experience)}
       </p>
       <div className={styles.circle} />
-      <p className={styles.vacancyInfoText}>{mode}</p>
+      <p className={styles.vacancyInfoText}>{typeOfEmployment}</p>
       <div className={styles.circle} />
       <p className={styles.vacancyInfoText}>{city}</p>
     </div>

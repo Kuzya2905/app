@@ -1,7 +1,3 @@
-export interface CompanyTypes {
-  companyId: string;
-}
-
 export interface VacancyCardType {
   idVacancy: number;
   idCompany: number;
@@ -9,6 +5,9 @@ export interface VacancyCardType {
   experience: number;
   city: string;
   description: string;
+  requirements: string;
+  responsibilities: string;
+  termsAndConditions: string;
   salary: number;
   company: string;
   logo: string;

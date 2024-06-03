@@ -1,21 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/Button/Button";
 import { cardsCompanies } from "./RegisteredСompaniesData";
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
 
+import { CompanyCardType } from "./RegisteredCompanies.types";
+
 import styles from "./registeredСompanies.module.scss";
 
 const RegisteredCompanies: React.FC = () => {
+  const [cards, setCards] = useState<CompanyCardType[]>([]);
+
   const router = useRouter();
   const handleClickCompaniesButton = () => router.push("/companies");
 
-  const cards = cardsCompanies.slice(0, 6);
-
   const handleClickCompany = (id: number) => router.push(`/company/${id}`);
+
+  const addCardsCompanies = () => {
+    const cards = localStorage.getItem("CardsCompanies");
+    if (cards) {
+      setCards(JSON.parse(cards).slice(-6));
+    } else {
+      localStorage.setItem("CardsCompanies", JSON.stringify(cardsCompanies));
+      setCards(cardsCompanies.slice(-6));
+    }
+  };
+
+  useEffect(() => {
+    addCardsCompanies();
+  }, []);
 
   return (
     <section className={styles.section}>
