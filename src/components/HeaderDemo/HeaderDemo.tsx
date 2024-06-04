@@ -3,11 +3,14 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
-import { TonConnectButton } from "@tonconnect/ui-react";
+import { useIsConnectionRestored, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
 import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
+import Button from "../Button/Button";
+import UserMenu from "@/modules/UserMenu/components/UserMenu/UserMenu";
+import useIsScreenWidthLessThan from "@/modules/hooks/useIsScreenWidthLessThan";
 
 import { Logo } from "@/assets/svgs/Logo";
 import { Burger } from "@/assets/svgs/Burger";
@@ -15,12 +18,30 @@ import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
 
+
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
+  const [tonConnectUi] = useTonConnectUI();
+  const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
+
+  const connectionRestored = useIsConnectionRestored();
+  const wallet = useTonWallet();
+
+  const IsScreenMobile = useIsScreenWidthLessThan(1025);
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
   };
+
+  useEffect(() => {
+    if(connectionRestored) {
+      if(wallet) {
+        setIsWalletLoaded(true);
+      } else {
+        setIsWalletLoaded(false);
+      }
+    }    
+  },[connectionRestored,wallet]);
 
   useEffect(() => {
     const changeBodyPosition = () => {
@@ -46,34 +67,60 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
           </div>
         </LinkNext>
         <div
-          className={cn(styles.headerDemo, { [styles.active]: activeBurger })}
+          className={cn(styles.headerDemo, { [styles.active]: activeBurger && !isWalletLoaded })}
         >
           <div className={styles.headerLinks}>
-            {LinksArr.map(({ id, text, withCount, disabled, count, link }) => (
+            {LinksArr.map(({ id, text, withCount, disabled, count, link, logoUrl }) => (
               <Link
+                className={styles.linkItem}
                 key={id}
                 count={count}
                 withCount={withCount}
                 disabled={disabled}
                 link={link}
+                logoUrl={IsScreenMobile ? logoUrl : ''}
+                fontSize={IsScreenMobile ? 's' : null}
               >
                 {text}
               </Link>
             ))}
           </div>
           <div className={styles.buttonConnectWalletWrapper}>
-            <TonConnectButton />
+            {
+              !isWalletLoaded && (
+                <Button
+                appearance="secondary"
+                size="l"
+                type="submit"
+                onClick={()=> {
+                  tonConnectUi.openModal();
+                }}
+                > 
+                  Connect wallet
+                </Button>
+              )
+            }
           </div>
         </div>
         {activeBurger ? (
-          <div onClick={toggleBurger} className={styles.headerDemoCross}>
-            <Cross />
-          </div>
+          <>
+            { isWalletLoaded ? (<UserMenu/>) :
+              (<div onClick={toggleBurger} className={styles.headerDemoBurger}>
+                <Cross />
+              </div>)
+            }
+          </>
         ) : (
-          <div className={styles.headerDemoBurger} onClick={toggleBurger}>
-            <Burger />
-          </div>
+          <>{
+            isWalletLoaded ? (<UserMenu/>) : (
+                <div className={styles.headerDemoBurger} onClick={toggleBurger}>
+                  <Burger />
+                </div>
+            ) 
+          }</>
+          
         )}
+        
       </div>
     </header>
   );

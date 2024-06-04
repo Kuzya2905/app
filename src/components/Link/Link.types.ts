@@ -6,6 +6,8 @@ export interface LinkTypes
   withCount: boolean;
   disabled: boolean;
   link?: string;
+  logoUrl?: string
   count: number | null;
   children: ReactNode;
+  fontSize?: "s" | "m" | "l" | "xl" | null;
 }

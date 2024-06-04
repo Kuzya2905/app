@@ -59,6 +59,14 @@
   cursor: not-allowed;
 }
 
+.menu {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  color: #1B1E27;
+}
+
 .tertiary {
   border: 1px solid $main-primary;
   color: $main-primary;
@@ -79,6 +87,17 @@
   border: 1px solid $stroke-card;
   color: $text-tertiary;
   cursor: not-allowed;
+}
+
+.xs {
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .s {
@@ -211,5 +230,11 @@
         fill: $text-tertiary;
       }
     }
+  }
+}
+
+@media(max-width: 1025px) {
+  .secondary.l {
+    width: 100%;
   }
 }

@@ -1,3 +1,8 @@
+import OpenJobs from '@/assets/svgs/OpenJobs.svg';
+import Companies from '@/assets/svgs/Companies.svg';
+import Specialists from '@/assets/svgs/Specialists.svg';
+import Blog from '@/assets/svgs/Blog.svg';
+
 export const LinksArr = [
   {
     id: 1,
@@ -6,6 +11,7 @@ export const LinksArr = [
     disabled: false,
     count: 32,
     link: "/vacancies",
+    logoUrl: OpenJobs
   },
   {
     id: 2,
@@ -14,6 +20,7 @@ export const LinksArr = [
     disabled: false,
     count: null,
     link: "/companies",
+    logoUrl: Companies
   },
   {
     id: 4,
@@ -21,6 +28,7 @@ export const LinksArr = [
     withCount: false,
     disabled: true,
     count: null,
+    logoUrl: Specialists
   },
   {
     id: 5,
@@ -28,5 +36,6 @@ export const LinksArr = [
     withCount: false,
     disabled: false,
     count: null,
+    logoUrl: Blog
   },
 ];
