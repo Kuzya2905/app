@@ -4,12 +4,14 @@ import { PageCompanyTypes } from "./page.types";
 
 import styles from "@/app/page.module.css";
 
-const PageCompany: React.FC<PageCompanyTypes> = ({ params }) => (
-  <main className={styles.main}>
-    <Layout>
-      <Company companyId={params.idCompany} />
-    </Layout>
-  </main>
-);
+const PageCompany: React.FC<PageCompanyTypes> = ({ params }) => {
+  return (
+    <main className={styles.main}>
+      <Layout>
+        <Company companyId={params.idCompany} />
+      </Layout>
+    </main>
+  );
+};
 
 export default PageCompany;

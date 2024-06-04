@@ -1,16 +1,16 @@
 import * as yup from "yup";
 
 export const schema = yup.object().shape({
-  linkLogo: yup.string().nullable().url("Link must be a valid URL"),
-  companyName: yup
+  logo: yup.string().nullable().url("Link must be a valid URL"),
+  title: yup
     .string()
     .required("Company name is required")
     .min(2, "Company name must be at least 2 characters long"),
-  webSite: yup
+  link: yup
     .string()
     .required("Web site is required")
     .min(2, "Web site must be at least 2 characters long"),
-  companyDescription: yup
+  description: yup
     .string()
     .nullable()
     .required("Company Description is required")

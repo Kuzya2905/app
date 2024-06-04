@@ -55,6 +55,8 @@ export const VacancyFormCreate = () => {
 
   const [activePreview, setActivePreview] = useState(false);
 
+  const [active, setActive] = useState(false);
+
   const [validBasicBlock, setValidBasicBlock] = useState(false);
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
   const [validSettingsBlock, setValidSettingsBlock] = useState(false);
@@ -128,13 +130,8 @@ export const VacancyFormCreate = () => {
 
   const changeActivePreview = () => setActivePreview((prev) => !prev);
 
-  const goToVacancy = () => {
-    router.push(`/vacancy/${vacancies[vacancies.length - 1].idVacancy + 1}`);
-  };
-
   const sendTransaction = async () => {
     if (!wallet) return;
-
     try {
       await tonConnectUi.sendTransaction({
         messages: [
@@ -145,10 +142,11 @@ export const VacancyFormCreate = () => {
         ],
         validUntil: Math.floor(Date.now() / 1000) + 60,
       });
-      goToVacancy();
-      return "Success";
+      setActive(true);
+      return true;
     } catch (error) {
       console.error("Transaction failed", error);
+      return false;
     }
   };
 
@@ -160,6 +158,7 @@ export const VacancyFormCreate = () => {
 
     if (transactionSuccessful) {
       createNewVacancy(data);
+      router.push("/path-to-redirect");
     }
   };
 

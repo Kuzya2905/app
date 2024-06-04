@@ -18,7 +18,6 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
   const router = useRouter();
 
   const userAddress = useTonAddress();
-
   return (
     <div className={styles.main}>
       <section className={styles.mainSection}>
@@ -77,7 +76,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             <Button
               appearance="secondary"
               size="l"
-              onClick={() => router.push("/company/edit")}
+              onClick={() => router.push(`/company/${dataCompany.id}/edit`)}
             >
               Edit
             </Button>

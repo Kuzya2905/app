@@ -48,7 +48,7 @@ const Company: React.FC = () => {
   });
 
   const router = useRouter();
-  const linkLogoValue = watch("linkLogo");
+  const linkLogoValue = watch("logo");
 
   const userAddress = useTonAddress();
 
@@ -91,21 +91,21 @@ const Company: React.FC = () => {
 
   const onSubmit: SubmitHandler<CompanyCreationFormTypes> = (data) => {
     console.log(data);
-    localStorage.setItem("formDataCompany", JSON.stringify(data));
 
     const newCompany = {
       id: companies.length + 1,
-      logo: data.linkLogo ?? "",
-      title: data.companyName,
-      nameLink: data.companyName,
-      link: data.webSite,
-      description: data.companyDescription,
+      logo: data.logo ?? "",
+      title: data.title,
+      nameLink: data.title,
+      link: data.link,
+      description: data.description,
       city: data.city ?? "",
       vacancyNumber: 0,
-      sizeCompany: data.size ?? "",
+      sizeCompany: data.sizeCompany ?? "",
       industry: data.industry ?? "",
       walletAddress: userAddress,
       linksContact: [],
+      telegram: data.telegram,
     };
 
     localStorage.setItem(
@@ -151,7 +151,7 @@ const Company: React.FC = () => {
                 <span className={styles.nameTitle}>Company name</span>
                 <div className={styles.informationInput}>
                   <Input<CompanyCreationFormTypes>
-                    name="companyName"
+                    name="title"
                     placeholder="Stellar"
                     register={register}
                     error={errors.companyName}
@@ -185,7 +185,7 @@ const Company: React.FC = () => {
                 <span className={styles.selectTitle}>Company size</span>
                 <div className={styles.selectInput}>
                   <Controller
-                    name="size"
+                    name="sizeCompany"
                     control={control}
                     render={({ field: { onChange, value } }) => {
                       return (
@@ -210,9 +210,9 @@ const Company: React.FC = () => {
                 </span>
                 <TextArea<CompanyCreationFormTypes>
                   register={register}
-                  name="companyDescription"
+                  name="description"
                   placeholder="Describe the company's activities"
-                  error={errors.companyDescription}
+                  error={errors.description}
                 />
               </div>
             </section>
@@ -245,10 +245,10 @@ const Company: React.FC = () => {
                 <span className={styles.inputTitle}>Web site</span>
                 <div className={styles.contactsInput}>
                   <Input<CompanyCreationFormTypes>
-                    name="webSite"
+                    name="link"
                     placeholder="stellar.org"
                     register={register}
-                    error={errors.webSite}
+                    error={errors.link}
                   />
                 </div>
               </div>
@@ -305,10 +305,10 @@ const Company: React.FC = () => {
             <span className={styles.creationLogoText}>Image link</span>
             <div className={styles.creationLogoInput}>
               <Input<CompanyCreationFormTypes>
-                name="linkLogo"
+                name="logo"
                 placeholder="Insert link"
                 register={register}
-                error={errors.linkLogo}
+                error={errors.logo}
               />
               <Image
                 onClick={() => changeActiveQuestion()}
