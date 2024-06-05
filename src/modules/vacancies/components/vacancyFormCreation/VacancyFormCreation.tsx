@@ -66,7 +66,7 @@ export const VacancyFormCreate = () => {
       "qualification",
       "experience",
       "typeOfEmployment",
-      "incomeLevel",
+      "salary",
     ],
     []
   );
@@ -77,17 +77,23 @@ export const VacancyFormCreate = () => {
 
   const vacanciesJSON = localStorage.getItem("CardsVacancies");
   const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+  const idVacancy = vacancies[vacancies.length - 1].idVacancy + 1;
 
   const router = useRouter();
 
   const valuesFieldsBasic = watch(fieldsBasic);
 
-  const fieldsDescription: (keyof VacancyFormCreationTypes)[] = useMemo(
-    () => ["jobDescription", "requirements", "responsibilities", "terms"],
+  const fieldsJobDescription: (keyof VacancyFormCreationTypes)[] = useMemo(
+    () => [
+      "description",
+      "requirements",
+      "responsibilities",
+      "termsAndConditions",
+    ],
     []
   );
 
-  const valuesFieldsDescription = watch(fieldsDescription);
+  const valuesJobDescription = watch(fieldsJobDescription);
 
   const valueFieldSettings = watch("publishingSettings");
 
@@ -99,13 +105,13 @@ export const VacancyFormCreate = () => {
   }, [fieldsBasic, valuesFieldsBasic, errors]);
 
   useEffect(() => {
-    const descriptionFieldsValid = valuesFieldsDescription.every(
+    const descriptionFieldsValid = valuesJobDescription.every(
       (field, index) => {
-        return !errors[fieldsDescription[index]] && field;
+        return !errors[fieldsJobDescription[index]] && field;
       }
     );
     setValidDescriptionBlock(descriptionFieldsValid);
-  }, [fieldsDescription, valuesFieldsDescription, errors]);
+  }, [fieldsJobDescription, valuesJobDescription, errors]);
 
   useEffect(() => {
     const settingFieldValid =
@@ -113,13 +119,17 @@ export const VacancyFormCreate = () => {
     setValidSettingsBlock(settingFieldValid);
   }, [valueFieldSettings, errors.publishingSettings, errors]);
 
-  useEffect(() => {
+  const disableHTMLScrolling = () => {
     const htmlStyle = document.documentElement.style;
     if (activePreview) {
       htmlStyle.overflow = "hidden";
     } else {
       htmlStyle.overflow = "";
     }
+  };
+
+  useEffect(() => {
+    disableHTMLScrolling()
   }, [activePreview]);
 
   const disableButtonPreview = () => {
@@ -128,13 +138,8 @@ export const VacancyFormCreate = () => {
 
   const changeActivePreview = () => setActivePreview((prev) => !prev);
 
-  const goToVacancy = () => {
-    router.push(`/vacancy/${vacancies[vacancies.length - 1].idVacancy + 1}`);
-  };
-
   const sendTransaction = async () => {
     if (!wallet) return;
-
     try {
       await tonConnectUi.sendTransaction({
         messages: [
@@ -145,21 +150,24 @@ export const VacancyFormCreate = () => {
         ],
         validUntil: Math.floor(Date.now() / 1000) + 60,
       });
-      goToVacancy();
       return "Success";
     } catch (error) {
       console.error("Transaction failed", error);
     }
   };
 
+  const goToVacancy = () => {
+    router.push(`/vacancy/${idVacancy}`);
+  };
+
   const onSubmit: SubmitHandler<VacancyFormCreationTypes> = async (data) => {
     console.log(data);
-    localStorage.setItem("formDataVacancy", JSON.stringify(data));
 
     const transactionSuccessful = await sendTransaction();
 
     if (transactionSuccessful) {
-      createNewVacancy(data);
+      createNewVacancy(data, idVacancy);
+      goToVacancy();
     }
   };
 
@@ -287,11 +295,11 @@ export const VacancyFormCreate = () => {
           <div className={styles.labeledField}>
             <p className={styles.label}>Income level</p>
             <Input<VacancyFormCreationTypes>
-              name="incomeLevel"
+              name="salary"
               isIcon={false}
               placeholder="from $10,000"
               register={register}
-              error={errors.incomeLevel}
+              error={errors.salary}
               className={styles.field}
             />
           </div>
@@ -417,7 +425,7 @@ export const VacancyFormCreate = () => {
         <PreviewVacancy
           basicInformation={valuesFieldsBasic as string[]}
           closePreview={changeActivePreview}
-          specification={valuesFieldsDescription as string[]}
+          jobDescription={valuesJobDescription as string[]}
         />
       )}
     </form>

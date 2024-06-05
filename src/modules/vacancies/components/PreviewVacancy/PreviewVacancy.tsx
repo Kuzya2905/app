@@ -9,7 +9,7 @@ import styles from "./previewVacancy.module.scss";
 
 const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
   closePreview,
-  specification,
+  jobDescription,
   basicInformation,
 }) => {
   const currentDateISO = new Date().toISOString();
@@ -30,7 +30,9 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
             <li className={styles.totalInfoItem}>
               {convertISOToDate(currentDateISO)}
             </li>
-            <li className={styles.totalInfoItem}>{basicInformation[5]}</li>
+            <li className={styles.totalInfoItem}>
+              From ${basicInformation[5]}
+            </li>
             <li className={styles.totalInfoItem}>
               {isFirstCharDigit(basicInformation[3]) ? (
                 <>Experience from {basicInformation[3]}</>
@@ -45,19 +47,19 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
         <div className={styles.blockInformation}>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Description</h2>
-            <div className={styles.sectionText}>{specification[0]}</div>
+            <div className={styles.sectionText}>{jobDescription[0]}</div>
           </div>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Requirements</h2>
-            <div className={styles.sectionText}>{specification[1]}</div>
+            <div className={styles.sectionText}>{jobDescription[1]}</div>
           </div>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Responsibilities</h2>
-            <div className={styles.sectionText}>{specification[2]}</div>
+            <div className={styles.sectionText}>{jobDescription[2]}</div>
           </div>
           <div className={styles.section}>
             <h2 className={styles.sectionTitle}>Terms and conditions</h2>
-            <div className={styles.sectionText}>{specification[3]}</div>
+            <div className={styles.sectionText}>{jobDescription[3]}</div>
           </div>
         </div>
       </div>

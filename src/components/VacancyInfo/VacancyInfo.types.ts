@@ -13,4 +13,5 @@ export default interface VacancyInfoTypes {
     date: string;
     expirationDate: string;
   };
+  vacancyId: string;
 }

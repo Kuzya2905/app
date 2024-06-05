@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 export interface CompanyInfoTypes {
   dataCompany: {
+    id: number;
     title: string;
     logo: string;
     nameLink: string;

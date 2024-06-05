@@ -12,8 +12,8 @@ export const dataTags = [
 export const dataTextareas = [
   {
     id: 1,
-    title: "Job Description",
-    nameFiledForm: "jobDescription",
+    title: "Description",
+    nameFiledForm: "description",
     placeholder: "Tell us about the job opening",
   },
   {
@@ -31,7 +31,7 @@ export const dataTextareas = [
   {
     id: 4,
     title: "Terms and conditions",
-    nameFiledForm: "terms",
+    nameFiledForm: "termsAndConditions",
     placeholder: "Describe the working conditions and benefits",
   },
 ];
@@ -59,8 +59,8 @@ export const Qualification = [
 export const Experience = [
   { value: "No experience", label: "No experience", icon: Check },
   { value: "1 to 3 years", label: "1 to 3 years", icon: Check },
-  { value: "3 to 5 years old", label: "3 to 5 years", icon: Check },
-  { value: "Over 5 years", label: "Over 5 years", icon: Check },
+  { value: "3 to 5 years", label: "3 to 5 years", icon: Check },
+  { value: "over 5 years", label: "over 5 years", icon: Check },
 ];
 
 export const Remote = [

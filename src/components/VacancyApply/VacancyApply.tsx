@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
 import { schema } from "./VacancySchemaYup";

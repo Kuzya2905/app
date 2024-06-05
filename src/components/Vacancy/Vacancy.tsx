@@ -32,6 +32,13 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
     );
   const isOwner =
     dataCompany && userAddress && userAddress === dataCompany.walletAddress;
+
+  const checkExperience = (experience: string) => {
+    return experience === "No experience"
+      ? experience
+      : `Experience from ${experience}`;
+  };
+
   return (
     <>
       {dataVacancy ? (
@@ -67,7 +74,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                   From $ {dataVacancy.salary}
                 </li>
                 <li className={styles.totalInfoItem}>
-                  Experience from {yearDeclensionEn(dataVacancy.experience)}
+                  {checkExperience(dataVacancy.experience)}
                 </li>
                 <li className={styles.totalInfoItem}>
                   {dataVacancy.typeOfEmployment}
@@ -104,7 +111,10 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               </div>
               <aside className={styles.aside}>
                 {isOwner ? (
-                  <VacancyInfo dataVacancy={dataVacancy} />
+                  <VacancyInfo
+                    dataVacancy={dataVacancy}
+                    vacancyId={vacancyId}
+                  />
                 ) : (
                   <VacancyApply
                     dataCompany={dataCompany}

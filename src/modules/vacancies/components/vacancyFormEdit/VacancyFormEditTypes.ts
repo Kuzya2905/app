@@ -2,14 +2,14 @@ export interface VacancyFormEditTypes {
   tags?: string[];
   remote?: string;
   publishingSettings: string;
-  jobDescription: string;
+  description: string;
   requirements: string;
   responsibilities: string;
-  terms: string;
+  termsAndConditions: string;
   name: string;
   other: string;
   qualification: string;
   experience: string;
   typeOfEmployment: string;
-  incomeLevel: number;
+  salary: number;
 }

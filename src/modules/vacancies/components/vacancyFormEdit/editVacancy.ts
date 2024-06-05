@@ -1,8 +1,8 @@
-import { VacancyFormCreationTypes } from "./VacancyFormCreationTypes";
+import { VacancyFormEditTypes } from "./VacancyFormEditTypes";
 
-export const createNewVacancy = (
-  dataForm: VacancyFormCreationTypes,
-  idVacancy: number
+export const editVacancy = (
+  dataForm: VacancyFormEditTypes,
+  vacancyId: number
 ) => {
   const vacanciesJSON = localStorage.getItem("CardsVacancies");
   const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
@@ -11,15 +11,14 @@ export const createNewVacancy = (
   const companies = companiesJSON && JSON.parse(companiesJSON);
   const dataCompany = companies[companies.length - 1];
 
-  const currentDate = new Date();
+  let currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() + 1);
-  const futureDate = currentDate.toISOString();
-  dataCompany.vacancyNumber = dataCompany.vacancyNumber + 1;
+  let futureDate = currentDate.toISOString();
 
   localStorage.setItem("CardsCompanies", JSON.stringify([...companies]));
 
   const newVacancy = {
-    idVacancy: idVacancy,
+    idVacancy: vacancyId,
     idCompany: dataCompany.id,
     name: dataForm.name,
     experience: dataForm.experience,
@@ -39,8 +38,9 @@ export const createNewVacancy = (
     other: dataForm.other,
   };
 
-  localStorage.setItem(
-    "CardsVacancies",
-    JSON.stringify([...vacancies, newVacancy])
+  const newVacancies = vacancies.map((vacancy: { idVacancy: number }) =>
+    vacancy.idVacancy === vacancyId ? newVacancy : vacancy
   );
+
+  localStorage.setItem("CardsVacancies", JSON.stringify(newVacancies));
 };

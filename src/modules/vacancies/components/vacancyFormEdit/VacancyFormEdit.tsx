@@ -9,6 +9,7 @@ import {
 } from "react-hook-form";
 import cn from "classnames";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { usePathname, useRouter } from "next/navigation";
 
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -28,6 +29,7 @@ import CheckboxTag from "@/components/CheckboxTag/CheckboxTag";
 import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
 import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
+import { editVacancy } from "./editVacancy";
 
 import { VacancyFormEditTypes } from "@/modules/vacancies/components/vacancyFormEdit/VacancyFormEditTypes";
 import { VARIANT } from "@/components/Select/Select.types";
@@ -56,6 +58,12 @@ export const VacancyFormEdit = () => {
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
   const [validSettingsBlock, setValidSettingsBlock] = useState(false);
 
+  const pathname = usePathname();
+  const match = pathname.match(/\d+/);
+  const idVacancy = Number(match && match[0]);
+
+  const router = useRouter();
+
   const fieldsBasic: (keyof VacancyFormEditTypes)[] = useMemo(
     () => [
       "name",
@@ -63,20 +71,36 @@ export const VacancyFormEdit = () => {
       "qualification",
       "experience",
       "typeOfEmployment",
-      "incomeLevel",
+      "salary",
     ],
     []
   );
+  const valuesFieldsBasic = watch(fieldsBasic);
+
+  const fieldsJobDescription: (keyof VacancyFormEditTypes)[] = useMemo(
+    () => [
+      "description",
+      "requirements",
+      "responsibilities",
+      "termsAndConditions",
+    ],
+    []
+  );
+  const valuesJobDescription = watch(fieldsJobDescription);
+
+  const valueFieldSettings = watch("publishingSettings");
 
   useEffect(() => {
-    const formDataVacancy = localStorage.getItem("formDataVacancy");
-    if (formDataVacancy) {
-      reset(JSON.parse(formDataVacancy));
-      setFormDefaultData(JSON.parse(formDataVacancy));
+    const vacanciesJSON = localStorage.getItem("CardsVacancies");
+    const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+    const dataVacancy = vacancies.find(
+      (vacancy: { idVacancy: number }) => vacancy.idVacancy === idVacancy
+    );
+    if (dataVacancy) {
+      reset(dataVacancy);
+      setFormDefaultData(dataVacancy);
     }
-  }, [reset]);
-
-  const valuesFieldsBasic = watch(fieldsBasic);
+  }, [reset, idVacancy]);
 
   useEffect(() => {
     const basicFieldsValid = valuesFieldsBasic.every((field, index) => {
@@ -85,23 +109,14 @@ export const VacancyFormEdit = () => {
     setValidBasicBlock(basicFieldsValid);
   }, [fieldsBasic, valuesFieldsBasic, errors]);
 
-  const fieldsDescription: (keyof VacancyFormEditTypes)[] = useMemo(
-    () => ["jobDescription", "requirements", "responsibilities", "terms"],
-    []
-  );
-
-  const valuesFieldsDescription = watch(fieldsDescription);
-
   useEffect(() => {
-    const descriptionFieldsValid = valuesFieldsDescription.every(
+    const descriptionFieldsValid = valuesJobDescription.every(
       (field, index) => {
-        return !errors[fieldsDescription[index]] && field;
+        return !errors[fieldsJobDescription[index]] && field;
       }
     );
     setValidDescriptionBlock(descriptionFieldsValid);
-  }, [fieldsDescription, valuesFieldsDescription, errors]);
-
-  const valueFieldSettings = watch("publishingSettings");
+  }, [fieldsJobDescription, valuesJobDescription, errors]);
 
   useEffect(() => {
     const settingFieldValid =
@@ -115,18 +130,27 @@ export const VacancyFormEdit = () => {
     return !(validBasicBlock && validDescriptionBlock && validSettingsBlock);
   };
 
-  useEffect(() => {
+  const disableHTMLScrolling = () => {
     const htmlStyle = document.documentElement.style;
     if (activePreview) {
       htmlStyle.overflow = "hidden";
     } else {
       htmlStyle.overflow = "";
     }
+  };
+
+  useEffect(() => {
+    disableHTMLScrolling();
   }, [activePreview]);
+
+  const goToVacancy = () => {
+    router.push(`/vacancy/${idVacancy}`);
+  };
 
   const onSubmit: SubmitHandler<VacancyFormEditTypes> = (data) => {
     console.log(data);
-    localStorage.setItem("formDataVacancy", JSON.stringify(data));
+    editVacancy(data, idVacancy);
+    goToVacancy();
   };
 
   return (
@@ -258,11 +282,11 @@ export const VacancyFormEdit = () => {
           <div className={styles.labeledField}>
             <p className={styles.label}>Income level</p>
             <Input<VacancyFormEditTypes>
-              name="incomeLevel"
+              name="salary"
               isIcon={false}
               placeholder="from $10,000"
               register={register}
-              error={errors.incomeLevel}
+              error={errors.salary}
               className={styles.field}
             />
           </div>
@@ -388,7 +412,7 @@ export const VacancyFormEdit = () => {
         <PreviewVacancy
           basicInformation={valuesFieldsBasic as string[]}
           closePreview={changeActivePreview}
-          specification={valuesFieldsDescription as string[]}
+          jobDescription={valuesJobDescription as string[]}
         />
       )}
     </form>

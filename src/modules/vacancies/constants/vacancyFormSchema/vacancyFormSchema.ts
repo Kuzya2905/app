@@ -6,8 +6,8 @@ export const vacancyFormSchema = yup.object().shape({
   qualification: yup.string().required("Field is required"),
   experience: yup.string().required("Field is required"),
   typeOfEmployment: yup.string().required("Field is required"),
-  incomeLevel: yup.number().required("Field is required"),
-  jobDescription: yup
+  salary: yup.number().required("Field is required"),
+  description: yup
     .string()
     .required("Field is required")
     .max(200, "Maximum 200 letters"),
@@ -19,7 +19,7 @@ export const vacancyFormSchema = yup.object().shape({
     .string()
     .required("Field is required")
     .max(200, "Maximum 200 letters"),
-  terms: yup
+  termsAndConditions: yup
     .string()
     .required("Field is required")
     .max(200, "Maximum 200 letters"),

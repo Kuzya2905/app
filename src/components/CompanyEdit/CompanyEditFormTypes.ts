@@ -1,11 +1,11 @@
 export interface CompanyEditFormTypes {
   city?: string;
-  linkLogo?: string | null;
+  logo?: string | null;
   industry?: string;
-  size?: string;
-  companyDescription: string;
-  companyName: string;
-  webSite: string;
+  sizeCompany?: string;
+  description: string;
+  title: string;
+  link: string;
   telegram: string;
   [key: string]: string | null | undefined;
 }

@@ -1,5 +1,5 @@
 export interface PreviewVacancyTypes {
   closePreview: () => void;
-  specification: string[];
+  jobDescription: string[];
   basicInformation: string[];
 }
