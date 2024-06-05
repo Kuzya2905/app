@@ -30,6 +30,7 @@ import styles from "./CompanyEdit.module.scss";
 const CompanyEdit: React.FC = () => {
   const [formDefaultData, setFormDefaultData] =
     useState<CompanyEditFormTypes>();
+
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
@@ -59,20 +60,19 @@ const CompanyEdit: React.FC = () => {
 
   const router = useRouter();
 
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const companies = companiesJSON && JSON.parse(companiesJSON);
-  const dataCompany = companies.find(
-    (company: { id: number }) => company.id === idCompany
-  );
+  const linkLogoValue = watch("logo");
 
   useEffect(() => {
+    const companiesJSON = localStorage.getItem("CardsCompanies");
+    const companies = companiesJSON && JSON.parse(companiesJSON);
+    const dataCompany = companies.find(
+      (company: { id: number }) => company.id === idCompany
+    );
     if (dataCompany) {
       reset(dataCompany);
       setFormDefaultData(dataCompany);
     }
-  }, [reset]);
-
-  const linkLogoValue = watch("logo");
+  }, [idCompany, reset]);
 
   useEffect(() => {
     const changeActiveLogo = () => {
@@ -93,18 +93,18 @@ const CompanyEdit: React.FC = () => {
     setLinks((prev) => [...prev, { id: uuid(), value: null }]);
   };
 
-  useEffect(() => {
-    const createFieldLink = (
-      arrLinks: { id: string; value: string | null }[]
-    ) => {
-      if (arrLinks.length > 0) {
-        setValue(
-          `link-${arrLinks.length - 1}`,
-          arrLinks[arrLinks.length - 1].value
-        );
-      }
-    };
+  const createFieldLink = (
+    arrLinks: { id: string; value: string | null }[]
+  ) => {
+    if (arrLinks.length > 0) {
+      setValue(
+        `link-${arrLinks.length - 1}`,
+        arrLinks[arrLinks.length - 1].value
+      );
+    }
+  };
 
+  useEffect(() => {
     createFieldLink(links);
   }, [links, setValue]);
 
@@ -133,7 +133,7 @@ const CompanyEdit: React.FC = () => {
           </Link>
           <span className={styles.blockSlash}>/</span>
           <Link className={styles.blockLink} href={`/company/${idCompany}`}>
-            {dataCompany.title}
+            {formDefaultData?.title}
           </Link>
           <span className={styles.blockSlash}>/</span>
           <Link className={styles.blockLinkCurrent} href="">

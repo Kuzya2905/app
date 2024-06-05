@@ -11,7 +11,7 @@ export const Qualification = [
 export const Experience = [
   { id: 1, nameSection: "No experience", disabled: false, active: false },
   { id: 2, nameSection: "1 to 3 years", disabled: false, active: false },
-  { id: 3, nameSection: "3 to 5 years old", disabled: false, active: false },
+  { id: 3, nameSection: "3 to 5 years", disabled: false, active: false },
   { id: 4, nameSection: "Over 5 years", disabled: false, active: false },
 ];
 

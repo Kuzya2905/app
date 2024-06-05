@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTonAddress } from "@tonconnect/ui-react";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -24,7 +25,6 @@ import Question from "@/assets/images/Question.png";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./companyCreation.module.scss";
-import { useTonAddress } from "@tonconnect/ui-react";
 
 const Company: React.FC = () => {
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(

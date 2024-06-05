@@ -10,7 +10,10 @@ import VacancyInfoTypes from "./VacancyInfo.types";
 
 import styles from "./VacancyInfo.module.scss";
 
-const VacancyInfo: React.FC<VacancyInfoTypes> = ({ dataVacancy }) => {
+const VacancyInfo: React.FC<VacancyInfoTypes> = ({
+  dataVacancy,
+  vacancyId,
+}) => {
   const router = useRouter();
 
   return (
@@ -28,7 +31,7 @@ const VacancyInfo: React.FC<VacancyInfoTypes> = ({ dataVacancy }) => {
         <Button
           appearance="secondary"
           size="l"
-          onClick={() => router.push("./edit")}
+          onClick={() => router.push(`/vacancy/${vacancyId}/edit`)}
         >
           Edit
         </Button>
