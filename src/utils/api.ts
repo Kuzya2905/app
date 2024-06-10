@@ -82,16 +82,19 @@ export const checkProof = async (
         state_init: account.walletStateInit,
       },
     };
-    console.log(reqBody);
     const response = await (
       await fetch(`${BACKEND_URL}/${ApiEndpoints.GetAccessToken}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "POST",
         body: JSON.stringify(reqBody),
       })
     ).json();
 
     if (response?.token) {
-      localStorage.setItem(localStorageKey, response.token);
+      console.log(localStorageKey);
+      localStorage.setItem("demo-api-access-token", response.token);
       setAccessToken(response.token);
     }
   } catch (e) {

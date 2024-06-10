@@ -73,7 +73,6 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     const payload = await generatePayload();
 
     if (payload) {
-      console.log(tonConnectUI);
       tonConnectUI.setConnectRequestParameters({
         state: "ready",
         value: payload,
@@ -99,10 +98,12 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     generatePayload();
   }
   const [authorized, setAuthorized] = useState(false);
+  console.log(tonConnectUI.wallet);
 
   useEffect(
     () =>
       tonConnectUI.onStatusChange(async (w) => {
+        console.log("dsad");
         if (!w) {
           reset(setAccessToken, localStorageKey, generatePayload());
           setAuthorized(false);
