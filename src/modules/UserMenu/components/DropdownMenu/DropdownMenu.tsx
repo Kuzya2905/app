@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useTonAddress,
   useTonConnectUI,
@@ -25,43 +25,39 @@ import TonIcon from "@/assets/svgs//TonIcon.svg";
 
 import styles from "./dropdownMenu.module.scss";
 
-const DropdownMenu: React.FC<DropdownMenuTypes> = ({ menuIsOpen }) => {
+const DropdownMenu: React.FC<DropdownMenuTypes> = ({
+  menuIsOpen,
+  currentToken,
+}) => {
   const userAddress = useTonAddress();
   const [tonConnectUi] = useTonConnectUI();
+  const wallet = useTonWallet();
 
   const [balance, setBalance] = useState<number | null>(0);
   const [dollarExchangeRate, setDollarExchangeRate] = useState<number | null>(
     null
   );
-  const localStorageKey = "demo-api-access-token";
-  const accessToken = useRef<string | null>(null);
-  const wallet = useTonWallet();
 
   const IsScreenMobile = useIsScreenWidthLessThan(1025);
-
   const refreshIntervalMs = 60 * 1000;
 
-  accessToken.current = localStorage.getItem(localStorageKey);
-
-  const getBalance = async () => {
-    if (accessToken.current) {
-      const data = await getAccountInfo(accessToken.current);
-      setBalance(
-        data && data.account
-          ? Number(data.account.balance.coins) / 1000000000
-          : null
-      );
-    }
-  };
-
   useEffect(() => {
+    const getBalance = async () => {
+      if (currentToken) {
+        const data = await getAccountInfo(currentToken);
+        setBalance(
+          data && data.account
+            ? Number(data.account.balance.coins) / 1000000000
+            : null
+        );
+      }
+    };
     getBalance();
-  }, [accessToken]);
+  }, [currentToken]);
 
-  const getDollar = async () => {
+  const getExchangeRate = async () => {
     const data = await getDollarExchangeRate();
-    console.log(data);
-    console.log(data.ok);
+
     if (data && data.ok) {
       const exchangeRate = Number(data.result);
       localStorage.setItem("dollar-exchange-rate", String(exchangeRate));
@@ -73,11 +69,11 @@ const DropdownMenu: React.FC<DropdownMenuTypes> = ({ menuIsOpen }) => {
     const exchangeRate = localStorage.getItem("dollar-exchange-rate");
     setDollarExchangeRate(Number(exchangeRate));
     if (!exchangeRate) {
-      getDollar();
+      getExchangeRate();
     }
-  }, [dollarExchangeRate]);
+  }, []);
 
-  useInterval(getDollar, refreshIntervalMs);
+  useInterval(getExchangeRate, refreshIntervalMs);
 
   return (
     <div

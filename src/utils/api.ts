@@ -1,48 +1,24 @@
+import { MutableRefObject } from "react";
 import { Account, TonProofItemReplySuccess } from "@tonconnect/ui-react";
+
+import { axiosBackend, axiosCoinGecko } from "./axiosWrapper";
 
 import {
   ApiEndpoints,
-  TON_CENTER_URL,
-  TON_CENTER_URL_TESTNET,
-  IAddressBalance,
-  COINGECKO_URL,
   IDollarExchangeRateData,
   IDollarExchangeRate,
-  BACKEND_URL,
   IGenerationPayload,
 } from "./types";
-import { MutableRefObject } from "react";
-
-export const getAddressBalance = async (
-  userAddress: string
-): Promise<IAddressBalance> => {
-  try {
-    const response = await fetch(
-      `${TON_CENTER_URL}/${ApiEndpoints.GetAddressBalance}?address=${userAddress}`
-    );
-    if (!response.ok) {
-      return { ok: false, result: "Network response was not ok" };
-    }
-
-    const data: IAddressBalance = await response.json();
-    return data;
-  } catch (err) {
-    console.error("Failed to fetch rate:", err);
-    return { ok: false, result: "Failed to fetch rate" };
-  }
-};
 
 export const getDollarExchangeRate = async (): Promise<IDollarExchangeRate> => {
   try {
-    const response = await fetch(
-      `${COINGECKO_URL}/${ApiEndpoints.GetDollarExchangeRate}`
+    const response = await axiosCoinGecko(
+      `${ApiEndpoints.GetDollarExchangeRate}`
     );
-
-    if (!response.ok) {
+    if (response.status !== 200) {
       return { ok: false, result: "Network response was not ok" };
     }
-
-    const data: IDollarExchangeRateData = await response.json();
+    const data: IDollarExchangeRateData = await response.data;
     return { ok: true, result: data["the-open-network"].usd };
   } catch (err) {
     console.error("Failed to fetch rate:", err);
@@ -52,12 +28,10 @@ export const getDollarExchangeRate = async (): Promise<IDollarExchangeRate> => {
 
 export const generatePayload = async (): Promise<IGenerationPayload | null> => {
   try {
-    const response = await (
-      await fetch(`${BACKEND_URL}/${ApiEndpoints.GetGenerationPayload}`, {
-        method: "POST",
-      })
-    ).json();
-    return { tonProof: response.payload as string };
+    const response = await axiosBackend.post(
+      `${ApiEndpoints.GetGenerationPayload}`
+    );
+    return { tonProof: response.data.payload as string };
   } catch {
     return null;
   }
@@ -79,19 +53,14 @@ export const checkProof = async (
         state_init: account.walletStateInit,
       },
     };
-    const response = await (
-      await fetch(`${BACKEND_URL}/${ApiEndpoints.GetAccessToken}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(reqBody),
-      })
-    ).json();
+    const response = await axiosBackend.post(
+      `${ApiEndpoints.GetAccessToken}`,
+      reqBody
+    );
 
-    if (response?.token) {
-      localStorage.setItem(localStorageKey, response.token);
-      accessToken.current = response.token;
+    if (response.data.token) {
+      localStorage.setItem(localStorageKey, response.data.token);
+      accessToken.current = response.data.token;
     }
   } catch (e) {
     console.log("checkProof error:", e);
@@ -99,14 +68,11 @@ export const checkProof = async (
 };
 
 export const getAccountInfo = async (accessToken: string | null) => {
-  const response = await (
-    await fetch(`${BACKEND_URL}/${ApiEndpoints.GetAccountInfo}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    })
-  ).json();
+  const response = await axiosBackend(`${ApiEndpoints.GetAccountInfo}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-  return response;
+  return response.data;
 };

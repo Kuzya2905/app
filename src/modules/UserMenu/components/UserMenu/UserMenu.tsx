@@ -6,13 +6,15 @@ import { useTonWallet } from "@tonconnect/ui-react";
 import DropdownMenu from "@/modules/UserMenu/components/DropdownMenu/DropdownMenu";
 import { useClickOutside } from "@/modules/hooks/useClickOutside";
 
+import { UserMenuTypes } from "./UserMenu.types";
+
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import { Burger } from "@/assets/svgs/Burger";
 import { CrossMenu } from "@/assets/svgs/CrossMenu";
 
 import styles from "./UserMenu.module.scss";
 
-const UserMenu: React.FC = ({ ...props }) => {
+const UserMenu: React.FC<UserMenuTypes> = ({ currentToken, ...props }) => {
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
   const userMenuRef = useRef(null);
   const wallet = useTonWallet();
@@ -47,7 +49,7 @@ const UserMenu: React.FC = ({ ...props }) => {
           {!menuIsOpen ? <Burger /> : <CrossMenu />}
         </div>
       }
-      <DropdownMenu menuIsOpen={menuIsOpen} />
+      <DropdownMenu menuIsOpen={menuIsOpen} currentToken={currentToken} />
     </div>
   );
 };

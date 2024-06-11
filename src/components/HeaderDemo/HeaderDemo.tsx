@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  MutableRefObject,
-} from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
 import {
@@ -17,12 +11,13 @@ import {
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
-import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import UserMenu from "@/modules/UserMenu/components/UserMenu/UserMenu";
 import useIsScreenWidthLessThan from "@/modules/hooks/useIsScreenWidthLessThan";
-import { checkProof, generatePayload, getAccountInfo } from "@/utils/api";
+import { checkProof, generatePayload } from "@/utils/api";
 import { reset, useInterval } from "./utils";
+
+import { HeaderDemoTypes } from "@/components/HeaderDemo/Header.types";
 
 import { Logo } from "@/assets/svgs/Logo";
 import { Burger } from "@/assets/svgs/Burger";
@@ -40,8 +35,12 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [tonConnectUI] = useTonConnectUI();
 
   const firstProofLoading = useRef<boolean>(true);
+
   const localStorageKey = "demo-api-access-token";
   const accessToken = useRef<string | null>(
+    localStorage.getItem(localStorageKey)
+  );
+  const [currentToken, setCurrentToken] = useState(
     localStorage.getItem(localStorageKey)
   );
 
@@ -118,6 +117,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
           tonConnectUI.disconnect();
           return;
         }
+        setCurrentToken(accessToken.current);
       }),
     [tonConnectUI]
   );
@@ -174,7 +174,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
         {activeBurger ? (
           <>
             {isWalletLoaded ? (
-              <UserMenu />
+              <UserMenu currentToken={currentToken} />
             ) : (
               <div onClick={toggleBurger} className={styles.headerDemoBurger}>
                 <Cross />
@@ -184,7 +184,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
         ) : (
           <>
             {isWalletLoaded ? (
-              <UserMenu />
+              <UserMenu currentToken={currentToken} />
             ) : (
               <div className={styles.headerDemoBurger} onClick={toggleBurger}>
                 <Burger />

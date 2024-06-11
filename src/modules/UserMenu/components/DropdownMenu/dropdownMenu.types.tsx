@@ -1,3 +1,4 @@
 export interface DropdownMenuTypes {
-    menuIsOpen: boolean
+  menuIsOpen: boolean;
+  currentToken: string | null;
 }
