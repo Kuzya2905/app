@@ -93,18 +93,17 @@ const CompanyEdit: React.FC = () => {
     setLinks((prev) => [...prev, { id: uuid(), value: null }]);
   };
 
-  const createFieldLink = (
-    arrLinks: { id: string; value: string | null }[]
-  ) => {
-    if (arrLinks.length > 0) {
-      setValue(
-        `link-${arrLinks.length - 1}`,
-        arrLinks[arrLinks.length - 1].value
-      );
-    }
-  };
-
   useEffect(() => {
+    const createFieldLink = (
+      arrLinks: { id: string; value: string | null }[]
+    ) => {
+      if (arrLinks.length > 0) {
+        setValue(
+          `link-${arrLinks.length - 1}`,
+          arrLinks[arrLinks.length - 1].value
+        );
+      }
+    };
     createFieldLink(links);
   }, [links, setValue]);
 

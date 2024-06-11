@@ -1,20 +1,17 @@
-import {
-  Account,
-  ConnectAdditionalRequest,
-  TonProofItemReplySuccess,
-} from "@tonconnect/ui-react";
+import { Account, TonProofItemReplySuccess } from "@tonconnect/ui-react";
 
 import {
   ApiEndpoints,
   TON_CENTER_URL,
   TON_CENTER_URL_TESTNET,
   IAddressBalance,
-  COINGENCKO_URL,
+  COINGECKO_URL,
   IDollarExchangeRateData,
   IDollarExchangeRate,
   BACKEND_URL,
   IGenerationPayload,
 } from "./types";
+import { MutableRefObject } from "react";
 
 export const getAddressBalance = async (
   userAddress: string
@@ -38,7 +35,7 @@ export const getAddressBalance = async (
 export const getDollarExchangeRate = async (): Promise<IDollarExchangeRate> => {
   try {
     const response = await fetch(
-      `${COINGENCKO_URL}/${ApiEndpoints.GetDollarExchangeRate}`
+      `${COINGECKO_URL}/${ApiEndpoints.GetDollarExchangeRate}`
     );
 
     if (!response.ok) {
@@ -70,7 +67,7 @@ export const checkProof = async (
   proof: TonProofItemReplySuccess["proof"],
   account: Account,
   localStorageKey: string,
-  setAccessToken: React.Dispatch<React.SetStateAction<string | null>>
+  accessToken: MutableRefObject<string | null>
 ): Promise<void> => {
   try {
     const reqBody = {
@@ -93,19 +90,15 @@ export const checkProof = async (
     ).json();
 
     if (response?.token) {
-      console.log(localStorageKey);
-      localStorage.setItem("demo-api-access-token", response.token);
-      setAccessToken(response.token);
+      localStorage.setItem(localStorageKey, response.token);
+      accessToken.current = response.token;
     }
   } catch (e) {
     console.log("checkProof error:", e);
   }
 };
 
-export const getAccountInfo = async (
-  account: Account,
-  accessToken: string | null
-) => {
+export const getAccountInfo = async (accessToken: string | null) => {
   const response = await (
     await fetch(`${BACKEND_URL}/${ApiEndpoints.GetAccountInfo}`, {
       headers: {
@@ -115,5 +108,5 @@ export const getAccountInfo = async (
     })
   ).json();
 
-  return response as {};
+  return response;
 };

@@ -130,16 +130,15 @@ export const VacancyFormEdit = () => {
     return !(validBasicBlock && validDescriptionBlock && validSettingsBlock);
   };
 
-  const disableHTMLScrolling = () => {
-    const htmlStyle = document.documentElement.style;
-    if (activePreview) {
-      htmlStyle.overflow = "hidden";
-    } else {
-      htmlStyle.overflow = "";
-    }
-  };
-
   useEffect(() => {
+    const disableHTMLScrolling = () => {
+      const htmlStyle = document.documentElement.style;
+      if (activePreview) {
+        htmlStyle.overflow = "hidden";
+      } else {
+        htmlStyle.overflow = "";
+      }
+    };
     disableHTMLScrolling();
   }, [activePreview]);
 

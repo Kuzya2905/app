@@ -1,5 +1,5 @@
 import { ConnectAdditionalRequest } from "@tonconnect/ui-react";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { MutableRefObject, useEffect, useLayoutEffect, useRef } from "react";
 
 export const useInterval = (callback: () => void, delay: number | null) => {
   const savedCallback = useRef(callback);
@@ -20,11 +20,11 @@ export const useInterval = (callback: () => void, delay: number | null) => {
 };
 
 export const reset = (
-  setAccessToken: React.Dispatch<React.SetStateAction<string | null>>,
+  accessToken: MutableRefObject<string | null>,
   localStorageKey: string,
   generatePayload: Promise<ConnectAdditionalRequest | null>
 ) => {
-  setAccessToken(null);
+  accessToken.current = null;
   localStorage.removeItem(localStorageKey);
   generatePayload;
 };

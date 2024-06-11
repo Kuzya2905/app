@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  MutableRefObject,
+} from "react";
 import cn from "classnames";
 import LinkNext from "next/link";
 import {
@@ -26,13 +32,21 @@ import styles from "./headerDemo.module.scss";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
+
   const [tonConnectUi] = useTonConnectUI();
   const [isWalletLoaded, setIsWalletLoaded] = useState<boolean>(false);
-
   const connectionRestored = useIsConnectionRestored();
   const wallet = useTonWallet();
+  const [tonConnectUI] = useTonConnectUI();
+
+  const firstProofLoading = useRef<boolean>(true);
+  const localStorageKey = "demo-api-access-token";
+  const accessToken = useRef<string | null>(
+    localStorage.getItem(localStorageKey)
+  );
 
   const IsScreenMobile = useIsScreenWidthLessThan(1025);
+  const refreshIntervalMs = 9 * 60 * 1000;
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
@@ -60,10 +74,6 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     changeBodyPosition();
   }, [activeBurger]);
 
-  const firstProofLoading = useRef<boolean>(true);
-  const [tonConnectUI] = useTonConnectUI();
-  const [data, setData] = useState({});
-
   const recreateProofPayload = useCallback(async () => {
     if (firstProofLoading.current) {
       tonConnectUI.setConnectRequestParameters({ state: "loading" });
@@ -86,27 +96,13 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     recreateProofPayload();
   }
 
-  const refreshIntervalMs = 9 * 60 * 1000;
-
   useInterval(recreateProofPayload, refreshIntervalMs);
-
-  const localStorageKey = "demo-api-access-token";
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem(localStorageKey)
-  );
-  if (accessToken) {
-    generatePayload();
-  }
-  const [authorized, setAuthorized] = useState(false);
-  console.log(tonConnectUI.wallet);
 
   useEffect(
     () =>
       tonConnectUI.onStatusChange(async (w) => {
-        console.log("dsad");
         if (!w) {
-          reset(setAccessToken, localStorageKey, generatePayload());
-          setAuthorized(false);
+          reset(accessToken, localStorageKey, generatePayload());
           return;
         }
 
@@ -115,29 +111,16 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
             w.connectItems.tonProof.proof,
             w.account,
             localStorageKey,
-            setAccessToken
+            accessToken
           );
         }
-
-        if (!accessToken) {
+        if (!accessToken.current) {
           tonConnectUI.disconnect();
-          setAuthorized(false);
           return;
         }
-
-        setAuthorized(true);
       }),
-    [tonConnectUI, accessToken]
+    [tonConnectUI]
   );
-
-  const getInfo = useCallback(async () => {
-    if (!wallet) {
-      return;
-    }
-    const response = await getAccountInfo(wallet.account, accessToken);
-
-    setData(response);
-  }, [wallet, accessToken]);
 
   return (
     <header className={styles.headerDemoMain}>

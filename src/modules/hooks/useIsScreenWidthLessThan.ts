@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useIsScreenWidthLessThan = (width: number): boolean => {
-  const [isScreenWidthLessThan, setIsScreenWidthLessThan] = useState<boolean>(false);
+  const [isScreenWidthLessThan, setIsScreenWidthLessThan] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const checkScreenWidth = () => {
@@ -10,10 +11,10 @@ const useIsScreenWidthLessThan = (width: number): boolean => {
 
     checkScreenWidth();
 
-    window.addEventListener('resize', checkScreenWidth);
+    window.addEventListener("resize", checkScreenWidth);
 
     return () => {
-      window.removeEventListener('resize', checkScreenWidth);
+      window.removeEventListener("resize", checkScreenWidth);
     };
   }, [width]);
 
