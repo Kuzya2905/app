@@ -8,6 +8,7 @@ import {
   useTonConnectUI,
   useTonWallet,
 } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
@@ -24,6 +25,8 @@ import { Burger } from "@/assets/svgs/Burger";
 import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
+import { createCompanyThunk } from "@/lib/features/createCompany/createCompanyThunk";
+import { AppDispatch } from "@/lib/store";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
@@ -122,6 +125,25 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     [tonConnectUI]
   );
 
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const createCompany = () => {
+      dispatch(
+        createCompanyThunk({
+          name: "dsadas",
+          city: "dsada23s",
+          description: "dsadas",
+          sizeCompany: "dsadas",
+          logo: "dsadas",
+          title: "dsadas",
+          industry: "dsadas",
+          contactLinks: "dsadas",
+        })
+      );
+    };
+    createCompany();
+  }, [dispatch]);
   return (
     <header className={styles.headerDemoMain}>
       <div className={styles.headerDemoWrapper} {...props}>
