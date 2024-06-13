@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { createCompanyThunk } from "./createCompanyThunk";
-import { CompaniesState, Company } from "./createCompany.types";
+import { Company, CreatedCompany } from "./createCompany.types";
 
 const createCompanySlice = createSlice({
   name: "createCompanySlice",
-  initialState: <CompaniesState>{
-    companies: [],
+  initialState: <CreatedCompany>{
+    companyCreated: null,
     loading: false,
     error: null,
   },
@@ -19,7 +19,7 @@ const createCompanySlice = createSlice({
         createCompanyThunk.fulfilled,
         (state, action: PayloadAction<Company>) => {
           state.loading = false;
-          state.companies.push(action.payload);
+          state.companyCreated = action.payload;
         }
       )
       .addCase(createCompanyThunk.rejected, (state, action) => {

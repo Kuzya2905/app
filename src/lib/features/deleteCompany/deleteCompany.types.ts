@@ -9,8 +9,13 @@ export interface Company {
   contactLinks: string;
 }
 
-export interface CreatedCompany {
-  companyCreated: Company | null;
+export interface UpdateCompany {
+  idCompany: string;
+  companyData: Company;
+}
+
+export interface CompaniesState {
+  message: string;
   loading: boolean;
   error: string | null;
 }

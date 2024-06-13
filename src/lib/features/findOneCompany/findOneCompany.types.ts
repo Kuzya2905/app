@@ -1,3 +1,5 @@
+export const BACKEND_URL = "http://localhost:8080/api/company";
+
 export interface Company {
   name: string;
   city: string;
@@ -9,8 +11,8 @@ export interface Company {
   contactLinks: string;
 }
 
-export interface CreatedCompany {
-  companyCreated: Company | null;
+export interface CompaniesState {
+  foundCompany: Company | null;
   loading: boolean;
   error: string | null;
 }

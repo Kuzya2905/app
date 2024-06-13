@@ -27,6 +27,11 @@ import { Cross } from "@/assets/svgs/Cross";
 import styles from "./headerDemo.module.scss";
 import { createCompanyThunk } from "@/lib/features/createCompany/createCompanyThunk";
 import { AppDispatch } from "@/lib/store";
+import { findAllCompaniesThunk } from "@/lib/features/findAllCompanies/findAllCompaniesThunk";
+import { deleteAllCompaniesThunk } from "@/lib/features/deleteAllCompanies/deleteAllCompaniesThunk";
+import findOneCompanyThunk from "@/lib/features/findOneCompany/findOneCompanyThunk";
+import updateCompanyThunk from "@/lib/features/updateCompany/updateCompanyThunk";
+import deleteCompanyThunk from "@/lib/features/deleteCompany/deleteCompanyThunk";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
@@ -127,25 +132,58 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    const createCompany = () => {
-      dispatch(
-        createCompanyThunk({
-          name: "dsadas",
-          city: "dsada23s",
-          description: "dsadas",
-          sizeCompany: "dsadas",
+  const createCompany = () => {
+    dispatch(
+      createCompanyThunk({
+        name: "1111",
+        city: "11111",
+        description: "dsadas",
+        sizeCompany: "dsadas",
+        logo: "dsadas",
+        title: "dsadas",
+        industry: "dsadas",
+        contactLinks: "dsadas",
+      })
+    );
+  };
+
+  const getAllCompanies = () => {
+    dispatch(findAllCompaniesThunk());
+  };
+
+  const deleteAllCompanies = () => {
+    dispatch(deleteAllCompaniesThunk());
+  };
+
+  const getCompany = () => {
+    dispatch(findOneCompanyThunk("666ab906650c4b12faaca46e"));
+  };
+
+  const updateCompany = () => {
+    dispatch(
+      updateCompanyThunk({
+        idCompany: "666ab906650c4b12faaca46e",
+        companyData: {
+          name: "1111",
+          city: "1111",
+          description: "1111",
+          sizeCompany: "1111",
           logo: "dsadas",
           title: "dsadas",
           industry: "dsadas",
           contactLinks: "dsadas",
-        })
-      );
-    };
-    createCompany();
-  }, [dispatch]);
+        },
+      })
+    );
+  };
+
+  const deleteCompany = () => {
+    dispatch(deleteCompanyThunk("666af9e71aecd50014e22713"));
+  };
+
   return (
     <header className={styles.headerDemoMain}>
+      <button onClick={() => getAllCompanies()}>Запрос на бэк</button>
       <div className={styles.headerDemoWrapper} {...props}>
         <LinkNext href="/">
           <div className={styles.headerDemoLogoContainer}>
