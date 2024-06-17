@@ -1,10 +1,12 @@
 export interface Company {
+  id: string;
+  title: string;
   name: string;
   city: string;
   description: string;
   sizeCompany: string;
   logo: string;
-  title: string;
+  vacancyNumber: number;
   industry: string;
   contactLinks: string;
 }

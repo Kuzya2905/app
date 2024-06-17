@@ -15,6 +15,7 @@ import { Telegram } from "@/assets/svgs/Telegram";
 import styles from "./CompanyInfo.module.scss";
 
 const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
+  console.log(dataCompany);
   const router = useRouter();
 
   const userAddress = useTonAddress();
@@ -33,7 +34,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
           <div className={styles.sectionBlockInfo}>
             <div className={styles.infoTitle}>
               <h1 className={styles.infoTitleH1}>{dataCompany.title}</h1>
-              <Link href={`https://${dataCompany.link}`} legacyBehavior>
+              {/* <Link href={`https://${dataCompany.link}`} legacyBehavior>
                 <a
                   className={styles.infoTitleLink}
                   target="_blank"
@@ -41,7 +42,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
                 >
                   {dataCompany.nameLink}
                 </a>
-              </Link>
+              </Link> */}
             </div>
             <div className={styles.infoData}>
               <div className={styles.infoSection}>
@@ -72,7 +73,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
               <Telegram />
             </Link>
           </div>
-          {userAddress && userAddress === dataCompany.walletAddress && (
+          {userAddress && userAddress && (
             <Button
               appearance="secondary"
               size="l"

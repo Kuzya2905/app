@@ -1,15 +1,20 @@
 export interface Company {
-  name: string;
+  id: string;
   city: string;
   description: string;
   sizeCompany: string;
   logo: string;
   title: string;
   industry: string;
-  contactLinks: string;
+  vacancyNumber: number;
+  contactLinks: {
+    telegram: String;
+    twitter: String;
+    site: String;
+  };
 }
 
-export interface CompaniesState {
+export interface CompanyState {
   foundCompany: Company | null;
   loading: boolean;
   error: string | null;

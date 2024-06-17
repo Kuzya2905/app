@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import findOneCompanyThunk from "./findOneCompanyThunk";
 
-import { CompaniesState, Company } from "./findOneCompany.types";
+import { CompanyState, Company } from "./findOneCompany.types";
 
 const findOneCompany = createSlice({
   name: "findOneCompany",
-  initialState: <CompaniesState>{
+  initialState: <CompanyState>{
     foundCompany: null,
     loading: false,
     error: null,

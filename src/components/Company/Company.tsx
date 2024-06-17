@@ -1,21 +1,44 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import Button from "../Button/Button";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 
-import { CompanyTypes, VacancyCardType } from "./Company.types";
+import { AppDispatch } from "@/lib/store";
+import { CompanyData, CompanyTypes, VacancyCardType } from "./Company.types";
+import { RootState } from "@/lib/features/companies/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
+  const [companyData, setCompanyData] = useState<CompanyData | null>(null);
+  const firstLoading = useRef(true);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const foundCompany = useSelector(
+    (state: RootState) => state.companiesReducers.findOneCompany.foundCompany
+  );
+
+  const getCompany = async () => {
+    await dispatch(findOneCompanyThunk(companyId));
+    setCompanyData(foundCompany);
+    firstLoading.current = false;
+  };
+
+  useEffect(() => {
+    getCompany();
+  }, []);
+
   const companiesJSON = localStorage.getItem("CardsCompanies");
   const dataCompany =
     companiesJSON &&
@@ -42,7 +65,13 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
   return (
     <>
-      {dataCompany ? (
+      {firstLoading.current ? (
+        <div className={styles.canvas}>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.loading}>Loading...</div>
+          </div>
+        </div>
+      ) : companyData ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -55,7 +84,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               </Link>
               <span className={styles.blockSlash}>/</span>
               <Link className={styles.blockLinkCurrent} href={""}>
-                {dataCompany.title}
+                {companyData.title}
               </Link>
             </div>
             <div className={styles.wrapperBlockMain}>
@@ -115,7 +144,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={dataCompany} />}</aside>
+              <aside>{<CompanyInfo dataCompany={companyData} />}</aside>
             </div>
           </div>
         </div>

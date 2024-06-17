@@ -1,3 +1,5 @@
+import { Company } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
+
 export interface CompanyTypes {
   companyId: string;
 }
@@ -16,3 +18,5 @@ export interface VacancyCardType {
   typeOfEmployment: string;
   expirationDate: string;
 }
+
+export interface CompanyData extends Company {}

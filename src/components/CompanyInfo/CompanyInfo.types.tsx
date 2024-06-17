@@ -1,20 +1,5 @@
-import { ReactElement } from "react";
+import { Company } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
 
 export interface CompanyInfoTypes {
-  dataCompany: {
-    id: number;
-    title: string;
-    logo: string;
-    nameLink: string;
-    link: string;
-    city: string;
-    industry: string;
-    sizeCompany: string;
-    description: string;
-    walletAddress: string;
-    linksContact: {
-      id: number;
-      icon: ReactElement;
-    }[];
-  };
+  dataCompany: Company;
 }

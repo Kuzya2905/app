@@ -143,13 +143,13 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
     dispatch(
       createCompanyThunk({
         logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
-        title: "55555",
+        title: "Tonstakers",
         description:
           "Get yields securely, equally and transparently at best rates on the market. Keep access to your staked asset at all times. Deposit TON, we'll do the rest.",
-        city: "55555",
-        vacancyNumber: 1,
+        city: "Dubai",
+        vacancyNumber: 7,
         sizeCompany: "1 - 50",
-        industry: "555555",
+        industry: "IT",
         contactLinks: {
           telegram: "https://tonstakers.com/",
           twitter: "https://tonstakers.com/",
@@ -195,7 +195,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const deleteCompany = () => {
-    dispatch(deleteCompanyThunk("666af9e71aecd50014e22713"));
+    dispatch(deleteCompanyThunk("667031fdb7120f3450cfd3d9"));
   };
 
   const createJob = () => {
@@ -250,7 +250,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   return (
     <header className={styles.headerDemoMain}>
-      <button onClick={() => getAllCompanies()}>Запрос на бэк</button>
+      <button onClick={() => deleteCompany()}>Запрос на бэк</button>
       <div className={styles.headerDemoWrapper} {...props}>
         <LinkNext href="/">
           <div className={styles.headerDemoLogoContainer}>
