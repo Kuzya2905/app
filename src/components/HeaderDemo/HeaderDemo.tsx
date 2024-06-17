@@ -8,7 +8,7 @@ import {
   useTonConnectUI,
   useTonWallet,
 } from "@tonconnect/ui-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Link from "@/components/Link/Link";
 import { LinksArr } from "./HeaderData";
@@ -25,13 +25,20 @@ import { Burger } from "@/assets/svgs/Burger";
 import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
-import { createCompanyThunk } from "@/lib/features/createCompany/createCompanyThunk";
+
+import { createCompanyThunk } from "@/lib/features/companies/createCompany/createCompanyThunk";
 import { AppDispatch } from "@/lib/store";
-import { findAllCompaniesThunk } from "@/lib/features/findAllCompanies/findAllCompaniesThunk";
-import { deleteAllCompaniesThunk } from "@/lib/features/deleteAllCompanies/deleteAllCompaniesThunk";
-import findOneCompanyThunk from "@/lib/features/findOneCompany/findOneCompanyThunk";
-import updateCompanyThunk from "@/lib/features/updateCompany/updateCompanyThunk";
-import deleteCompanyThunk from "@/lib/features/deleteCompany/deleteCompanyThunk";
+import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
+import { deleteAllCompaniesThunk } from "@/lib/features/companies/deleteAllCompanies/deleteAllCompaniesThunk";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import updateCompanyThunk from "@/lib/features/companies/updateCompany/updateCompanyThunk";
+import deleteCompanyThunk from "@/lib/features/companies/deleteCompany/deleteCompanyThunk";
+import { createJobThunk } from "@/lib/features/jobs/createJob/createJobThunk";
+import { deleteAllJobsThunk } from "@/lib/features/jobs/deleteAllJobs/deleteAllJobsThunk";
+import deleteJobThunk from "@/lib/features/jobs/deleteJob/deleteJobThunk";
+import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
+import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
+import updateJobThunk from "@/lib/features/jobs/updateJob/updateJobThunk";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
@@ -53,7 +60,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   );
 
   const IsScreenMobile = useIsScreenWidthLessThan(1025);
-  const refreshIntervalMs = 9 * 60 * 1000;
+  const refreshIntervalMs = 30 * 1000;
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
@@ -135,14 +142,19 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const createCompany = () => {
     dispatch(
       createCompanyThunk({
-        name: "1111",
-        city: "11111",
-        description: "dsadas",
-        sizeCompany: "dsadas",
-        logo: "dsadas",
-        title: "dsadas",
-        industry: "dsadas",
-        contactLinks: "dsadas",
+        logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
+        title: "55555",
+        description:
+          "Get yields securely, equally and transparently at best rates on the market. Keep access to your staked asset at all times. Deposit TON, we'll do the rest.",
+        city: "55555",
+        vacancyNumber: 1,
+        sizeCompany: "1 - 50",
+        industry: "555555",
+        contactLinks: {
+          telegram: "https://tonstakers.com/",
+          twitter: "https://tonstakers.com/",
+          site: "https://tonstakers.com/",
+        },
       })
     );
   };
@@ -156,22 +168,27 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const getCompany = () => {
-    dispatch(findOneCompanyThunk("666ab906650c4b12faaca46e"));
+    dispatch(findOneCompanyThunk("666fea2e3359553f80e9a412"));
   };
 
   const updateCompany = () => {
     dispatch(
       updateCompanyThunk({
-        idCompany: "666ab906650c4b12faaca46e",
+        idCompany: "667018d99e62e843a0eca3e2",
         companyData: {
-          name: "1111",
-          city: "1111",
-          description: "1111",
-          sizeCompany: "1111",
-          logo: "dsadas",
-          title: "dsadas",
-          industry: "dsadas",
-          contactLinks: "dsadas",
+          logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
+          title: "11111",
+          description:
+            "Get yields securely, equally and transparently at best rates on the market. Keep access to your staked asset at all times. Deposit TON, we'll do the rest.",
+          city: "111111",
+          vacancyNumber: 1,
+          sizeCompany: "1 - 50",
+          industry: "11111",
+          contactLinks: {
+            telegram: "https://tonstakers.com/",
+            twitter: "https://tonstakers.com/",
+            site: "https://tonstakers.com/",
+          },
         },
       })
     );
@@ -179,6 +196,56 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   const deleteCompany = () => {
     dispatch(deleteCompanyThunk("666af9e71aecd50014e22713"));
+  };
+
+  const createJob = () => {
+    dispatch(
+      createJobThunk({
+        idCompany: "667018d99e62e843a0eca3e2",
+        name: "11",
+        experience: 3,
+        mode: "Remote",
+        city: "11",
+        description:
+          "As a Senior Frontend Engineer at Tonstakers, you will play a critical role in shaping the future of our platform. You will collaborate closely with our dedicated design, product, and development teams to deliver outstanding user experiences.",
+        salary: 10000,
+        logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
+      })
+    );
+  };
+
+  const deleteAllJobs = () => {
+    dispatch(deleteAllJobsThunk());
+  };
+
+  const deleteJob = () => {
+    dispatch(deleteJobThunk("6670192e9e62e843a0eca3e7"));
+  };
+
+  const getAllJobs = () => {
+    dispatch(findAllJobsThunk());
+  };
+
+  const getJob = () => {
+    dispatch(findOneJobThunk("667013409e62e843a0eca3c2"));
+  };
+
+  const updateJob = () => {
+    dispatch(
+      updateJobThunk({
+        idJob: "6670192e9e62e843a0eca3e7",
+        jobData: {
+          name: "nnnnnnn",
+          experience: 3,
+          mode: "nnnnnn",
+          city: "nnnnnn",
+          description:
+            "As a Senior Frontend Engineer at Tonstakers, you will play a critical role in shaping the future of our platform. You will collaborate closely with our dedicated design, product, and development teams to deliver outstanding user experiences.",
+          salary: 23232323,
+          logo: "https://cdn.getro.com/companies/1df17e37-856f-543e-a964-1b2f51f1d305",
+        },
+      })
+    );
   };
 
   return (

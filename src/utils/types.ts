@@ -1,7 +1,7 @@
 export const TON_CENTER_URL = "https://toncenter.com/api/v2";
 export const TON_CENTER_URL_TESTNET = "https://testnet.toncenter.com/api/v2";
 export const COINGECKO_URL = "https://api.coingecko.com/api/v3";
-export const BACKEND_URL = "http://localhost:8080";
+export const BACKEND_URL = "http://localhost:8081";
 
 export enum ApiEndpoints {
   GetAddressBalance = "getAddressBalance",

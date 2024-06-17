@@ -1,15 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apiService } from "./apiService";
-import createCompanyReducer from "./features/createCompany/createCompanySlice";
+
+import companiesReducers from "./features/companies/companiesReducers";
+import jobsReducers from "./features/jobs/jobsReducers";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      [apiService.reducerPath]: apiService.reducer,
-      createCompany: createCompanyReducer,
+      companiesReducers,
+      jobsReducers,
     },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(apiService.middleware),
   });
 };
 

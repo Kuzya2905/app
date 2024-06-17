@@ -1,0 +1,25 @@
+export interface Company {
+  city: string;
+  description: string;
+  sizeCompany: string;
+  logo: string;
+  title: string;
+  industry: string;
+  vacancyNumber: number;
+  contactLinks: {
+    telegram: String;
+    twitter: String;
+    site: String;
+  };
+}
+
+export interface UpdateCompany {
+  idCompany: string;
+  companyData: Company;
+}
+
+export interface CompaniesState {
+  updatedCompany: Company | null;
+  loading: boolean;
+  error: string | null;
+}
