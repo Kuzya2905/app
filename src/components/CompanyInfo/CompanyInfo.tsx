@@ -15,7 +15,6 @@ import { Telegram } from "@/assets/svgs/Telegram";
 import styles from "./CompanyInfo.module.scss";
 
 const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
-  console.log(dataCompany);
   const router = useRouter();
 
   const userAddress = useTonAddress();

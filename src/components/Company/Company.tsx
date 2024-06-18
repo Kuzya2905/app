@@ -12,46 +12,50 @@ import Button from "../Button/Button";
 import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 
 import { AppDispatch } from "@/lib/store";
-import { CompanyData, CompanyTypes, VacancyCardType } from "./Company.types";
+import { CompanyTypes, VacancyCardType } from "./Company.types";
 import { RootState } from "@/lib/features/companies/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
+import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
-  const [companyData, setCompanyData] = useState<CompanyData | null>(null);
-  const firstLoading = useRef(true);
+  const [vacancies, setVacancies] = useState<VacancyCardType[] | null>(null);
+  const [firstLoading, setFirstLoading] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
 
   const foundCompany = useSelector(
     (state: RootState) => state.companiesReducers.findOneCompany.foundCompany
   );
-
-  const getCompany = async () => {
-    await dispatch(findOneCompanyThunk(companyId));
-    setCompanyData(foundCompany);
-    firstLoading.current = false;
-  };
+  const idVacanciesCompany = foundCompany?.vacancy;
 
   useEffect(() => {
+    const getCompany = async () => {
+      await dispatch(findOneCompanyThunk(companyId));
+      setFirstLoading(false);
+    };
     getCompany();
-  }, []);
+  }, [companyId, dispatch]);
 
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const dataCompany =
-    companiesJSON &&
-    JSON.parse(companiesJSON).find(
-      (company: { id: number }) => company.id === Number(companyId)
-    );
+  useEffect(() => {
+    if (!idVacanciesCompany) return;
 
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+    const getVacancies = async () => {
+      const vacanciesCompany = await Promise.all(
+        idVacanciesCompany.map(async (id: string) => {
+          const vacancyData = await dispatch(findOneJobThunk(id));
+          return vacancyData.payload as VacancyCardType;
+        })
+      );
+      setVacancies(vacanciesCompany);
+    };
 
-  const vacanciesCompany: VacancyCardType[] = vacancies.filter(
-    (vacancy: VacancyCardType) => vacancy.idCompany === Number(companyId)
-  );
+    if (!firstLoading) {
+      getVacancies();
+    }
+  }, [firstLoading, idVacanciesCompany, dispatch]);
 
   const userAddress = useTonAddress();
 
@@ -61,17 +65,17 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const isOwner =
     userAddress &&
     userAddress ===
-      { ...dataCompany, walletAddress: userAddress }.walletAddress;
+      { ...foundCompany, walletAddress: userAddress }.walletAddress;
 
   return (
     <>
-      {firstLoading.current ? (
+      {firstLoading ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.loading}>Loading...</div>
           </div>
         </div>
-      ) : companyData ? (
+      ) : foundCompany ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -84,7 +88,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               </Link>
               <span className={styles.blockSlash}>/</span>
               <Link className={styles.blockLinkCurrent} href={""}>
-                {companyData.title}
+                {foundCompany.title}
               </Link>
             </div>
             <div className={styles.wrapperBlockMain}>
@@ -105,7 +109,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
                     <span className={styles.blockTotal}>
-                      Total vacancies: {vacanciesCompany.length}
+                      Total vacancies: {vacancies?.length}
                     </span>
                     <span className={styles.blockSort}>
                       By date of posting
@@ -115,42 +119,50 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     </span>
                   </div>
                   <div className={styles.blockCards}>
-                    {vacanciesCompany.map(
-                      ({
-                        idVacancy,
-                        name,
-                        experience,
-                        typeOfEmployment,
-                        city,
-                        description,
-                        salary,
-                        date,
-                      }) => (
-                        <VacancyCard
-                          onClick={() => handleClickVacancy(idVacancy)}
-                          key={idVacancy}
-                          name={name}
-                          experience={experience}
-                          typeOfEmployment={typeOfEmployment}
-                          city={city}
-                          description={description}
-                          salary={salary}
-                          company={dataCompany.title}
-                          logo={dataCompany.logo}
-                          date={date}
-                        />
+                    {vacancies ? (
+                      vacancies.map(
+                        ({
+                          id,
+                          name,
+                          experience,
+                          typeOfEmployment,
+                          city,
+                          description,
+                          salary,
+                          date,
+                        }) => (
+                          <VacancyCard
+                            onClick={() => handleClickVacancy(id)}
+                            key={id}
+                            name={name}
+                            experience={experience}
+                            typeOfEmployment={typeOfEmployment}
+                            city={city}
+                            description={description}
+                            salary={salary}
+                            company={foundCompany.title}
+                            logo={foundCompany.logo}
+                            date={date}
+                          />
+                        )
                       )
+                    ) : (
+                      <div>Loading...</div>
                     )}
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={companyData} />}</aside>
+              <aside>{<CompanyInfo dataCompany={foundCompany} />}</aside>
             </div>
           </div>
         </div>
       ) : (
         <div className={styles.canvas}>
-          <div className={styles.canvasWrapper}>No company data available</div>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.noDataCompany}>
+              No company data available
+            </div>
+          </div>
         </div>
       )}
     </>

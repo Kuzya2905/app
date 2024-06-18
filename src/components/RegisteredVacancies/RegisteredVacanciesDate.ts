@@ -1,6 +1,6 @@
 export const cardsVacancies = [
   {
-    idVacancy: 1,
+    id: 1,
     idCompany: 1,
     name: "Lead QA Engineer",
     experience: 3,
@@ -21,7 +21,7 @@ export const cardsVacancies = [
     expirationDate: "2025-04-04T01:30:00.000-05:00",
   },
   {
-    idVacancy: 2,
+    id: 2,
     idCompany: 2,
     name: "Software Development Engineer",
     experience: 3,
@@ -42,7 +42,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 3,
+    id: 3,
     idCompany: 3,
     name: "Product Analyst",
     experience: 7,
@@ -63,7 +63,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 4,
+    id: 4,
     idCompany: 6,
     name: "Lead QA Engineer",
     experience: 5,
@@ -84,7 +84,7 @@ export const cardsVacancies = [
     expirationDate: "2025-04-20T01:30:00.000-05:00",
   },
   {
-    idVacancy: 5,
+    id: 5,
     idCompany: 4,
     name: "Product Manager",
     experience: 1,
@@ -105,7 +105,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 6,
+    id: 6,
     idCompany: 5,
     name: "Software Development Engineer",
     experience: 7,
@@ -126,7 +126,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 8,
+    id: 8,
     idCompany: 2,
     name: "Product Analyst",
     experience: 3,
@@ -147,7 +147,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 9,
+    id: 9,
     idCompany: 3,
     name: "Lead QA Engineer",
     experience: 7,
@@ -168,7 +168,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 10,
+    id: 10,
     idCompany: 6,
     name: "Software Development Engineer",
     experience: 5,
@@ -189,7 +189,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 11,
+    id: 11,
     idCompany: 4,
     name: "Product Analyst",
     experience: 1,
@@ -210,7 +210,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 12,
+    id: 12,
     idCompany: 5,
     name: "Product Manager",
     experience: 7,
@@ -231,7 +231,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 14,
+    id: 14,
     idCompany: 2,
     name: "Product Analyst",
     experience: 3,
@@ -252,7 +252,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 16,
+    id: 16,
     idCompany: 6,
     name: "Product Analyst",
     experience: 5,
@@ -273,7 +273,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 18,
+    id: 18,
     idCompany: 5,
     name: "Product Analyst",
     experience: 7,
@@ -294,7 +294,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 19,
+    id: 19,
     idCompany: 1,
     name: "Product Analyst",
     experience: 3,
@@ -315,7 +315,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 20,
+    id: 20,
     idCompany: 2,
     name: "Product Manager",
     experience: 3,
@@ -336,7 +336,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 21,
+    id: 21,
     idCompany: 3,
     name: "Product Manager",
     experience: 7,
@@ -357,7 +357,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 22,
+    id: 22,
     idCompany: 6,
     name: "Lead QA Engineer",
     experience: 5,
@@ -378,7 +378,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 24,
+    id: 24,
     idCompany: 5,
     name: "Software Development Engineer",
     experience: 7,
@@ -399,7 +399,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 25,
+    id: 25,
     idCompany: 1,
     name: "Product Analyst",
     experience: 3,
@@ -420,7 +420,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 26,
+    id: 26,
     idCompany: 2,
     name: "Product Analyst",
     experience: 3,
@@ -441,7 +441,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 27,
+    id: 27,
     idCompany: 3,
     name: "Product Analyst",
     experience: 7,
@@ -462,7 +462,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 28,
+    id: 28,
     idCompany: 6,
     name: "Chief Marketing Officer (CMO)",
     experience: 5,
@@ -483,7 +483,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 30,
+    id: 30,
     idCompany: 5,
     name: "Product Analyst",
     experience: 7,
@@ -504,7 +504,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 31,
+    id: 31,
     idCompany: 1,
     name: "Software Development Engineer",
     experience: 3,
@@ -525,7 +525,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 32,
+    id: 32,
     idCompany: 2,
     name: "Lead QA Engineer",
     experience: 3,
@@ -546,7 +546,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 33,
+    id: 33,
     idCompany: 3,
     name: "Software Development Engineer",
     experience: 7,
@@ -567,7 +567,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 34,
+    id: 34,
     idCompany: 6,
     name: "Product Manager",
     experience: 5,
@@ -588,7 +588,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 37,
+    id: 37,
     idCompany: 1,
     name: "Chief Marketing Officer (CMO)",
     experience: 3,
@@ -609,7 +609,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 38,
+    id: 38,
     idCompany: 2,
     name: "Software Development Engineer",
     experience: 3,
@@ -630,7 +630,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 39,
+    id: 39,
     idCompany: 3,
     name: "Lead QA Engineer",
     experience: 7,
@@ -651,7 +651,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 40,
+    id: 40,
     idCompany: 6,
     name: "Lead QA Engineer",
     experience: 5,
@@ -672,7 +672,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 42,
+    id: 42,
     idCompany: 5,
     name: "Product Analyst",
     experience: 7,
@@ -693,7 +693,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 43,
+    id: 43,
     idCompany: 1,
     name: "Product Analyst",
     experience: 3,
@@ -714,7 +714,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 44,
+    id: 44,
     idCompany: 2,
     name: "Software Development Engineer",
     experience: 3,
@@ -735,7 +735,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 45,
+    id: 45,
     idCompany: 3,
     name: "Chief Marketing Officer (CMO)",
     experience: 7,
@@ -756,7 +756,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 46,
+    id: 46,
     idCompany: 6,
     name: "Product Manager",
     experience: 5,
@@ -777,7 +777,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 47,
+    id: 47,
     idCompany: 4,
     name: "Software Development Engineer",
     experience: 1,
@@ -798,7 +798,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 48,
+    id: 48,
     idCompany: 5,
     name: "Chief Marketing Officer (CMO)",
     experience: 7,
@@ -819,7 +819,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 49,
+    id: 49,
     idCompany: 1,
     name: "Software Development Engineer",
     experience: 3,
@@ -840,7 +840,7 @@ export const cardsVacancies = [
       "Hybrid work format or full remote work in cities where we do not have offices",
   },
   {
-    idVacancy: 50,
+    id: 50,
     idCompany: 2,
     name: "Software Development Engineer",
     experience: 3,
