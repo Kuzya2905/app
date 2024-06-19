@@ -14,44 +14,46 @@ import styles from "./vacancy.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
   const userAddress = useTonAddress();
   const [firstLoading, setFirstLoading] = useState(true);
 
   const foundVacancy = useSelector(
-    (state) => state.jobsReducers.findOneJob.foundJob
+    (state: JobsReducersTypes) => state.jobsReducers.findOneJob.foundJob
   );
 
-  console.log(foundVacancy);
+  const foundCompany = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findOneCompany.foundCompany
+  );
 
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const getVacancy = async () => {
       await dispatch(findOneJobThunk(vacancyId));
+
       setFirstLoading(false);
     };
     getVacancy();
   }, [vacancyId, dispatch]);
 
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+  useEffect(() => {
+    const getCompany = async () => {
+      if (foundVacancy) {
+        await dispatch(findOneCompanyThunk(foundVacancy.idCompany));
+      }
+    };
 
-  const dataVacancy = vacancies.find(
-    (vacancy: { idVacancy: number }) => vacancy.idVacancy === Number(vacancyId)
-  );
+    getCompany();
+  }, [foundVacancy, dispatch]);
 
-  const idCompany = String(dataVacancy?.idCompany);
-
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const dataCompany =
-    companiesJSON &&
-    JSON.parse(companiesJSON).find(
-      (company: { id: number }) => company.id === Number(idCompany)
-    );
   const isOwner =
-    dataCompany && userAddress && userAddress === dataCompany.walletAddress;
+    foundVacancy && userAddress && userAddress === foundVacancy.walletAddress;
 
   const checkExperience = (experience: string) => {
     return experience === "No experience"
@@ -61,7 +63,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
 
   return (
     <>
-      {foundVacancy ? (
+      {foundVacancy && foundCompany ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -75,9 +77,9 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               <span className={styles.blockSlash}>/</span>
               <Link
                 className={styles.blockLinkCurrent}
-                href={`/company/${idCompany}`}
+                href={`/company/${foundVacancy.id}`}
               >
-                {dataCompany?.title}
+                {foundCompany?.title}
               </Link>
               <span className={styles.blockSlash}>/</span>
               <Link className={styles.blockLinkCurrent} href={""}>
@@ -88,7 +90,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               <h1 className={styles.blockTopTitle}>{foundVacancy.name}</h1>
               <ul className={styles.blockTotalInfo}>
                 <li className={styles.totalInfoItem}>
-                  {convertISOToDate(foundVacancy.date)}
+                  {convertISOToDate(foundVacancy.createdAt)}
                 </li>
                 <li className={styles.totalInfoItem}>
                   From $ {foundVacancy.salary}
@@ -96,9 +98,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 <li className={styles.totalInfoItem}>
                   {checkExperience(foundVacancy.experience)}
                 </li>
-                <li className={styles.totalInfoItem}>
-                  {foundVacancy.typeOfEmployment}
-                </li>
+                <li className={styles.totalInfoItem}>{foundVacancy.mode}</li>
                 <li className={styles.totalInfoItem}>{foundVacancy.city}</li>
               </ul>
             </div>
@@ -137,8 +137,8 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                   />
                 ) : (
                   <VacancyApply
-                    dataCompany={dataCompany}
-                    idCompany={idCompany}
+                    dataCompany={foundCompany}
+                    idCompany={foundCompany.id}
                   />
                 )}
               </aside>

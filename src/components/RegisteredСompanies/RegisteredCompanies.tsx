@@ -9,7 +9,7 @@ import CompanyCard from "@/components/CompanyCard/CompanyCard";
 import { AppDispatch } from "@/lib/store";
 import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
 
-import { RootState } from "@/lib/features/companies/types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import styles from "./registeredСompanies.module.scss";
 
@@ -22,7 +22,8 @@ const RegisteredCompanies: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   let cardsCompanies = useSelector(
-    (state: RootState) => state.companiesReducers.findAllCompanies.allCompanies
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findAllCompanies.allCompanies
   );
 
   cardsCompanies = cardsCompanies.slice(-6);
@@ -30,6 +31,14 @@ const RegisteredCompanies: React.FC = () => {
   useEffect(() => {
     dispatch(findAllCompaniesThunk());
   }, [dispatch]);
+
+  const counterVacancies = (idCompany: string) => {
+    const company = cardsCompanies.find(({ id }) => id === idCompany);
+    if (company) {
+      const numberVacancies = company?.vacancy.length;
+      return numberVacancies;
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -47,7 +56,7 @@ const RegisteredCompanies: React.FC = () => {
         </div>
         <div className={styles.sectionCards}>
           {cardsCompanies.map(
-            ({ id, logo, title, description, city, vacancyNumber }) => (
+            ({ id, logo, title, description, city}) => (
               <CompanyCard
                 onClick={() => handleClickCompany(id)}
                 key={id}
@@ -55,7 +64,7 @@ const RegisteredCompanies: React.FC = () => {
                 title={title}
                 description={description}
                 city={city}
-                vacancyNumber={vacancyNumber}
+                vacancyNumber={counterVacancies(id)}
               />
             )
           )}

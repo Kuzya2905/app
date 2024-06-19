@@ -46,7 +46,7 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
           title={dataCompany.title}
           description={dataCompany.description}
           city={dataCompany.city}
-          vacancyNumber={dataCompany.vacancyNumber}
+          vacancyNumber={dataCompany.vacancy.length}
         />
       ) : (
         <div className={styles.sectionCard}>No company information</div>

@@ -6,5 +6,5 @@ export interface CompanyCardTypes
   title: string;
   description: string;
   city: string;
-  vacancyNumber: number | string;
+  vacancyNumber?: number;
 }

@@ -1,17 +1,22 @@
 export default interface VacancyInfoTypes {
   dataVacancy: {
-    idVacancy: number;
-    idCompany: number;
+    id: string;
     name: string;
-    experience: number;
-    typeOfEmployment: string;
     city: string;
     description: string;
-    salary: number;
-    company: string;
+    sizeCompany: string;
     logo: string;
-    date: string;
-    expirationDate: string;
+    industry: string;
+    contactLinks: string;
+    experience: string;
+    requirements: string;
+    responsibilities: string;
+    mode: string;
+    salary: number;
+    idCompany: string;
+    createdAt: string;
+    nameCompany: string;
+    termsAndConditions: string;
   };
   vacancyId: string;
 }

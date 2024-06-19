@@ -1,12 +1,18 @@
 export interface Job {
+  id: string;
   name: string;
   city: string;
   description: string;
   sizeCompany: string;
   logo: string;
-  title: string;
   industry: string;
   contactLinks: string;
+  experience: number;
+  mode: string;
+  salary: number;
+  idCompany: string;
+  createdAt: string;
+  nameCompany: string;
 }
 
 export interface JobsState {

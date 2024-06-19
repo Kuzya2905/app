@@ -14,7 +14,7 @@ const VacancyCard: React.FC<VacancyCardTypes> = ({
   city,
   description,
   salary,
-  company,
+  nameCompany,
   logo,
   date,
   className,
@@ -44,7 +44,7 @@ const VacancyCard: React.FC<VacancyCardTypes> = ({
           width="24"
           height="24"
         />
-        <p className={styles.vacancyCardLogoText}>{company}</p>
+        <p className={styles.vacancyCardLogoText}>{nameCompany}</p>
       </div>
       <p className={styles.vacancyCardDate}>{convertISOToDate(date)}</p>
     </div>

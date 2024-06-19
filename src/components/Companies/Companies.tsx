@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
@@ -11,14 +11,24 @@ import { CompanyCardType } from "./compaines.types";
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./companies.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/lib/store";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
 
 const Companies = () => {
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const companies: CompanyCardType[] =
-    companiesJSON && JSON.parse(companiesJSON);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { allCompanies: cardsCompanies, loading } = useSelector(
+    (state: CompaniesReducersTypes) => state.companiesReducers.findAllCompanies
+  );
+
+  useEffect(() => {
+    dispatch(findAllCompaniesThunk());
+  }, [dispatch]);
 
   const router = useRouter();
-  const handleClickCompany = (id: number) => router.push(`/company/${id}`);
+  const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
   return (
     <main className={styles.main}>
@@ -36,18 +46,22 @@ const Companies = () => {
               </span>
             </div>
             <div className={styles.blockCards}>
-              {companies.map(
-                ({ id, logo, title, description, city, vacancyNumber }) => (
-                  <CompanyCard
-                    onClick={() => handleClickCompany(id)}
-                    key={id}
-                    logo={logo}
-                    title={title}
-                    description={description}
-                    city={city}
-                    vacancyNumber={vacancyNumber}
-                  />
+              {!loading ? (
+                cardsCompanies.map(
+                  ({ id, logo, title, description, city, vacancy }) => (
+                    <CompanyCard
+                      onClick={() => handleClickCompany(id)}
+                      key={id}
+                      logo={logo}
+                      title={title}
+                      description={description}
+                      city={city}
+                      vacancyNumber={vacancy.length}
+                    />
+                  )
                 )
+              ) : (
+                <div>Loading...</div>
               )}
             </div>
           </div>

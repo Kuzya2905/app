@@ -7,7 +7,7 @@ export interface VacancyCardTypes
   city: string;
   description: string;
   salary: number;
-  company: string;
+  nameCompany?: string;
   logo: string;
   date: string;
   className?: string;

@@ -13,7 +13,7 @@ import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOne
 
 import { AppDispatch } from "@/lib/store";
 import { CompanyTypes, VacancyCardType } from "./Company.types";
-import { RootState } from "@/lib/features/companies/types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
@@ -27,7 +27,8 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const foundCompany = useSelector(
-    (state: RootState) => state.companiesReducers.findOneCompany.foundCompany
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findOneCompany.foundCompany
   );
   const idVacanciesCompany = foundCompany?.vacancy;
 
@@ -125,24 +126,24 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                           id,
                           name,
                           experience,
-                          typeOfEmployment,
+                          mode,
                           city,
                           description,
                           salary,
-                          date,
+                          createdAt,
                         }) => (
                           <VacancyCard
                             onClick={() => handleClickVacancy(id)}
                             key={id}
                             name={name}
                             experience={experience}
-                            typeOfEmployment={typeOfEmployment}
+                            typeOfEmployment={mode}
                             city={city}
                             description={description}
+                            nameCompany={foundCompany.title}
                             salary={salary}
-                            company={foundCompany.title}
                             logo={foundCompany.logo}
-                            date={date}
+                            date={createdAt}
                           />
                         )
                       )

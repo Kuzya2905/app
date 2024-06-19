@@ -1,4 +1,5 @@
 export interface Company {
+  vacancy: [];
   id: string;
   title: string;
   name: string;

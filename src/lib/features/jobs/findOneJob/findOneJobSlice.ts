@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import findOneJobThunk from "./findOneJobThunk";
 
-import { JobsState, Job } from "./findOneJob.types";
+import { JobState, Job } from "./findOneJob.types";
 
 const findOneJob = createSlice({
   name: "findOneJob",
-  initialState: <JobsState>{
+  initialState: <JobState>{
     foundJob: null,
     loading: false,
     error: null,

@@ -1,19 +1,19 @@
 export interface VacancyApplyTypes {
   dataCompany?: {
-    id: number;
+    id: string;
+    city: string;
+    description: string;
+    sizeCompany: string;
     logo: string;
     title: string;
-    nameLink: string;
-    link: string;
-    description: string;
-    city: string;
-    vacancyNumber: number;
-    sizeCompany: string;
     industry: string;
-    linksContact: {
-      id: number;
-      icon: React.JSX.Element;
-    }[];
+    vacancyNumber: number;
+    contactLinks: {
+      telegram: String;
+      twitter: String;
+      site: String;
+    };
+    vacancy: [];
   };
   idCompany: string | null;
 }

@@ -14,8 +14,8 @@ export interface VacancyCardType {
   salary: number;
   company: string;
   logo: string;
-  date: string;
-  typeOfEmployment: string;
+  createdAt: string;
+  mode: string;
   expirationDate: string;
 }
 

@@ -195,13 +195,13 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const deleteCompany = () => {
-    dispatch(deleteCompanyThunk("667031fdb7120f3450cfd3d9"));
+    dispatch(deleteCompanyThunk("6672b9580fa53d2b40494060"));
   };
 
   const createJob = () => {
     dispatch(
       createJobThunk({
-        idCompany: "66703155b7120f3450cfd3cb",
+        idCompany: "6672b9580fa53d2b40494060",
         name: "aaaa",
         experience: 3,
         mode: "Remote",
@@ -219,7 +219,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const deleteJob = () => {
-    dispatch(deleteJobThunk("6670192e9e62e843a0eca3e7"));
+    dispatch(deleteJobThunk("6672b9950fa53d2b40494062"));
   };
 
   const getAllJobs = () => {
@@ -227,7 +227,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const getJob = () => {
-    dispatch(findOneJobThunk("66718057ef1fac3df786fe43"));
+    dispatch(findOneJobThunk("6672ace23168323ef020bb3b"));
   };
 
   const updateJob = () => {
@@ -250,7 +250,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   return (
     <header className={styles.headerDemoMain}>
-      <button onClick={() => deleteAllCompanies()}>Запрос на бэк</button>
+      <button>Запрос на бэк</button>
       <div className={styles.headerDemoWrapper} {...props}>
         <LinkNext href="/">
           <div className={styles.headerDemoLogoContainer}>
