@@ -12,6 +12,7 @@ export interface Company {
     twitter: String;
     site: String;
   };
+  vacancy: [];
 }
 
 export interface CompanyState {

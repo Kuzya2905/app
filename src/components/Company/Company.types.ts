@@ -5,7 +5,7 @@ export interface CompanyTypes {
 }
 
 export interface VacancyCardType {
-  idVacancy: number;
+  id: number;
   idCompany: number;
   name: string;
   experience: number;

@@ -4,7 +4,7 @@ import createJobReducer from "@/lib/features/jobs/createJob/createJobSlice";
 import deleteAllJobsReducer from "@/lib/features/jobs/deleteAllJobs/deleteAllJobsSlice";
 import deleteJobReducer from "@/lib/features/jobs/deleteJob/deleteJobSlice";
 import findAllJobsReducer from "@/lib/features/jobs/findAllJobs/findAllJobsSlice";
-import findOneJobsReducer from "@/lib/features/jobs/findOneJob/findOneJobSlice";
+import findOneJobReducer from "@/lib/features/jobs/findOneJob/findOneJobSlice";
 import updateJobReducer from "@/lib/features/jobs/updateJob/updateJobSlice";
 
 const jobsReducers = combineReducers({
@@ -12,7 +12,7 @@ const jobsReducers = combineReducers({
   deleteAllJobs: deleteAllJobsReducer,
   deleteJob: deleteJobReducer,
   findAllJobs: findAllJobsReducer,
-  findOneJobs: findOneJobsReducer,
+  findOneJob: findOneJobReducer,
   updateJob: updateJobReducer,
 });
 
