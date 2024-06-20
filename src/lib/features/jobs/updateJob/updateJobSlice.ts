@@ -4,8 +4,8 @@ import updateJobThunk from "./updateJobThunk";
 
 import { JobsState } from "./updateJobs.types";
 
-const updateJob = createSlice({
-  name: "updateJob",
+const updateJobSlice = createSlice({
+  name: "updateJobSlice",
   initialState: <JobsState>{
     massage: null,
     loading: false,
@@ -31,4 +31,4 @@ const updateJob = createSlice({
   },
 });
 
-export default updateJob.reducer;
+export default updateJobSlice.reducer;

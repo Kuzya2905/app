@@ -4,7 +4,7 @@ import { findAllJobsThunk } from "./findAllJobsThunk";
 
 import { JobsState, Job } from "./findAllJobs.types";
 
-const findAllJobs = createSlice({
+const findAllJobsSlice = createSlice({
   name: "findAllJobsSlice",
   initialState: <JobsState>{
     allJobs: [],
@@ -31,4 +31,4 @@ const findAllJobs = createSlice({
   },
 });
 
-export default findAllJobs.reducer;
+export default findAllJobsSlice.reducer;

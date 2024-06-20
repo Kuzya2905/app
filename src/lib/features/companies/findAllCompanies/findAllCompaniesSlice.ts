@@ -4,7 +4,7 @@ import { findAllCompaniesThunk } from "./findAllCompaniesThunk";
 
 import { CompaniesState, Company } from "./findAllCompanies.types";
 
-const findAllCompanies = createSlice({
+const findAllCompaniesSlice = createSlice({
   name: "findAllCompaniesSlice",
   initialState: <CompaniesState>{
     allCompanies: [],
@@ -31,4 +31,4 @@ const findAllCompanies = createSlice({
   },
 });
 
-export default findAllCompanies.reducer;
+export default findAllCompaniesSlice.reducer;

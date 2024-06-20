@@ -4,8 +4,8 @@ import findOneCompanyThunk from "./findOneCompanyThunk";
 
 import { CompanyState, Company } from "./findOneCompany.types";
 
-const findOneCompany = createSlice({
-  name: "findOneCompany",
+const findOneCompanySlice = createSlice({
+  name: "findOneCompanySlice",
   initialState: <CompanyState>{
     foundCompany: null,
     loading: false,
@@ -31,4 +31,4 @@ const findOneCompany = createSlice({
   },
 });
 
-export default findOneCompany.reducer;
+export default findOneCompanySlice.reducer;

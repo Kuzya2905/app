@@ -4,8 +4,8 @@ import findOneJobThunk from "./findOneJobThunk";
 
 import { JobState, Job } from "./findOneJob.types";
 
-const findOneJob = createSlice({
-  name: "findOneJob",
+const findOneJobSlice = createSlice({
+  name: "findOneJobSlice",
   initialState: <JobState>{
     foundJob: null,
     loading: false,
@@ -31,4 +31,4 @@ const findOneJob = createSlice({
   },
 });
 
-export default findOneJob.reducer;
+export default findOneJobSlice.reducer;

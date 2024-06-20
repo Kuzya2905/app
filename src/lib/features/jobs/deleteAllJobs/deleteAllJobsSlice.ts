@@ -4,7 +4,7 @@ import { deleteAllJobsThunk } from "./deleteAllJobsThunk";
 
 import { DeleteAllJobs } from "./deleteAllJobs.types";
 
-const deleteAllJobs = createSlice({
+const deleteAllJobsSlice = createSlice({
   name: "deleteAllJobsSlice",
   initialState: <DeleteAllJobs>{
     message: "",
@@ -28,4 +28,4 @@ const deleteAllJobs = createSlice({
   },
 });
 
-export default deleteAllJobs.reducer;
+export default deleteAllJobsSlice.reducer;

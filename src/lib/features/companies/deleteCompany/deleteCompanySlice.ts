@@ -4,8 +4,8 @@ import deleteCompanyThunk from "./deleteCompanyThunk";
 
 import { CompanyState } from "./deleteCompany.types";
 
-const deleteCompany = createSlice({
-  name: "deleteCompany",
+const deleteCompanySlice = createSlice({
+  name: "deleteCompanySlice",
   initialState: <CompanyState>{
     message: "",
     loading: false,
@@ -31,4 +31,4 @@ const deleteCompany = createSlice({
   },
 });
 
-export default deleteCompany.reducer;
+export default deleteCompanySlice.reducer;

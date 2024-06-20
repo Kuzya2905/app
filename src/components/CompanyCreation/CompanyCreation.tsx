@@ -25,11 +25,19 @@ import Question from "@/assets/images/Question.png";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./companyCreation.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { createCompanyThunk } from "@/lib/features/companies/createCompany/createCompanyThunk";
+import { AppDispatch } from "@/lib/store";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 const Company: React.FC = () => {
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
+
+  const [firstLoading, setFirstLoading] = useState(true);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const [activeLogo, setActiveLogo] = useState<boolean>(false);
 
@@ -89,36 +97,41 @@ const Company: React.FC = () => {
     createFieldLink(links);
   }, [links, setValue]);
 
-  const onSubmit: SubmitHandler<CompanyCreationFormTypes> = (data) => {
+  const companyCreated = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.createCompany.companyCreated
+  );
+
+  const onSubmit: SubmitHandler<CompanyCreationFormTypes> = async (data) => {
     console.log(data);
 
     const newCompany = {
-      id: companies.length + 1,
       logo: data.logo ?? "",
       title: data.title,
-      nameLink: data.title,
-      link: data.link,
       description: data.description,
       city: data.city ?? "",
-      vacancyNumber: 0,
       sizeCompany: data.sizeCompany ?? "",
       industry: data.industry ?? "",
       walletAddress: userAddress,
-      linksContact: [],
-      telegram: data.telegram,
+      contactLinks: {
+        telegram: data.telegram ?? "",
+        twitter: "",
+        site: data.link ?? "",
+      },
     };
-
-    localStorage.setItem(
-      "CardsCompanies",
-      JSON.stringify([...companies, newCompany])
-    );
-
-    goToCompany();
+    console.log(newCompany);
+    await dispatch(createCompanyThunk(newCompany));
+    setFirstLoading(false);
   };
 
-  const goToCompany = () => {
-    router.push(`/company/${companies.length + 1}`);
-  };
+  useEffect(() => {
+    const goToCompany = () => {
+      router.push(`/company/${companyCreated?.id}`);
+    };
+    if (!firstLoading) {
+      goToCompany();
+    }
+  }, [firstLoading]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>

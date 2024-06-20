@@ -26,6 +26,10 @@ import Question from "@/assets/images/Question.png";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./CompanyEdit.module.scss";
+import { AppDispatch } from "@/lib/store";
+import { useDispatch, useSelector } from "react-redux";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 const CompanyEdit: React.FC = () => {
   const [formDefaultData, setFormDefaultData] =
@@ -53,8 +57,7 @@ const CompanyEdit: React.FC = () => {
   });
 
   const pathname = usePathname();
-  const match = pathname.match(/\d+/);
-  const idCompany = Number(match && match[0]);
+  const idCompany = pathname.split("/company/")[1].split("/edit")[0];
 
   const userAddress = useTonAddress();
 
@@ -62,17 +65,29 @@ const CompanyEdit: React.FC = () => {
 
   const linkLogoValue = watch("logo");
 
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { foundCompany: dataCompany, loading } = useSelector(
+    (state: CompaniesReducersTypes) => state.companiesReducers.findOneCompany
+  );
+
   useEffect(() => {
     const companiesJSON = localStorage.getItem("CardsCompanies");
     const companies = companiesJSON && JSON.parse(companiesJSON);
-    const dataCompany = companies.find(
-      (company: { id: number }) => company.id === idCompany
-    );
+
+    dispatch(findOneCompanyThunk(idCompany));
+  }, []);
+
+  useEffect(() => {
     if (dataCompany) {
+      const webSite = dataCompany.contactLinks.site;
+      console.log({ link: webSite });
+
       reset(dataCompany);
+      reset({ link: webSite });
       setFormDefaultData(dataCompany);
     }
-  }, [idCompany, reset]);
+  }, [dataCompany]);
 
   useEffect(() => {
     const changeActiveLogo = () => {
@@ -172,6 +187,7 @@ const CompanyEdit: React.FC = () => {
                     name="industry"
                     control={control}
                     render={({ field: { onChange, value } }) => {
+                      console.log(formDefaultData?.industry);
                       return (
                         <div>
                           <Select

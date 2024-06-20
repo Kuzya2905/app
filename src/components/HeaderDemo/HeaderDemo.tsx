@@ -147,7 +147,6 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
         description:
           "Get yields securely, equally and transparently at best rates on the market. Keep access to your staked asset at all times. Deposit TON, we'll do the rest.",
         city: "Dubai",
-        vacancyNumber: 7,
         sizeCompany: "1 - 50",
         industry: "IT",
         contactLinks: {
@@ -195,7 +194,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   };
 
   const deleteCompany = () => {
-    dispatch(deleteCompanyThunk("6672b9580fa53d2b40494060"));
+    dispatch(deleteCompanyThunk("667417871901f707f862b137"));
   };
 
   const createJob = () => {
@@ -250,7 +249,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
 
   return (
     <header className={styles.headerDemoMain}>
-      <button>Запрос на бэк</button>
+      <button onClick={() => deleteCompany()}>Запрос на бэк</button>
       <div className={styles.headerDemoWrapper} {...props}>
         <LinkNext href="/">
           <div className={styles.headerDemoLogoContainer}>

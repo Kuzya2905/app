@@ -4,8 +4,8 @@ import updateCompanyThunk from "./updateCompanyThunk";
 
 import { CompaniesState, Company } from "./updateCompany.types";
 
-const updateCompany = createSlice({
-  name: "updateCompany",
+const updateCompanySlice = createSlice({
+  name: "updateCompanySlice",
   initialState: <CompaniesState>{
     updatedCompany: null,
     loading: false,
@@ -31,4 +31,4 @@ const updateCompany = createSlice({
   },
 });
 
-export default updateCompany.reducer;
+export default updateCompanySlice.reducer;
