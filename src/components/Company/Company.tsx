@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
@@ -10,18 +10,18 @@ import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import Button from "@/components/Button/Button";
 import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
-import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
+import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
 import { AppDispatch } from "@/lib/store";
 
 import { CompanyTypes, VacancyCardType } from "./Company.types";
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
-  const [vacancies, setVacancies] = useState<VacancyCardType[] | null>(null);
   const [firstLoading, setFirstLoading] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -33,11 +33,15 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
       state.companiesReducers.findOneCompany.foundCompany
   );
   const idVacanciesCompany = foundCompany?.vacancy;
-  const isOwner = foundCompany?.walletAddress === userAddress;
+  const isOwner =
+    foundCompany?.walletAddress === userAddress && userAddress !== "";
+
+  const foundJobs = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany.foundJobs
+  );
 
   useEffect(() => {
     const getCompany = async () => {
-      console.log(companyId);
       await dispatch(findOneCompanyThunk(companyId));
       setFirstLoading(false);
     };
@@ -50,21 +54,15 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     if (!idVacanciesCompany) return;
 
     const getVacancies = async () => {
-      const vacanciesCompany = await Promise.all(
-        idVacanciesCompany.map(async (id: string) => {
-          const vacancyData = await dispatch(findOneJobThunk(id));
-          return vacancyData.payload as VacancyCardType;
-        })
-      );
-      setVacancies(vacanciesCompany);
+      await dispatch(findJobsByCompanyThunk(companyId));
     };
 
     if (!firstLoading) {
       getVacancies();
     }
-  }, [firstLoading, idVacanciesCompany, dispatch]);
+  }, [firstLoading, idVacanciesCompany, companyId, dispatch]);
 
-  const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
+  const handleClickVacancy = (id: string) => router.push(`/vacancy/${id}`);
 
   return (
     <>
@@ -110,7 +108,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
                     <span className={styles.blockTotal}>
-                      Total vacancies: {vacancies?.length}
+                      Total vacancies: {foundJobs?.length}
                     </span>
                     <span className={styles.blockSort}>
                       By date of posting
@@ -120,8 +118,8 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     </span>
                   </div>
                   <div className={styles.blockCards}>
-                    {vacancies ? (
-                      vacancies.map(
+                    {foundJobs ? (
+                      foundJobs.map(
                         ({
                           id,
                           name,

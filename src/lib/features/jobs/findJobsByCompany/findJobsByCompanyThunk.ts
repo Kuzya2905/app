@@ -4,14 +4,14 @@ import axios from "axios";
 import { axiosBackend } from "@/lib/features/axiosWrapper";
 
 import { ApiEndpointsJobs } from "@/lib/features/types";
-import { Job } from "./findOneJob.types";
+import { Job } from "./findJobsByCompany.types";
 
-const findOneJobThunk = createAsyncThunk<Job, string>(
-  "jobs/findOne",
-  async (idJob, { rejectWithValue }) => {
+const findJobsByCompanyThunk = createAsyncThunk<Job[], string>(
+  "jobs/findAllByCompany",
+  async (idCompany, { rejectWithValue }) => {
     try {
       const response = await axiosBackend(
-        `${ApiEndpointsJobs.JobApi}/${idJob}`
+        `${ApiEndpointsJobs.JobApi}/company/${idCompany}`
       );
       return response.data;
     } catch (error) {
@@ -20,4 +20,4 @@ const findOneJobThunk = createAsyncThunk<Job, string>(
   }
 );
 
-export default findOneJobThunk;
+export default findJobsByCompanyThunk;

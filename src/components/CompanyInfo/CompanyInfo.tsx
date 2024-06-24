@@ -18,7 +18,9 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
   const router = useRouter();
 
   const userAddress = useTonAddress();
-  const isOwner = dataCompany?.walletAddress === userAddress;
+  const isOwner =
+    dataCompany?.walletAddress === userAddress && userAddress !== "";
+
   return (
     <div className={styles.main}>
       <section className={styles.mainSection}>
