@@ -3,24 +3,27 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
+import { convertISOToDate, transformValueExperience } from "@/helpers/helpers";
 import VacancyInfo from "@/components/VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
-
-import { CompanyTypes } from "./Vacancy.types";
-
-import styles from "./vacancy.module.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
 import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
-import { JobsReducersTypes } from "@/lib/features/jobs/types";
-import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
-const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
-  const userAddress = useTonAddress();
+import { VacancyTypes } from "./Vacancy.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import { Job } from "@/lib/features/jobs/findOneJob/findOneJob.types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
+
+import styles from "./vacancy.module.scss";
+
+const Vacancy: React.FC<VacancyTypes> = ({ vacancyId }) => {
   const [firstLoading, setFirstLoading] = useState(true);
+
+  const userAddress = useTonAddress();
+  const dispatch = useDispatch<AppDispatch>();
 
   const foundVacancy = useSelector(
     (state: JobsReducersTypes) => state.jobsReducers.findOneJob.foundJob
@@ -31,39 +34,32 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
       state.companiesReducers.findOneCompany.foundCompany
   );
 
-  const dispatch = useDispatch<AppDispatch>();
-
   useEffect(() => {
-    const getVacancy = async () => {
-      await dispatch(findOneJobThunk(vacancyId));
+    const getVacancyAndCompany = async () => {
+      const vacancyResponse = await dispatch(findOneJobThunk(vacancyId));
+      const vacancyData = vacancyResponse.payload as Job;
 
+      if (vacancyData && vacancyData.idCompany) {
+        await dispatch(findOneCompanyThunk(vacancyData.idCompany));
+      }
       setFirstLoading(false);
     };
-    getVacancy();
+
+    getVacancyAndCompany();
   }, [vacancyId, dispatch]);
 
-  useEffect(() => {
-    const getCompany = async () => {
-      if (foundVacancy) {
-        await dispatch(findOneCompanyThunk(foundVacancy.idCompany));
-      }
-    };
-
-    getCompany();
-  }, [foundVacancy, dispatch]);
-
   const isOwner =
-    foundVacancy && userAddress && userAddress === foundVacancy.walletAddress;
-
-  const checkExperience = (experience: string) => {
-    return experience === "No experience"
-      ? experience
-      : `Experience from ${experience}`;
-  };
+    foundCompany?.walletAddress === userAddress && userAddress !== "";
 
   return (
     <>
-      {foundVacancy && foundCompany ? (
+      {firstLoading ? (
+        <div className={styles.canvas}>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.loading}>Loading...</div>
+          </div>
+        </div>
+      ) : foundVacancy && foundCompany ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -77,7 +73,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               <span className={styles.blockSlash}>/</span>
               <Link
                 className={styles.blockLinkCurrent}
-                href={`/company/${foundVacancy.id}`}
+                href={`/company/${foundCompany.id}`}
               >
                 {foundCompany?.title}
               </Link>
@@ -96,7 +92,7 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                   From $ {foundVacancy.salary}
                 </li>
                 <li className={styles.totalInfoItem}>
-                  {checkExperience(foundVacancy.experience)}
+                  {transformValueExperience(Number(foundVacancy.experience))}
                 </li>
                 <li className={styles.totalInfoItem}>{foundVacancy.mode}</li>
                 <li className={styles.totalInfoItem}>{foundVacancy.city}</li>

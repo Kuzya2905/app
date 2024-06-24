@@ -8,36 +8,42 @@ import { useDispatch, useSelector } from "react-redux";
 
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
-
+import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
 import { AppDispatch } from "@/lib/store";
+
 import { CompanyTypes, VacancyCardType } from "./Company.types";
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
-import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const [vacancies, setVacancies] = useState<VacancyCardType[] | null>(null);
   const [firstLoading, setFirstLoading] = useState(true);
 
   const dispatch = useDispatch<AppDispatch>();
+  const userAddress = useTonAddress();
+  const router = useRouter();
 
   const foundCompany = useSelector(
     (state: CompaniesReducersTypes) =>
       state.companiesReducers.findOneCompany.foundCompany
   );
   const idVacanciesCompany = foundCompany?.vacancy;
+  const isOwner = foundCompany?.walletAddress === userAddress;
 
   useEffect(() => {
     const getCompany = async () => {
+      console.log(companyId);
       await dispatch(findOneCompanyThunk(companyId));
       setFirstLoading(false);
     };
-    getCompany();
+    if (companyId) {
+      getCompany();
+    }
   }, [companyId, dispatch]);
 
   useEffect(() => {
@@ -58,15 +64,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
     }
   }, [firstLoading, idVacanciesCompany, dispatch]);
 
-  const userAddress = useTonAddress();
-
-  const router = useRouter();
   const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
-
-  const isOwner =
-    userAddress &&
-    userAddress ===
-      { ...foundCompany, walletAddress: userAddress }.walletAddress;
 
   return (
     <>
@@ -100,7 +98,9 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     <Button
                       appearance="primary"
                       size="m"
-                      onClick={() => router.push("/vacancy/create")}
+                      onClick={() =>
+                        router.push(`/company/${companyId}/createVacancy`)
+                      }
                     >
                       Publish
                     </Button>

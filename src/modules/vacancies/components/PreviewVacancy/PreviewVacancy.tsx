@@ -1,7 +1,7 @@
 import React from "react";
 
 import Button from "@/components/Button/Button";
-import { convertISOToDate, isFirstCharDigit } from "@/helpers/helpers";
+import { convertISOToDate, transformValueExperience } from "@/helpers/helpers";
 
 import { PreviewVacancyTypes } from "./PreviewVacancyTypes";
 
@@ -34,11 +34,7 @@ const PreviewVacancy: React.FC<PreviewVacancyTypes> = ({
               From ${basicInformation[5]}
             </li>
             <li className={styles.totalInfoItem}>
-              {isFirstCharDigit(basicInformation[3]) ? (
-                <>Experience from {basicInformation[3]}</>
-              ) : (
-                <>{basicInformation[3]}</>
-              )}
+              <>{transformValueExperience(Number(basicInformation[3]))}</>
             </li>
             <li className={styles.totalInfoItem}>{basicInformation[4]}</li>
             <li className={styles.totalInfoItem}>London</li>

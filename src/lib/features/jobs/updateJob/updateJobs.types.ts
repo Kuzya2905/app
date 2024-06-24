@@ -1,14 +1,17 @@
 export interface Job {
-  salary: Number;
-  experience: Number;
-  description: String;
-  name: String;
-  mode: String;
-  logo: String;
-  city: String;
-  date?: Date;
-  lastModify?: Date;
-  expirationDate?: Date;
+  nameCompany?: string;
+  logo?: string | null;
+  name?: string;
+  experience?: number;
+  mode?: string;
+  description?: string;
+  requirements?: string;
+  responsibilities?: string;
+  termsAndConditions?: string;
+  salary?: number;
+  qualification?: string;
+  publishingSettings?: string;
+  other?: string;
 }
 
 export interface UpdateJob {
@@ -16,8 +19,8 @@ export interface UpdateJob {
   jobData: Job;
 }
 
-export interface JobsState {
-  massage: string | null;
+export interface UpdatedJob {
+  status: string | null;
   loading: boolean;
   error: string | null;
 }

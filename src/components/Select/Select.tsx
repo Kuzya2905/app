@@ -5,10 +5,10 @@ import ReactSelect from "react-select";
 
 import DropdownIndicator from "./DropdownIndicator";
 import IconOption from "./IconOption";
+
 import { SelectTypes, VARIANT } from "./Select.types";
 
 import { stylesSelect } from "./StylesSelect";
-
 import styles from "./styles.module.scss";
 
 const Select: React.FC<SelectTypes> = ({
@@ -34,11 +34,13 @@ const Select: React.FC<SelectTypes> = ({
   const getValue = (obj: { value: string }) =>
     obj ? data?.find((option) => option.value === obj.value) : "";
 
+  const label = data?.find((option) => option.value === valueDefault)?.label;
+
   const preparedStyles = stylesSelect(variant, enteredValueColor, error);
   return (
     <div className={styles.selectWrapper}>
       <ReactSelect
-        defaultValue={{ value: valueDefault, label: valueDefault }}
+        defaultValue={{ value: valueDefault, label }}
         placeholder={placeholder}
         styles={preparedStyles}
         options={data}

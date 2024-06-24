@@ -3,35 +3,32 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "@/components/Input/Input";
 import FiltersJobs from "@/components/FiltersJobs/FilterJobs";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
+import { AppDispatch } from "@/lib/store";
+import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
 
-import { VacancyCardType } from "./Jobs.types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./jobs.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { JobsReducersTypes } from "@/lib/features/jobs/types";
-import { AppDispatch } from "@/lib/store";
-import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
 
 const Jobs = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { register } = useForm();
+  const router = useRouter();
 
-  let { allJobs: cardsVacancies, loading } = useSelector(
+  const { allJobs: cardsVacancies, loading } = useSelector(
     (state: JobsReducersTypes) => state.jobsReducers.findAllJobs
   );
 
   useEffect(() => {
     dispatch(findAllJobsThunk());
   }, [dispatch]);
-
-  const { register } = useForm();
-
-  const router = useRouter();
 
   const handleClickVacancy = (idVacancy: string) =>
     router.push(`/vacancy/${idVacancy}`);

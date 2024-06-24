@@ -5,11 +5,10 @@ export interface Company {
   logo: string;
   title: string;
   industry: string;
-  vacancyNumber: number;
   contactLinks: {
-    telegram: String;
-    twitter: String;
-    site: String;
+    telegram: string;
+    twitter: string;
+    site: string;
   };
 }
 
@@ -18,8 +17,8 @@ export interface UpdateCompany {
   companyData: Company;
 }
 
-export interface CompaniesState {
-  updatedCompany: Company | null;
+export interface UpdatedCompany {
+  status: string | null;
   loading: boolean;
   error: string | null;
 }

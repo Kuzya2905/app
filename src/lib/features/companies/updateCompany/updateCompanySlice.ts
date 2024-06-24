@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import updateCompanyThunk from "./updateCompanyThunk";
 
-import { CompaniesState, Company } from "./updateCompany.types";
+import { UpdatedCompany } from "./updateCompany.types";
 
 const updateCompanySlice = createSlice({
   name: "updateCompanySlice",
-  initialState: <CompaniesState>{
-    updatedCompany: null,
+  initialState: <UpdatedCompany>{
+    status: null,
     loading: false,
     error: null,
   },
@@ -19,9 +19,9 @@ const updateCompanySlice = createSlice({
       })
       .addCase(
         updateCompanyThunk.fulfilled,
-        (state, action: PayloadAction<Company>) => {
+        (state, action: PayloadAction<string>) => {
           state.loading = false;
-          state.updatedCompany = action.payload;
+          state.status = action.payload;
         }
       )
       .addCase(updateCompanyThunk.rejected, (state, action) => {

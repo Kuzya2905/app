@@ -14,7 +14,8 @@ import {
   useTonConnectUI,
   useTonWallet,
 } from "@tonconnect/ui-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "@/components/Input/Input";
 import Button from "@/components/Button/Button";
@@ -35,9 +36,14 @@ import Textarea from "@/components/Textarea/Textarea";
 import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
 import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
 import { createNewVacancy } from "./createNewVacancy";
+import { AppDispatch } from "@/lib/store";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import { createJobThunk } from "@/lib/features/jobs/createJob/createJobThunk";
 
 import { VacancyFormCreationTypes } from "@/modules/vacancies/components/vacancyFormCreation/VacancyFormCreationTypes";
 import { VARIANT } from "@/components/Select/Select.types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import styles from "./styles.module.scss";
 
@@ -54,30 +60,20 @@ export const VacancyFormCreate = () => {
   });
 
   const [activePreview, setActivePreview] = useState(false);
+  const [permissionGoVacancy, setPermissionGoVacancy] = useState(false);
 
   const [validBasicBlock, setValidBasicBlock] = useState(false);
   const [validDescriptionBlock, setValidDescriptionBlock] = useState(false);
   const [validSettingsBlock, setValidSettingsBlock] = useState(false);
 
   const fieldsBasic: (keyof VacancyFormCreationTypes)[] = useMemo(
-    () => [
-      "name",
-      "other",
-      "qualification",
-      "experience",
-      "typeOfEmployment",
-      "salary",
-    ],
+    () => ["name", "other", "qualification", "experience", "mode", "salary"],
     []
   );
 
   const wallet = useTonWallet();
   const [tonConnectUi] = useTonConnectUI();
   const userAddress = useTonAddress();
-
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
-  const idVacancy = vacancies[vacancies.length - 1].idVacancy + 1;
 
   const router = useRouter();
 
@@ -93,8 +89,19 @@ export const VacancyFormCreate = () => {
     []
   );
 
-  const valuesJobDescription = watch(fieldsJobDescription);
+  const pathname = usePathname();
+  const idCompany = pathname.split("/company/")[1].split("/createVacancy")[0];
 
+  const dispatch = useDispatch<AppDispatch>();
+  const foundCompany = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findOneCompany.foundCompany
+  );
+  const createdJob = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.createJob.jobCreated
+  );
+
+  const valuesJobDescription = watch(fieldsJobDescription);
   const valueFieldSettings = watch("publishingSettings");
 
   useEffect(() => {
@@ -155,20 +162,34 @@ export const VacancyFormCreate = () => {
     }
   };
 
-  const goToVacancy = () => {
-    router.push(`/vacancy/${idVacancy}`);
-  };
+  useEffect(() => {
+    const getCompany = async () => {
+      await dispatch(findOneCompanyThunk(idCompany));
+    };
+    getCompany();
+  }, [idCompany, dispatch]);
 
   const onSubmit: SubmitHandler<VacancyFormCreationTypes> = async (data) => {
     console.log(data);
 
     const transactionSuccessful = await sendTransaction();
 
-    if (transactionSuccessful) {
-      createNewVacancy(data, idVacancy);
-      goToVacancy();
+    if (transactionSuccessful && foundCompany) {
+      const newVacancy = createNewVacancy(data, foundCompany);
+
+      await dispatch(createJobThunk(newVacancy));
+      setPermissionGoVacancy(true);
     }
   };
+
+  useEffect(() => {
+    const goToVacancy = () => {
+      router.push(`/vacancy/${createdJob?.id}`);
+    };
+    if (permissionGoVacancy) {
+      goToVacancy();
+    }
+  }, [permissionGoVacancy, router, createdJob]);
 
   return (
     <form
@@ -266,7 +287,7 @@ export const VacancyFormCreate = () => {
             <p className={styles.label}>Type of Employment</p>
             <div className={styles.fieldWrapper}>
               <Controller
-                name="typeOfEmployment"
+                name="mode"
                 control={control}
                 render={({ field: { onChange, value } }) => (
                   <Select
@@ -276,7 +297,7 @@ export const VacancyFormCreate = () => {
                     data={EmploymentType}
                     placeholder="Choose a type of employment"
                     enteredValueColor="#1B1E27"
-                    error={errors.typeOfEmployment}
+                    error={errors.mode}
                   />
                 )}
               />

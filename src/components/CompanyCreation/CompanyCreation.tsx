@@ -9,6 +9,7 @@ import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -16,32 +17,27 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyCreationSchemaYup";
 import { city, industry, size } from "./CompanyCreationData";
+import { createCompanyThunk } from "@/lib/features/companies/createCompany/createCompanyThunk";
+import { AppDispatch } from "@/lib/store";
 
 import { CompanyCreationFormTypes } from "./CompanyCreationFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./companyCreation.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { createCompanyThunk } from "@/lib/features/companies/createCompany/createCompanyThunk";
-import { AppDispatch } from "@/lib/store";
-import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 const Company: React.FC = () => {
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
-
-  const [firstLoading, setFirstLoading] = useState(true);
-
-  const dispatch = useDispatch<AppDispatch>();
-
+  const [permissionGoCompany, setPermissionGoCompany] = useState(false);
   const [activeLogo, setActiveLogo] = useState<boolean>(false);
-
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
@@ -57,11 +53,7 @@ const Company: React.FC = () => {
 
   const router = useRouter();
   const linkLogoValue = watch("logo");
-
   const userAddress = useTonAddress();
-
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const companies = companiesJSON && JSON.parse(companiesJSON);
 
   useEffect(() => {
     const changeActiveLogo = () => {
@@ -119,19 +111,18 @@ const Company: React.FC = () => {
         site: data.link ?? "",
       },
     };
-    console.log(newCompany);
     await dispatch(createCompanyThunk(newCompany));
-    setFirstLoading(false);
+    setPermissionGoCompany(true);
   };
 
   useEffect(() => {
     const goToCompany = () => {
       router.push(`/company/${companyCreated?.id}`);
     };
-    if (!firstLoading) {
+    if (permissionGoCompany) {
       goToCompany();
     }
-  }, [firstLoading]);
+  }, [permissionGoCompany, companyCreated, router]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>

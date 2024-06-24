@@ -9,7 +9,7 @@ export interface VacancyFormEditTypes {
   name: string;
   other: string;
   qualification: string;
-  experience: string;
-  typeOfEmployment: string;
+  experience: number;
+  mode: string;
   salary: number;
 }

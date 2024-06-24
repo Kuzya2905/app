@@ -14,12 +14,12 @@ import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 import styles from "./registeredСompanies.module.scss";
 
 const RegisteredCompanies: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
   const handleClickCompaniesButton = () => router.push("/companies");
 
   const handleClickCompany = (id: string) => router.push(`/company/${id}`);
-
-  const dispatch = useDispatch<AppDispatch>();
 
   let cardsCompanies = useSelector(
     (state: CompaniesReducersTypes) =>
@@ -55,19 +55,17 @@ const RegisteredCompanies: React.FC = () => {
           </Button>
         </div>
         <div className={styles.sectionCards}>
-          {cardsCompanies.map(
-            ({ id, logo, title, description, city}) => (
-              <CompanyCard
-                onClick={() => handleClickCompany(id)}
-                key={id}
-                logo={logo}
-                title={title}
-                description={description}
-                city={city}
-                vacancyNumber={counterVacancies(id)}
-              />
-            )
-          )}
+          {cardsCompanies.map(({ id, logo, title, description, city }) => (
+            <CompanyCard
+              onClick={() => handleClickCompany(id)}
+              key={id}
+              logo={logo}
+              title={title}
+              description={description}
+              city={city}
+              vacancyNumber={counterVacancies(id)}
+            />
+          ))}
         </div>
       </div>
     </section>

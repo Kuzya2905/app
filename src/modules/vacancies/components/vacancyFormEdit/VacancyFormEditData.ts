@@ -57,10 +57,11 @@ export const Qualification = [
 ];
 
 export const Experience = [
-  { value: "No experience", label: "No experience", icon: Check },
-  { value: "1 to 3 years", label: "1 to 3 years", icon: Check },
-  { value: "3 to 5 years", label: "3 to 5 years", icon: Check },
-  { value: "over 5 years", label: "over 5 years", icon: Check },
+  { value: 1, label: "1 year", icon: Check },
+  { value: 2, label: "2 years", icon: Check },
+  { value: 3, label: "3 years", icon: Check },
+  { value: 4, label: "4 years", icon: Check },
+  { value: 5, label: "Over 5 years", icon: Check },
 ];
 
 export const Remote = [

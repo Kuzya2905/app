@@ -6,11 +6,11 @@ export interface Company {
   logo: string;
   title: string;
   industry: string;
-  vacancyNumber: number;
+  walletAddress: string;
   contactLinks: {
-    telegram: String;
-    twitter: String;
-    site: String;
+    telegram: string;
+    twitter: string;
+    site: string;
   };
   vacancy: [];
 }

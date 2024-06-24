@@ -8,14 +8,13 @@ export interface Company {
   industry: string;
   walletAddress: string;
   contactLinks: {
-    telegram?: String;
-    twitter?: String;
-    site?: String;
+    telegram: string;
+    twitter: string;
+    site: string;
   };
 }
 
 export interface CreatedCompany {
-  CreatedCompany: any;
   companyCreated: Company | null;
   loading: boolean;
   error: string | null;

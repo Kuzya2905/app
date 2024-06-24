@@ -1,3 +1,3 @@
-export interface CompanyTypes {
+export interface VacancyTypes {
   vacancyId: string;
 }

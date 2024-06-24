@@ -1,29 +1,18 @@
+import { Company } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
 import { VacancyFormCreationTypes } from "./VacancyFormCreationTypes";
 
 export const createNewVacancy = (
   dataForm: VacancyFormCreationTypes,
-  idVacancy: number
+  dataCompany: Company
 ) => {
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
-
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const companies = companiesJSON && JSON.parse(companiesJSON);
-  const dataCompany = companies[companies.length - 1];
-
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() + 1);
-  const futureDate = currentDate.toISOString();
-  dataCompany.vacancyNumber = dataCompany.vacancyNumber + 1;
-
-  localStorage.setItem("CardsCompanies", JSON.stringify([...companies]));
 
   const newVacancy = {
-    idVacancy: idVacancy,
     idCompany: dataCompany.id,
     name: dataForm.name,
     experience: dataForm.experience,
-    typeOfEmployment: dataForm.typeOfEmployment,
+    mode: dataForm.mode,
     city: dataCompany.city,
     description: dataForm.description,
     requirements: dataForm.requirements,
@@ -31,16 +20,12 @@ export const createNewVacancy = (
     termsAndConditions: dataForm.termsAndConditions,
     salary: dataForm.salary,
     qualification: dataForm.qualification,
-    company: dataCompany.company,
+    nameCompany: dataCompany.title,
     logo: dataCompany.logo,
-    date: new Date().toISOString(),
-    expirationDate: futureDate,
+    expirationDate: currentDate,
     publishingSettings: dataForm.publishingSettings,
     other: dataForm.other,
   };
 
-  localStorage.setItem(
-    "CardsVacancies",
-    JSON.stringify([...vacancies, newVacancy])
-  );
+  return newVacancy;
 };

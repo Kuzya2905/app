@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
 
 import { CompanyInfoTypes } from "./CompanyInfo.types";
 
@@ -18,6 +18,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
   const router = useRouter();
 
   const userAddress = useTonAddress();
+  const isOwner = dataCompany?.walletAddress === userAddress;
   return (
     <div className={styles.main}>
       <section className={styles.mainSection}>
@@ -33,15 +34,18 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
           <div className={styles.sectionBlockInfo}>
             <div className={styles.infoTitle}>
               <h1 className={styles.infoTitleH1}>{dataCompany.title}</h1>
-              {/* <Link href={`https://${dataCompany.link}`} legacyBehavior>
+              <Link
+                href={`https://${dataCompany.contactLinks.site}`}
+                legacyBehavior
+              >
                 <a
                   className={styles.infoTitleLink}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {dataCompany.nameLink}
+                  {dataCompany.title}
                 </a>
-              </Link> */}
+              </Link>
             </div>
             <div className={styles.infoData}>
               <div className={styles.infoSection}>
@@ -72,7 +76,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
               <Telegram />
             </Link>
           </div>
-          {userAddress && userAddress && (
+          {isOwner && (
             <Button
               appearance="secondary"
               size="l"

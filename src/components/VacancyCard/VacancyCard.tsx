@@ -2,7 +2,12 @@ import React from "react";
 import cn from "classnames";
 import Image from "next/image";
 
-import { convertISOToDate, priceRu, yearDeclensionEn } from "@/helpers/helpers";
+import {
+  convertISOToDate,
+  priceRu,
+  transformValueExperience,
+} from "@/helpers/helpers";
+
 import { VacancyCardTypes } from "@/components/VacancyCard/VacancyCard.types";
 
 import styles from "./VacancyCard.module.scss";
@@ -27,7 +32,7 @@ const VacancyCard: React.FC<VacancyCardTypes> = ({
     </div>
     <div className={styles.vacancyInfo}>
       <p className={styles.vacancyInfoText}>
-        Experience from {yearDeclensionEn(experience)}
+        {transformValueExperience(experience)}
       </p>
       <div className={styles.circle} />
       <p className={styles.vacancyInfoText}>{typeOfEmployment}</p>

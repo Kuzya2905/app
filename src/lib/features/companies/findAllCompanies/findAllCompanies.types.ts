@@ -9,7 +9,11 @@ export interface Company {
   logo: string;
   vacancyNumber: number;
   industry: string;
-  contactLinks: string;
+  contactLinks: {
+    telegram: string;
+    twitter: string;
+    site: string;
+  };
 }
 
 export interface CompaniesState {

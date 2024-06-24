@@ -2,39 +2,30 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import Button from "@/components/Button/Button";
-
-import { VacancyCardType } from "./RegisteredVacancies.types";
-
-import styles from "./registeredVacancies.module.scss";
-import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/lib/store";
 import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
+
 import { JobsReducersTypes } from "@/lib/features/jobs/types";
-import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+
+import styles from "./registeredVacancies.module.scss";
 
 const RegisteredVacancies: React.FC = () => {
-  const [vacancies, setVacancies] = useState<VacancyCardType[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   const router = useRouter();
-
   const handleClickJobsButton = () => router.push("/vacancies");
 
   const handleClickVacancy = (idVacancy: string) =>
     router.push(`/vacancy/${idVacancy}`);
 
-  const dispatch = useDispatch<AppDispatch>();
-
-  let { allJobs: cardsVacancies, loading: jobsLoading } = useSelector(
+  let { allJobs: cardsVacancies } = useSelector(
     (state: JobsReducersTypes) => state.jobsReducers.findAllJobs
   );
   cardsVacancies = cardsVacancies.slice(-8);
-
-  const cardsCompanies = useSelector(
-    (state: CompaniesReducersTypes) =>
-      state.companiesReducers.findAllCompanies.allCompanies
-  );
 
   useEffect(() => {
     dispatch(findAllJobsThunk());

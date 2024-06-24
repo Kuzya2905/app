@@ -6,7 +6,11 @@ export interface Job {
   sizeCompany: string;
   logo: string;
   industry: string;
-  contactLinks: string;
+  contactLinks: {
+    telegram: string;
+    twitter: string;
+    site: string;
+  };
   experience: number;
   mode: string;
   salary: number;

@@ -2,21 +2,21 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
 import FiltersCompanies from "@/components/FiltersCompanies/FiltersCompanies";
+import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
+import { AppDispatch } from "@/lib/store";
 
-import { CompanyCardType } from "./compaines.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./companies.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/lib/store";
-import { CompaniesReducersTypes } from "@/lib/features/companies/types";
-import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
 
 const Companies = () => {
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
 
   const { allCompanies: cardsCompanies, loading } = useSelector(
@@ -27,7 +27,6 @@ const Companies = () => {
     dispatch(findAllCompaniesThunk());
   }, [dispatch]);
 
-  const router = useRouter();
   const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
   return (

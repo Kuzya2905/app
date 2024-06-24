@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import updateJobThunk from "./updateJobThunk";
 
-import { JobsState } from "./updateJobs.types";
+import { UpdatedJob } from "./updateJobs.types";
 
 const updateJobSlice = createSlice({
   name: "updateJobSlice",
-  initialState: <JobsState>{
-    massage: null,
+  initialState: <UpdatedJob>{
+    status: null,
     loading: false,
     error: null,
   },
@@ -21,7 +21,7 @@ const updateJobSlice = createSlice({
         updateJobThunk.fulfilled,
         (state, action: PayloadAction<string>) => {
           state.loading = false;
-          state.massage = action.payload;
+          state.status = action.payload;
         }
       )
       .addCase(updateJobThunk.rejected, (state, action) => {

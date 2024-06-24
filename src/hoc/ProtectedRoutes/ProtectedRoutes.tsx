@@ -1,9 +1,5 @@
 "use client";
-import {
-  useIsConnectionRestored,
-  useTonConnectUI,
-  useTonWallet,
-} from "@tonconnect/ui-react";
+import { useIsConnectionRestored, useTonWallet } from "@tonconnect/ui-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -18,7 +14,6 @@ const ProtectedRoutes: React.FC<{
 
   const wallet = useTonWallet();
   const connectionRestored = useIsConnectionRestored();
-  const [tonConnectUi] = useTonConnectUI();
 
   const [loading, setLoading] = useState(true);
 

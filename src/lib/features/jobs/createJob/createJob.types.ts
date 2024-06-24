@@ -1,5 +1,6 @@
 export interface Job {
   idCompany: String;
+  id?: string;
   salary: Number;
   experience: Number;
   description: String;

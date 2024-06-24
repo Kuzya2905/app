@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Location } from "@/components/CompanyCard/Location";
 import { Fire } from "@/components/CompanyCard/Fire";
+
 import { CompanyCardTypes } from "@/components/CompanyCard/CompanyCard.types";
 
 import styles from "./CompanyCard.module.scss";
@@ -16,7 +17,13 @@ const CompanyCard: React.FC<CompanyCardTypes> = ({
   ...props
 }) => (
   <div className={styles.content} {...props}>
-    <Image className={styles.logo} src={logo} alt="Company image" width={48} height={48} />
+    <Image
+      className={styles.logo}
+      src={logo}
+      alt="Company image"
+      width={48}
+      height={48}
+    />
     <div className={styles.descriptionBlock}>
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.description}>{description}</p>

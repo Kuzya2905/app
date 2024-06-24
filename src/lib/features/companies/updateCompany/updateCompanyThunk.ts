@@ -4,9 +4,9 @@ import axios from "axios";
 import { axiosBackend } from "@/lib/features/axiosWrapper";
 
 import { ApiEndpointsCompanies } from "@/lib/features/types";
-import { Company, UpdateCompany } from "./updateCompany.types";
+import { UpdateCompany } from "./updateCompany.types";
 
-const updateCompanyThunk = createAsyncThunk<Company, UpdateCompany>(
+const updateCompanyThunk = createAsyncThunk<string, UpdateCompany>(
   "companies/update",
   async ({ idCompany, companyData }, { rejectWithValue }) => {
     try {
