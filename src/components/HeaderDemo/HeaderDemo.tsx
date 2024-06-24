@@ -24,6 +24,7 @@ import { Burger } from "@/assets/svgs/Burger";
 import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
+import axios from "axios";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);
@@ -45,7 +46,7 @@ const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   );
 
   const IsScreenMobile = useIsScreenWidthLessThan(1025);
-  const refreshIntervalMs = 30 * 1000;
+  const refreshIntervalMs = 9 * 60 * 1000;
 
   const toggleBurger = () => {
     setActiveBurger((prev) => !prev);
