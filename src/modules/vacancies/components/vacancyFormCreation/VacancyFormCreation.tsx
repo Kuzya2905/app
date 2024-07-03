@@ -119,17 +119,16 @@ export const VacancyFormCreate = () => {
     setValidSettingsBlock(settingFieldValid);
   }, [valueFieldSettings, errors.publishingSettings, errors]);
 
-  const disableHTMLScrolling = () => {
-    const htmlStyle = document.documentElement.style;
-    if (activePreview) {
-      htmlStyle.overflow = "hidden";
-    } else {
-      htmlStyle.overflow = "";
-    }
-  };
-
   useEffect(() => {
-    disableHTMLScrolling()
+    const disableHTMLScrolling = () => {
+      const htmlStyle = document.documentElement.style;
+      if (activePreview) {
+        htmlStyle.overflow = "hidden";
+      } else {
+        htmlStyle.overflow = "";
+      }
+    };
+    disableHTMLScrolling();
   }, [activePreview]);
 
   const disableButtonPreview = () => {
