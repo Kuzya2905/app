@@ -23,8 +23,8 @@ const VacancyInfo: React.FC<VacancyInfoTypes> = ({
         <div className={styles.periodWrapper}>
           <h4 className={styles.periodTitle}> The vacancy is active during:</h4>
           <p className={styles.period}>{`${convertISOToDate(
-            dataVacancy.date
-          )} - ${convertISOToDate(dataVacancy.expirationDate)}`}</p>
+            dataVacancy.createdAt
+          )} - ${convertISOToDate(dataVacancy.createdAt)}`}</p>
         </div>
       </div>
       <div className={styles.buttons}>

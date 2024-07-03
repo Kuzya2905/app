@@ -2,37 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import VacancyCard from "@/components/VacancyCard/VacancyCard";
-import { cardsVacancies } from "./RegisteredVacanciesDate";
-import Button from "@/components/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
 
-import { VacancyCardType } from "./RegisteredVacancies.types";
+import VacancyCard from "@/components/VacancyCard/VacancyCard";
+import Button from "@/components/Button/Button";
+import { AppDispatch } from "@/lib/store";
+import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
+
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import styles from "./registeredVacancies.module.scss";
 
 const RegisteredVacancies: React.FC = () => {
-  const [vacancies, setVacancies] = useState<VacancyCardType[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
 
   const router = useRouter();
-
   const handleClickJobsButton = () => router.push("/vacancies");
 
-  const handleClickVacancy = (idVacancy: number) =>
+  const handleClickVacancy = (idVacancy: string) =>
     router.push(`/vacancy/${idVacancy}`);
 
-  const addCardsVacancies = () => {
-    const cards = localStorage.getItem("CardsVacancies");
-    if (cards) {
-      setVacancies(JSON.parse(cards).slice(-8));
-    } else {
-      localStorage.setItem("CardsVacancies", JSON.stringify(cardsVacancies));
-      setVacancies(cardsVacancies);
-    }
-  };
+  let { allJobs: cardsVacancies } = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findAllJobs
+  );
+  cardsVacancies = cardsVacancies.slice(-8);
 
   useEffect(() => {
-    addCardsVacancies();
-  }, []);
+    dispatch(findAllJobsThunk());
+  }, [dispatch]);
 
   return (
     <section className={styles.section}>
@@ -49,31 +46,31 @@ const RegisteredVacancies: React.FC = () => {
           </Button>
         </div>
         <div className={styles.sectionCards}>
-          {vacancies.map(
+          {cardsVacancies.map(
             ({
-              idVacancy,
+              id,
               name,
               experience,
-              typeOfEmployment,
+              mode,
               city,
               description,
               salary,
-              company,
               logo,
-              date,
+              createdAt,
+              nameCompany,
             }) => (
               <VacancyCard
-                onClick={() => handleClickVacancy(idVacancy)}
-                key={idVacancy}
+                onClick={() => handleClickVacancy(id)}
+                key={id}
                 name={name}
                 experience={experience}
-                typeOfEmployment={typeOfEmployment}
+                typeOfEmployment={mode}
                 city={city}
                 description={description}
                 salary={salary}
-                company={company}
+                nameCompany={nameCompany}
                 logo={logo}
-                date={date}
+                date={createdAt}
               />
             )
           )}

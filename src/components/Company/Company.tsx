@@ -1,48 +1,78 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
-import Button from "../Button/Button";
+import Button from "@/components/Button/Button";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
+import { AppDispatch } from "@/lib/store";
 
 import { CompanyTypes, VacancyCardType } from "./Company.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const dataCompany =
-    companiesJSON &&
-    JSON.parse(companiesJSON).find(
-      (company: { id: number }) => company.id === Number(companyId)
-    );
+  const [firstLoading, setFirstLoading] = useState(true);
 
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
+  const dispatch = useDispatch<AppDispatch>();
+  const userAddress = useTonAddress();
+  const router = useRouter();
 
-  const vacanciesCompany: VacancyCardType[] = vacancies.filter(
-    (vacancy: VacancyCardType) => vacancy.idCompany === Number(companyId)
+  const foundCompany = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findOneCompany.foundCompany
+  );
+  const idVacanciesCompany = foundCompany?.vacancy;
+  const isOwner =
+    foundCompany?.walletAddress === userAddress && userAddress !== "";
+
+  const foundJobs = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany.foundJobs
   );
 
-  const userAddress = useTonAddress();
+  useEffect(() => {
+    const getCompany = async () => {
+      await dispatch(findOneCompanyThunk(companyId));
+      setFirstLoading(false);
+    };
+    if (companyId) {
+      getCompany();
+    }
+  }, [companyId, dispatch]);
 
-  const router = useRouter();
-  const handleClickVacancy = (id: number) => router.push(`/vacancy/${id}`);
+  useEffect(() => {
+    if (!idVacanciesCompany) return;
 
-  const isOwner =
-    userAddress &&
-    userAddress ===
-      { ...dataCompany, walletAddress: userAddress }.walletAddress;
+    const getVacancies = async () => {
+      await dispatch(findJobsByCompanyThunk(companyId));
+    };
+
+    if (!firstLoading) {
+      getVacancies();
+    }
+  }, [firstLoading, idVacanciesCompany, companyId, dispatch]);
+
+  const handleClickVacancy = (id: string) => router.push(`/vacancy/${id}`);
 
   return (
     <>
-      {dataCompany ? (
+      {firstLoading ? (
+        <div className={styles.canvas}>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.loading}>Loading...</div>
+          </div>
+        </div>
+      ) : foundCompany ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -55,7 +85,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
               </Link>
               <span className={styles.blockSlash}>/</span>
               <Link className={styles.blockLinkCurrent} href={""}>
-                {dataCompany.title}
+                {foundCompany.title}
               </Link>
             </div>
             <div className={styles.wrapperBlockMain}>
@@ -66,7 +96,9 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     <Button
                       appearance="primary"
                       size="m"
-                      onClick={() => router.push("/vacancy/create")}
+                      onClick={() =>
+                        router.push(`/company/${companyId}/createVacancy`)
+                      }
                     >
                       Publish
                     </Button>
@@ -76,7 +108,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
                     <span className={styles.blockTotal}>
-                      Total vacancies: {vacanciesCompany.length}
+                      Total vacancies: {foundJobs?.length}
                     </span>
                     <span className={styles.blockSort}>
                       By date of posting
@@ -86,42 +118,50 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                     </span>
                   </div>
                   <div className={styles.blockCards}>
-                    {vacanciesCompany.map(
-                      ({
-                        idVacancy,
-                        name,
-                        experience,
-                        typeOfEmployment,
-                        city,
-                        description,
-                        salary,
-                        date,
-                      }) => (
-                        <VacancyCard
-                          onClick={() => handleClickVacancy(idVacancy)}
-                          key={idVacancy}
-                          name={name}
-                          experience={experience}
-                          typeOfEmployment={typeOfEmployment}
-                          city={city}
-                          description={description}
-                          salary={salary}
-                          company={dataCompany.title}
-                          logo={dataCompany.logo}
-                          date={date}
-                        />
+                    {foundJobs ? (
+                      foundJobs.map(
+                        ({
+                          id,
+                          name,
+                          experience,
+                          mode,
+                          city,
+                          description,
+                          salary,
+                          createdAt,
+                        }) => (
+                          <VacancyCard
+                            onClick={() => handleClickVacancy(id)}
+                            key={id}
+                            name={name}
+                            experience={experience}
+                            typeOfEmployment={mode}
+                            city={city}
+                            description={description}
+                            nameCompany={foundCompany.title}
+                            salary={salary}
+                            logo={foundCompany.logo}
+                            date={createdAt}
+                          />
+                        )
                       )
+                    ) : (
+                      <div>Loading...</div>
                     )}
                   </div>
                 </div>
               </main>
-              <aside>{<CompanyInfo dataCompany={dataCompany} />}</aside>
+              <aside>{<CompanyInfo dataCompany={foundCompany} />}</aside>
             </div>
           </div>
         </div>
       ) : (
         <div className={styles.canvas}>
-          <div className={styles.canvasWrapper}>No company data available</div>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.noDataCompany}>
+              No company data available
+            </div>
+          </div>
         </div>
       )}
     </>

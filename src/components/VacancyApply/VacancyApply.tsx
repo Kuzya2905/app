@@ -31,9 +31,9 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
   });
 
   const router = useRouter();
-  const handleClickCompany = (id: string) => router.push(`/company/${id}`);
-
   const buttonDisabled = !watch("agree");
+
+  const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
   const onSubmit: SubmitHandler<VacancyForm> = (data) => console.log(data);
 
@@ -46,7 +46,7 @@ const VacancyApply: React.FC<VacancyApplyTypes> = ({
           title={dataCompany.title}
           description={dataCompany.description}
           city={dataCompany.city}
-          vacancyNumber={dataCompany.vacancyNumber}
+          vacancyNumber={dataCompany.vacancy.length}
         />
       ) : (
         <div className={styles.sectionCard}>No company information</div>

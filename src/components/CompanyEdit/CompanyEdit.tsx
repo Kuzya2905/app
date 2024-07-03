@@ -16,7 +16,6 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyEditSchemaYup";
 import { city, industry, size } from "./CompanyEditData";
-import { companyChange } from "./companyChange";
 
 import { CompanyEditFormTypes } from "./CompanyEditFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
@@ -26,17 +25,21 @@ import Question from "@/assets/images/Question.png";
 import { IconButton } from "@/assets/svgs/IconButton";
 
 import styles from "./CompanyEdit.module.scss";
+import { AppDispatch } from "@/lib/store";
+import { useDispatch, useSelector } from "react-redux";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import updateCompanyThunk from "@/lib/features/companies/updateCompany/updateCompanyThunk";
+import updateJobThunk from "@/lib/features/jobs/updateJob/updateJobThunk";
 
 const CompanyEdit: React.FC = () => {
   const [formDefaultData, setFormDefaultData] =
     useState<CompanyEditFormTypes>();
-
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
-
+  const [permissionGoCompany, setPermissionGoCompany] = useState(false);
   const [activeLogo, setActiveLogo] = useState<boolean>(false);
-
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
 
   const {
@@ -52,27 +55,42 @@ const CompanyEdit: React.FC = () => {
     mode: "onChange",
   });
 
+  const router = useRouter();
   const pathname = usePathname();
-  const match = pathname.match(/\d+/);
-  const idCompany = Number(match && match[0]);
+  const idCompany = pathname.split("/company/")[1].split("/edit")[0];
 
   const userAddress = useTonAddress();
-
-  const router = useRouter();
-
   const linkLogoValue = watch("logo");
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { foundCompany: dataCompany } = useSelector(
+    (state: CompaniesReducersTypes) => state.companiesReducers.findOneCompany
+  );
+
+  const { loading: loadingUpdateCompany } = useSelector(
+    (state: CompaniesReducersTypes) => state.companiesReducers.updateCompany
+  );
 
   useEffect(() => {
-    const companiesJSON = localStorage.getItem("CardsCompanies");
-    const companies = companiesJSON && JSON.parse(companiesJSON);
-    const dataCompany = companies.find(
-      (company: { id: number }) => company.id === idCompany
-    );
+    dispatch(findOneCompanyThunk(idCompany));
+  }, [dispatch, idCompany]);
+
+  useEffect(() => {
     if (dataCompany) {
-      reset(dataCompany);
-      setFormDefaultData(dataCompany);
+      const { contactLinks, vacancy, ...rest } = dataCompany;
+      const { site: link, telegram, twitter } = contactLinks;
+
+      const defaultData: CompanyEditFormTypes = {
+        ...rest,
+        link,
+        telegram,
+        twitter,
+      };
+
+      reset(defaultData);
+      setFormDefaultData(defaultData);
     }
-  }, [idCompany, reset]);
+  }, [dataCompany, reset]);
 
   useEffect(() => {
     const changeActiveLogo = () => {
@@ -107,17 +125,56 @@ const CompanyEdit: React.FC = () => {
     createFieldLink(links);
   }, [links, setValue]);
 
-  const goToCompany = () => {
-    router.push(`/company/${idCompany}`);
-  };
+  const updateVacancies = () => {};
 
-  const onSubmit: SubmitHandler<CompanyEditFormTypes> = (data) => {
+  const onSubmit: SubmitHandler<CompanyEditFormTypes> = async (data) => {
     console.log(data);
+    const newCompany = {
+      idCompany,
+      companyData: {
+        logo: data.logo ?? "",
+        title: data.title,
+        description: data.description,
+        city: data.city ?? "",
+        sizeCompany: data.sizeCompany ?? "",
+        industry: data.industry ?? "",
+        walletAddress: userAddress ?? "",
+        contactLinks: {
+          telegram: data.telegram,
+          twitter: "",
+          site: data.link ?? "",
+        },
+      },
+    };
+    await dispatch(updateCompanyThunk(newCompany));
 
-    companyChange(data, idCompany, userAddress);
+    if (dataCompany) {
+      await Promise.all(
+        dataCompany.vacancy.map(async (id: string) => {
+          await dispatch(
+            updateJobThunk({
+              idJob: id,
+              jobData: {
+                nameCompany: data.title,
+                logo: data.logo,
+              },
+            })
+          );
+        })
+      );
+    }
 
-    goToCompany();
+    setPermissionGoCompany(true);
   };
+
+  useEffect(() => {
+    const goToCompany = () => {
+      router.push(`/company/${idCompany}`);
+    };
+    if (permissionGoCompany) {
+      goToCompany();
+    }
+  }, [permissionGoCompany, loadingUpdateCompany, router, idCompany]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>
@@ -150,194 +207,198 @@ const CompanyEdit: React.FC = () => {
             Save changes
           </Button>
         </h1>
-        <div className={styles.wrapperBlockMain}>
-          <main className={styles.main}>
-            <section className={styles.blockBasicInformation}>
-              <h2 className={styles.informationTitle}>Basic information</h2>
-              <div className={styles.informationName}>
-                <span className={styles.nameTitle}>Company name</span>
-                <div className={styles.informationInput}>
-                  <Input<CompanyEditFormTypes>
-                    name="title"
-                    placeholder="Stellar"
-                    register={register}
-                    error={errors.title}
-                  />
-                </div>
-              </div>
-              <div className={styles.informationSelect}>
-                <span className={styles.selectTitle}>Industry</span>
-                <div className={styles.selectInput}>
-                  <Controller
-                    name="industry"
-                    control={control}
-                    render={({ field: { onChange, value } }) => {
-                      return (
-                        <div>
-                          <Select
-                            valueDefault={formDefaultData?.industry}
-                            color="#1B1E27"
-                            variant={VARIANT.BIG}
-                            onChange={onChange}
-                            objValue={value}
-                            data={industry}
-                            placeholder="Choose a industry"
-                          />
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
-              </div>
-              <div className={styles.informationSelect}>
-                <span className={styles.selectTitle}>Company size</span>
-                <div className={styles.selectInput}>
-                  <Controller
-                    name="sizeCompany"
-                    control={control}
-                    render={({ field: { onChange, value } }) => {
-                      return (
-                        <div>
-                          <Select
-                            valueDefault={formDefaultData?.sizeCompany}
-                            color="#1B1E27"
-                            variant={VARIANT.BIG}
-                            onChange={onChange}
-                            objValue={value}
-                            data={size}
-                            placeholder="Choose a size"
-                          />
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
-              </div>
-              <div className={styles.description}>
-                <span className={styles.descriptionTitle}>
-                  Company Description
-                </span>
-                <TextArea<CompanyEditFormTypes>
-                  register={register}
-                  name="description"
-                  placeholder="Describe the company's activities"
-                  error={errors.description}
-                />
-              </div>
-            </section>
-            <section className={styles.blockContacts}>
-              <h2 className={styles.contactsTitle}>Contacts</h2>
-              <div className={styles.contactsSelect}>
-                <span className={styles.selectTitle}>City</span>
-                <div className={styles.selectInput}>
-                  <Controller
-                    name="city"
-                    control={control}
-                    render={({ field: { onChange, value } }) => {
-                      return (
-                        <div>
-                          <Select
-                            valueDefault={formDefaultData?.city}
-                            color="#1B1E27"
-                            variant={VARIANT.BIG}
-                            onChange={onChange}
-                            objValue={value}
-                            data={city}
-                            placeholder="Choose a city"
-                          />
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
-              </div>
-              <div className={styles.contactsWrapperInput}>
-                <span className={styles.inputTitle}>Web site</span>
-                <div className={styles.contactsInput}>
-                  <Input<CompanyEditFormTypes>
-                    name="link"
-                    placeholder="stellar.org"
-                    register={register}
-                    error={errors.link}
-                  />
-                </div>
-              </div>
-              <div className={styles.contactsWrapperInput}>
-                <span className={styles.inputTitle}>Telegram</span>
-                <div className={styles.contactsInput}>
-                  <Input<CompanyEditFormTypes>
-                    name="telegram"
-                    placeholder="t.me/stellar"
-                    register={register}
-                    error={errors.telegram}
-                  />
-                </div>
-              </div>
-              {links.map((link, index) => (
-                <div key={link.id} className={styles.contactsWrapperInput}>
-                  <div className={styles.contactsInput}>
+        {formDefaultData ? (
+          <div className={styles.wrapperBlockMain}>
+            <main className={styles.main}>
+              <section className={styles.blockBasicInformation}>
+                <h2 className={styles.informationTitle}>Basic information</h2>
+                <div className={styles.informationName}>
+                  <span className={styles.nameTitle}>Company name</span>
+                  <div className={styles.informationInput}>
                     <Input<CompanyEditFormTypes>
-                      name={`link-${index}`}
-                      placeholder="Paste link"
+                      name="title"
+                      placeholder="Stellar"
                       register={register}
+                      error={errors.title}
                     />
                   </div>
                 </div>
-              ))}
-              <div className={styles.contactsButton}>
-                <Button
-                  onClick={addLink}
-                  size={"s"}
-                  appearance={"ghost"}
-                  startIcon={<IconButton />}
+                <div className={styles.informationSelect}>
+                  <span className={styles.selectTitle}>Industry</span>
+                  <div className={styles.selectInput}>
+                    <Controller
+                      name="industry"
+                      control={control}
+                      render={({ field: { onChange, value } }) => {
+                        return (
+                          <div>
+                            <Select
+                              valueDefault={formDefaultData?.industry}
+                              color="#1B1E27"
+                              variant={VARIANT.BIG}
+                              onChange={onChange}
+                              objValue={value}
+                              data={industry}
+                              placeholder="Choose a industry"
+                            />
+                          </div>
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.informationSelect}>
+                  <span className={styles.selectTitle}>Company size</span>
+                  <div className={styles.selectInput}>
+                    <Controller
+                      name="sizeCompany"
+                      control={control}
+                      render={({ field: { onChange, value } }) => {
+                        return (
+                          <div>
+                            <Select
+                              valueDefault={formDefaultData?.sizeCompany}
+                              color="#1B1E27"
+                              variant={VARIANT.BIG}
+                              onChange={onChange}
+                              objValue={value}
+                              data={size}
+                              placeholder="Choose a size"
+                            />
+                          </div>
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.description}>
+                  <span className={styles.descriptionTitle}>
+                    Company Description
+                  </span>
+                  <TextArea<CompanyEditFormTypes>
+                    register={register}
+                    name="description"
+                    placeholder="Describe the company's activities"
+                    error={errors.description}
+                  />
+                </div>
+              </section>
+              <section className={styles.blockContacts}>
+                <h2 className={styles.contactsTitle}>Contacts</h2>
+                <div className={styles.contactsSelect}>
+                  <span className={styles.selectTitle}>City</span>
+                  <div className={styles.selectInput}>
+                    <Controller
+                      name="city"
+                      control={control}
+                      render={({ field: { onChange, value } }) => {
+                        return (
+                          <div>
+                            <Select
+                              valueDefault={formDefaultData?.city}
+                              color="#1B1E27"
+                              variant={VARIANT.BIG}
+                              onChange={onChange}
+                              objValue={value}
+                              data={city}
+                              placeholder="Choose a city"
+                            />
+                          </div>
+                        );
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.contactsWrapperInput}>
+                  <span className={styles.inputTitle}>Web site</span>
+                  <div className={styles.contactsInput}>
+                    <Input<CompanyEditFormTypes>
+                      name="link"
+                      placeholder="stellar.org"
+                      register={register}
+                      error={errors.link}
+                    />
+                  </div>
+                </div>
+                <div className={styles.contactsWrapperInput}>
+                  <span className={styles.inputTitle}>Telegram</span>
+                  <div className={styles.contactsInput}>
+                    <Input<CompanyEditFormTypes>
+                      name="telegram"
+                      placeholder="t.me/stellar"
+                      register={register}
+                      error={errors.telegram}
+                    />
+                  </div>
+                </div>
+                {links.map((link, index) => (
+                  <div key={link.id} className={styles.contactsWrapperInput}>
+                    <div className={styles.contactsInput}>
+                      <Input<CompanyEditFormTypes>
+                        name={`link-${index}`}
+                        placeholder="Paste link"
+                        register={register}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <div className={styles.contactsButton}>
+                  <Button
+                    onClick={addLink}
+                    size={"s"}
+                    appearance={"ghost"}
+                    startIcon={<IconButton />}
+                  >
+                    Add a link
+                  </Button>
+                </div>
+              </section>
+            </main>
+            <aside className={styles.asideCreationLogo}>
+              {!activeLogo ? (
+                <Image
+                  className={styles.logoEmpty}
+                  src={LogoEmpty}
+                  priority
+                  alt="LogoEmpty"
+                />
+              ) : (
+                <Image
+                  src={linkLogoValue?.startsWith("https") ? linkLogoValue : "/"}
+                  width={320}
+                  height={320}
+                  priority
+                  alt="Error loading image"
+                />
+              )}
+              <span className={styles.creationLogoText}>Image link</span>
+              <div className={styles.creationLogoInput}>
+                <Input<CompanyEditFormTypes>
+                  name="logo"
+                  placeholder="Insert link"
+                  register={register}
+                  error={errors.logo}
+                />
+                <Image
+                  onClick={() => changeActiveQuestion()}
+                  src={Question}
+                  priority
+                  alt={"Question"}
+                  className={styles.inputQuestion}
+                />
+                <div
+                  className={cn(styles.infoQuestion, {
+                    [styles.questionActive]: activeQuestion,
+                  })}
                 >
-                  Add a link
-                </Button>
+                  The logo image must have a width and height of 320 px
+                </div>
               </div>
-            </section>
-          </main>
-          <aside className={styles.asideCreationLogo}>
-            {!activeLogo ? (
-              <Image
-                className={styles.logoEmpty}
-                src={LogoEmpty}
-                priority
-                alt="LogoEmpty"
-              />
-            ) : (
-              <Image
-                src={linkLogoValue?.startsWith("https") ? linkLogoValue : "/"}
-                width={320}
-                height={320}
-                priority
-                alt="Error loading image"
-              />
-            )}
-            <span className={styles.creationLogoText}>Image link</span>
-            <div className={styles.creationLogoInput}>
-              <Input<CompanyEditFormTypes>
-                name="logo"
-                placeholder="Insert link"
-                register={register}
-                error={errors.logo}
-              />
-              <Image
-                onClick={() => changeActiveQuestion()}
-                src={Question}
-                priority
-                alt={"Question"}
-                className={styles.inputQuestion}
-              />
-              <div
-                className={cn(styles.infoQuestion, {
-                  [styles.questionActive]: activeQuestion,
-                })}
-              >
-                The logo image must have a width and height of 320 px
-              </div>
-            </div>
-          </aside>
-        </div>
+            </aside>
+          </div>
+        ) : (
+          <>Loading</>
+        )}
       </div>
     </form>
   );

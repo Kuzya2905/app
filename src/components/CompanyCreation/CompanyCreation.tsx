@@ -9,6 +9,7 @@ import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "@/components/Input/Input";
 import Select from "@/components/Select/Select";
@@ -16,9 +17,12 @@ import TextArea from "@/components/Textarea/Textarea";
 import Button from "@/components/Button/Button";
 import { schema } from "./CompanyCreationSchemaYup";
 import { city, industry, size } from "./CompanyCreationData";
+import { createCompanyThunk } from "@/lib/features/companies/createCompany/createCompanyThunk";
+import { AppDispatch } from "@/lib/store";
 
 import { CompanyCreationFormTypes } from "./CompanyCreationFormTypes";
 import { VARIANT } from "@/components/Select/Select.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import LogoEmpty from "@/assets/svgs/logoEmpty.svg";
 import Question from "@/assets/images/Question.png";
@@ -30,10 +34,10 @@ const Company: React.FC = () => {
   const [links, setLinks] = useState<{ id: string; value: string | null }[]>(
     []
   );
-
+  const [permissionGoCompany, setPermissionGoCompany] = useState(false);
   const [activeLogo, setActiveLogo] = useState<boolean>(false);
-
   const [activeQuestion, setActiveQuestion] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
@@ -49,11 +53,7 @@ const Company: React.FC = () => {
 
   const router = useRouter();
   const linkLogoValue = watch("logo");
-
   const userAddress = useTonAddress();
-
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const companies = companiesJSON && JSON.parse(companiesJSON);
 
   useEffect(() => {
     const changeActiveLogo = () => {
@@ -89,36 +89,40 @@ const Company: React.FC = () => {
     createFieldLink(links);
   }, [links, setValue]);
 
-  const onSubmit: SubmitHandler<CompanyCreationFormTypes> = (data) => {
+  const companyCreated = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.createCompany.companyCreated
+  );
+
+  const onSubmit: SubmitHandler<CompanyCreationFormTypes> = async (data) => {
     console.log(data);
 
     const newCompany = {
-      id: companies.length + 1,
       logo: data.logo ?? "",
       title: data.title,
-      nameLink: data.title,
-      link: data.link,
       description: data.description,
       city: data.city ?? "",
-      vacancyNumber: 0,
       sizeCompany: data.sizeCompany ?? "",
       industry: data.industry ?? "",
       walletAddress: userAddress,
-      linksContact: [],
-      telegram: data.telegram,
+      contactLinks: {
+        telegram: data.telegram ?? "",
+        twitter: "",
+        site: data.link ?? "",
+      },
     };
-
-    localStorage.setItem(
-      "CardsCompanies",
-      JSON.stringify([...companies, newCompany])
-    );
-
-    goToCompany();
+    await dispatch(createCompanyThunk(newCompany));
+    setPermissionGoCompany(true);
   };
 
-  const goToCompany = () => {
-    router.push(`/company/${companies.length + 1}`);
-  };
+  useEffect(() => {
+    const goToCompany = () => {
+      router.push(`/company/${companyCreated?.id}`);
+    };
+    if (permissionGoCompany) {
+      goToCompany();
+    }
+  }, [permissionGoCompany, companyCreated, router]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.canvas}>

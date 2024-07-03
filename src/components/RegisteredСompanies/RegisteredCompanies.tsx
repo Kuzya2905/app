@@ -1,37 +1,44 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "@/components/Button/Button";
-import { cardsCompanies } from "./RegisteredСompaniesData";
 import CompanyCard from "@/components/CompanyCard/CompanyCard";
+import { AppDispatch } from "@/lib/store";
+import { findAllCompaniesThunk } from "@/lib/features/companies/findAllCompanies/findAllCompaniesThunk";
 
-import { CompanyCardType } from "./RegisteredCompanies.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 
 import styles from "./registeredСompanies.module.scss";
 
 const RegisteredCompanies: React.FC = () => {
-  const [cards, setCards] = useState<CompanyCardType[]>([]);
-
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+
   const handleClickCompaniesButton = () => router.push("/companies");
 
-  const handleClickCompany = (id: number) => router.push(`/company/${id}`);
+  const handleClickCompany = (id: string) => router.push(`/company/${id}`);
 
-  const addCardsCompanies = () => {
-    const cards = localStorage.getItem("CardsCompanies");
-    if (cards) {
-      setCards(JSON.parse(cards).slice(-6));
-    } else {
-      localStorage.setItem("CardsCompanies", JSON.stringify(cardsCompanies));
-      setCards(cardsCompanies.slice(-6));
-    }
-  };
+  let cardsCompanies = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findAllCompanies.allCompanies
+  );
+
+  cardsCompanies = cardsCompanies.slice(-6);
 
   useEffect(() => {
-    addCardsCompanies();
-  }, []);
+    dispatch(findAllCompaniesThunk());
+  }, [dispatch]);
+
+  const counterVacancies = (idCompany: string) => {
+    const company = cardsCompanies.find(({ id }) => id === idCompany);
+    if (company) {
+      const numberVacancies = company?.vacancy.length;
+      return numberVacancies;
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -48,19 +55,17 @@ const RegisteredCompanies: React.FC = () => {
           </Button>
         </div>
         <div className={styles.sectionCards}>
-          {cards.map(
-            ({ id, logo, title, description, city, vacancyNumber }) => (
-              <CompanyCard
-                onClick={() => handleClickCompany(id)}
-                key={id}
-                logo={logo}
-                title={title}
-                description={description}
-                city={city}
-                vacancyNumber={vacancyNumber}
-              />
-            )
-          )}
+          {cardsCompanies.map(({ id, logo, title, description, city }) => (
+            <CompanyCard
+              onClick={() => handleClickCompany(id)}
+              key={id}
+              logo={logo}
+              title={title}
+              description={description}
+              city={city}
+              vacancyNumber={counterVacancies(id)}
+            />
+          ))}
         </div>
       </div>
     </section>

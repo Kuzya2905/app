@@ -27,3 +27,15 @@ export const priceRu = (price: number): string =>
 export const getYear = () => new Date().getFullYear();
 
 export const isFirstCharDigit = (str: string) => /^\d/.test(str);
+
+export const transformValueExperience = (experience: number) => {
+  const obj = {
+    6: "No experience",
+    5: "Experience over 5 years",
+  };
+  return experience === 6 || experience === 5
+    ? obj[experience]
+    : experience === 1
+    ? `Experience from ${experience} year`
+    : `Experience from ${experience} years`;
+};

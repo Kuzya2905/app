@@ -3,7 +3,7 @@ export interface CompanyTypes {
 }
 
 export interface VacancyCardType {
-  idVacancy: number;
+  id: number;
   idCompany: number;
   name: string;
   experience: number;
@@ -12,7 +12,7 @@ export interface VacancyCardType {
   salary: number;
   company: string;
   logo: string;
-  date: string;
-  typeOfEmployment: string;
+  createdAt: string;
+  mode: string;
   expirationDate: string;
 }

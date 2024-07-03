@@ -2,7 +2,7 @@
 
 .canvas {
   width: 100%;
-  margin-top: 80px;
+  margin-top: 105px;
   background-color: $bg-main;
   padding: 0 10px;
 }
@@ -83,9 +83,9 @@
 }
 
 .mainTitleWrapper {
-  display: flex; 
+  display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
   margin-bottom: 32px;
 }
 
@@ -126,4 +126,12 @@
 .blockCards {
   display: grid;
   gap: 24px;
+}
+
+.loading {
+  padding-top: 30px;
+}
+
+.noDataCompany {
+  padding-top: 30px;
 }

@@ -24,6 +24,7 @@ import { Burger } from "@/assets/svgs/Burger";
 import { Cross } from "@/assets/svgs/Cross";
 
 import styles from "./headerDemo.module.scss";
+import axios from "axios";
 
 const HeaderDemo: React.FC<HeaderDemoTypes> = ({ className, ...props }) => {
   const [activeBurger, setActiveBurger] = useState(false);

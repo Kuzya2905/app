@@ -1,30 +1,36 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "@/components/Input/Input";
 import FiltersJobs from "@/components/FiltersJobs/FilterJobs";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
+import { AppDispatch } from "@/lib/store";
+import { findAllJobsThunk } from "@/lib/features/jobs/findAllJobs/findAllJobsThunk";
 
-import { VacancyCardType } from "./Jobs.types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./jobs.module.scss";
 
 const Jobs = () => {
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-
-  const vacancies: VacancyCardType[] =
-    vacanciesJSON && JSON.parse(vacanciesJSON);
-
+  const dispatch = useDispatch<AppDispatch>();
   const { register } = useForm();
-
   const router = useRouter();
 
-  const handleClickVacancy = (idVacancy: number) =>
+  const { allJobs: cardsVacancies, loading } = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findAllJobs
+  );
+
+  useEffect(() => {
+    dispatch(findAllJobsThunk());
+  }, [dispatch]);
+
+  const handleClickVacancy = (idVacancy: string) =>
     router.push(`/vacancy/${idVacancy}`);
 
   return (
@@ -50,33 +56,37 @@ const Jobs = () => {
               </span>
             </div>
             <div className={styles.blockCards}>
-              {vacancies.map(
-                ({
-                  idVacancy,
-                  name,
-                  experience,
-                  typeOfEmployment,
-                  city,
-                  description,
-                  salary,
-                  company,
-                  logo,
-                  date,
-                }) => (
-                  <VacancyCard
-                    onClick={() => handleClickVacancy(idVacancy)}
-                    key={idVacancy}
-                    name={name}
-                    experience={experience}
-                    typeOfEmployment={typeOfEmployment}
-                    city={city}
-                    description={description}
-                    salary={salary}
-                    company={company}
-                    logo={logo}
-                    date={date}
-                  />
+              {!loading ? (
+                cardsVacancies.map(
+                  ({
+                    id,
+                    name,
+                    experience,
+                    mode,
+                    city,
+                    description,
+                    salary,
+                    nameCompany,
+                    logo,
+                    createdAt,
+                  }) => (
+                    <VacancyCard
+                      onClick={() => handleClickVacancy(id)}
+                      key={id}
+                      name={name}
+                      experience={experience}
+                      typeOfEmployment={mode}
+                      city={city}
+                      description={description}
+                      salary={salary}
+                      nameCompany={nameCompany}
+                      logo={logo}
+                      date={createdAt}
+                    />
+                  )
                 )
+              ) : (
+                <div>Loading...</div>
               )}
             </div>
           </div>

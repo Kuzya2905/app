@@ -8,8 +8,8 @@ export interface VacancyFormCreationTypes {
   name: string;
   other: string;
   qualification: string;
-  experience: string;
-  typeOfEmployment: string;
+  experience: number;
+  mode: string;
   remote?: string;
   salary: number;
 }

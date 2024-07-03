@@ -1,47 +1,65 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTonAddress } from "@tonconnect/ui-react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { convertISOToDate, yearDeclensionEn } from "@/helpers/helpers";
+import { convertISOToDate, transformValueExperience } from "@/helpers/helpers";
 import VacancyInfo from "@/components/VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
+import { AppDispatch } from "@/lib/store";
+import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
+import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 
-import { CompanyTypes } from "./Vacancy.types";
+import { VacancyTypes } from "./Vacancy.types";
+import { CompaniesReducersTypes } from "@/lib/features/companies/types";
+import { Job } from "@/lib/features/jobs/findOneJob/findOneJob.types";
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
 import styles from "./vacancy.module.scss";
 
-const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
+const Vacancy: React.FC<VacancyTypes> = ({ vacancyId }) => {
+  const [firstLoading, setFirstLoading] = useState(true);
+
   const userAddress = useTonAddress();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const vacanciesJSON = localStorage.getItem("CardsVacancies");
-  const vacancies = vacanciesJSON && JSON.parse(vacanciesJSON);
-
-  const dataVacancy = vacancies.find(
-    (vacancy: { idVacancy: number }) => vacancy.idVacancy === Number(vacancyId)
+  const foundVacancy = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findOneJob.foundJob
   );
 
-  const idCompany = String(dataVacancy?.idCompany);
+  const foundCompany = useSelector(
+    (state: CompaniesReducersTypes) =>
+      state.companiesReducers.findOneCompany.foundCompany
+  );
 
-  const companiesJSON = localStorage.getItem("CardsCompanies");
-  const dataCompany =
-    companiesJSON &&
-    JSON.parse(companiesJSON).find(
-      (company: { id: number }) => company.id === Number(idCompany)
-    );
+  useEffect(() => {
+    const getVacancyAndCompany = async () => {
+      const vacancyResponse = await dispatch(findOneJobThunk(vacancyId));
+      const vacancyData = vacancyResponse.payload as Job;
+
+      if (vacancyData && vacancyData.idCompany) {
+        await dispatch(findOneCompanyThunk(vacancyData.idCompany));
+      }
+      setFirstLoading(false);
+    };
+
+    getVacancyAndCompany();
+  }, [vacancyId, dispatch]);
+
   const isOwner =
-    dataCompany && userAddress && userAddress === dataCompany.walletAddress;
-
-  const checkExperience = (experience: string) => {
-    return experience === "No experience"
-      ? experience
-      : `Experience from ${experience}`;
-  };
+    foundCompany?.walletAddress === userAddress && userAddress !== "";
 
   return (
     <>
-      {dataVacancy ? (
+      {firstLoading ? (
+        <div className={styles.canvas}>
+          <div className={styles.canvasWrapper}>
+            <div className={styles.loading}>Loading...</div>
+          </div>
+        </div>
+      ) : foundVacancy && foundCompany ? (
         <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
@@ -55,31 +73,29 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
               <span className={styles.blockSlash}>/</span>
               <Link
                 className={styles.blockLinkCurrent}
-                href={`/company/${idCompany}`}
+                href={`/company/${foundCompany.id}`}
               >
-                {dataCompany?.title}
+                {foundCompany?.title}
               </Link>
               <span className={styles.blockSlash}>/</span>
               <Link className={styles.blockLinkCurrent} href={""}>
-                {dataVacancy?.name}
+                {foundVacancy?.name}
               </Link>
             </div>
             <div className={styles.blockTop}>
-              <h1 className={styles.blockTopTitle}>{dataVacancy.name}</h1>
+              <h1 className={styles.blockTopTitle}>{foundVacancy.name}</h1>
               <ul className={styles.blockTotalInfo}>
                 <li className={styles.totalInfoItem}>
-                  {convertISOToDate(dataVacancy.date)}
+                  {convertISOToDate(foundVacancy.createdAt)}
                 </li>
                 <li className={styles.totalInfoItem}>
-                  From $ {dataVacancy.salary}
+                  From $ {foundVacancy.salary}
                 </li>
                 <li className={styles.totalInfoItem}>
-                  {checkExperience(dataVacancy.experience)}
+                  {transformValueExperience(Number(foundVacancy.experience))}
                 </li>
-                <li className={styles.totalInfoItem}>
-                  {dataVacancy.typeOfEmployment}
-                </li>
-                <li className={styles.totalInfoItem}>{dataVacancy.city}</li>
+                <li className={styles.totalInfoItem}>{foundVacancy.mode}</li>
+                <li className={styles.totalInfoItem}>{foundVacancy.city}</li>
               </ul>
             </div>
             <div className={styles.wrapperBlockMain}>
@@ -87,38 +103,38 @@ const Vacancy: React.FC<CompanyTypes> = ({ vacancyId }) => {
                 <div className={styles.section}>
                   <h2 className={styles.sectionTitle}>Description</h2>
                   <div className={styles.sectionText}>
-                    {dataVacancy.description}
+                    {foundVacancy.description}
                   </div>
                 </div>
                 <div className={styles.section}>
                   <h3 className={styles.sectionTitle}>Requirements</h3>
                   <div className={styles.sectionText}>
-                    {dataVacancy.requirements}
+                    {foundVacancy.requirements}
                   </div>
                 </div>
                 <div className={styles.section}>
                   <h3 className={styles.sectionTitle}>Responsibilities</h3>
                   <div className={styles.sectionText}>
-                    {dataVacancy.responsibilities}
+                    {foundVacancy.responsibilities}
                   </div>
                 </div>
                 <div className={styles.section}>
                   <h3 className={styles.sectionTitle}>TermsAndConditions</h3>
                   <div className={styles.sectionText}>
-                    {dataVacancy.termsAndConditions}
+                    {foundVacancy.termsAndConditions}
                   </div>
                 </div>
               </div>
               <aside className={styles.aside}>
                 {isOwner ? (
                   <VacancyInfo
-                    dataVacancy={dataVacancy}
+                    dataVacancy={foundVacancy}
                     vacancyId={vacancyId}
                   />
                 ) : (
                   <VacancyApply
-                    dataCompany={dataCompany}
-                    idCompany={idCompany}
+                    dataCompany={foundCompany}
+                    idCompany={foundCompany.id}
                   />
                 )}
               </aside>

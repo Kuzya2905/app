@@ -7,15 +7,15 @@ export enum VARIANT {
 
 export interface SelectTypes
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  objValue: { value: string } | string | undefined | null;
+  objValue: { value: string } | string | undefined | null | number;
   onChange: (...event: any[]) => void;
   data?: {
-    value: string;
+    value: number | string;
     label: string;
   }[];
   placeholder: string;
   variant?: string;
   enteredValueColor?: string;
   error?: any;
-  valueDefault?: string;
+  valueDefault?: string | number;
 }
