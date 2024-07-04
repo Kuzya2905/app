@@ -1,0 +1,77 @@
+@import "@/assets/core/_variables.scss";
+
+.cardContainer {
+  max-width: 100%;
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+}
+
+@media (max-width: 900px) {
+  .cardContainer {
+    max-width: 100%;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 6px;
+}
+
+.vacancyTitle {
+  margin: 0;
+  color: $text-primary;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.vacancySalary {
+  margin: 0;
+  color: $text-primary;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.6px;
+}
+
+@media (max-width: 400px) {
+  .vacancySalary {
+    font-size: 16px;
+  }
+}
+
+.vacancyInfo {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.vacancyInfoText {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15.6px;
+  color: $text-tertiary;
+}
+
+.circle {
+  width: 4px;
+  height: 4px;
+  margin: 0 8px;
+  background: $text-tertiary;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+.vacancyCardFooter {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

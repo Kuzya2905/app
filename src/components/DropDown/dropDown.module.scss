@@ -1,0 +1,49 @@
+@import "@/assets/core/_variables.scss";
+
+.dropdown {
+  position: relative;
+  display: block;
+}
+
+.dropdownToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+}
+
+.dropdownMenu {
+  position: absolute;
+  right: 0;
+  min-width: 188px;
+  top: 100%;
+  box-shadow: 0 8px 12px 0 rgba(234, 234, 234, 0.8);
+  background: $bg-white;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+
+  &:hover {
+    background: rgba(219, 222, 240, 0.16);
+  }
+
+  .iconBefore {
+    margin-right: 8px;
+  }
+
+  .iconAfter {
+    margin-left: 8px;
+  }
+}

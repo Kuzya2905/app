@@ -20,6 +20,7 @@ import { JobsReducersTypes } from "@/lib/features/jobs/types";
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
+import VacancyCardUser from "../VacancyCardUser/VacancyCardUser";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const [firstLoading, setFirstLoading] = useState(true);
@@ -130,18 +131,14 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                           salary,
                           createdAt,
                         }) => (
-                          <VacancyCard
-                            onClick={() => handleClickVacancy(id)}
+                          <VacancyCardUser
                             key={id}
+                            id={id}
                             name={name}
                             experience={experience}
                             typeOfEmployment={mode}
                             city={city}
-                            description={description}
-                            nameCompany={foundCompany.title}
                             salary={salary}
-                            logo={foundCompany.logo}
-                            date={createdAt}
                           />
                         )
                       )
