@@ -13,7 +13,7 @@ import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOne
 import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
 import { AppDispatch } from "@/lib/store";
 
-import { CompanyTypes, VacancyCardType } from "./Company.types";
+import { CompanyTypes } from "./Company.types";
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 import { JobsReducersTypes } from "@/lib/features/jobs/types";
 
@@ -21,9 +21,12 @@ import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
 import VacancyCardUser from "../VacancyCardUser/VacancyCardUser";
+import TabSwitcher from "../TabSwitcher/TabSwitcher";
+import { buttonsTabSwitcher } from "./CompanyData";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const [firstLoading, setFirstLoading] = useState(true);
+  const [valueActiveTab, setValueActiveTab] = useState("Active");
 
   const dispatch = useDispatch<AppDispatch>();
   const userAddress = useTonAddress();
@@ -37,8 +40,8 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const isOwner =
     foundCompany?.walletAddress === userAddress && userAddress !== "";
 
-  const foundJobs = useSelector(
-    (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany.foundJobs
+  const { foundJobs } = useSelector(
+    (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany
   );
 
   useEffect(() => {
@@ -65,6 +68,63 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
   const handleClickVacancy = (id: string) => router.push(`/vacancy/${id}`);
 
+  const handleTabChange = (tab) => {
+    setValueActiveTab(tab);
+  };
+
+  const renderJobCard = (
+    {
+      id,
+      name,
+      experience,
+      mode,
+      city,
+      description,
+      salary,
+      createdAt,
+      published,
+      idCompany,
+    },
+    userAddress,
+    valueActiveTab,
+    handleClickVacancy,
+    foundCompany
+  ) => {
+    const commonProps = {
+      id,
+      name,
+      experience,
+      typeOfEmployment: mode,
+      city,
+      salary,
+      valueActiveTab,
+      idCompany,
+    };
+
+    if (userAddress === foundCompany.walletAddress) {
+      if (
+        (published && valueActiveTab === "Active") ||
+        (!published && valueActiveTab === "Archived")
+      ) {
+        return <VacancyCardUser {...commonProps} key={id} />;
+      }
+    } else {
+      return (
+        <VacancyCard
+          key={id}
+          onClick={() => handleClickVacancy(id)}
+          description={description}
+          nameCompany={foundCompany.title}
+          logo={foundCompany.logo}
+          date={createdAt}
+          {...commonProps}
+        />
+      );
+    }
+
+    return null;
+  };
+
   return (
     <>
       {firstLoading ? (
@@ -85,7 +145,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                 Companies
               </Link>
               <span className={styles.blockSlash}>/</span>
-              <Link className={styles.blockLinkCurrent} href={""}>
+              <Link className={styles.blockLinkCurrent} href="">
                 {foundCompany.title}
               </Link>
             </div>
@@ -108,9 +168,13 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
-                    <span className={styles.blockTotal}>
-                      Total vacancies: {foundJobs?.length}
-                    </span>
+                    {userAddress === foundCompany.walletAddress && (
+                      <TabSwitcher
+                        buttons={buttonsTabSwitcher}
+                        valueActiveTab={valueActiveTab}
+                        onTabChange={handleTabChange}
+                      />
+                    )}
                     <span className={styles.blockSort}>
                       By date of posting
                       <button className={styles.blockSortVector}>
@@ -120,26 +184,13 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
                   </div>
                   <div className={styles.blockCards}>
                     {foundJobs ? (
-                      foundJobs.map(
-                        ({
-                          id,
-                          name,
-                          experience,
-                          mode,
-                          city,
-                          description,
-                          salary,
-                          createdAt,
-                        }) => (
-                          <VacancyCardUser
-                            key={id}
-                            id={id}
-                            name={name}
-                            experience={experience}
-                            typeOfEmployment={mode}
-                            city={city}
-                            salary={salary}
-                          />
+                      foundJobs.map((job) =>
+                        renderJobCard(
+                          job,
+                          userAddress,
+                          valueActiveTab,
+                          handleClickVacancy,
+                          foundCompany
                         )
                       )
                     ) : (

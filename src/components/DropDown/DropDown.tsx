@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+
 import styles from "./dropDown.module.scss";
 
 const DropdownMenu = ({ buttonLogo, options, onOptionSelect }) => {

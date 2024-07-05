@@ -1,0 +1,51 @@
+@import "@/assets/core/_variables.scss";
+
+.tabSwitcher {
+  display: flex;
+  border-radius: 12px;
+  gap: 0 8px;
+  padding: 4px;
+  background: $bg-white;
+}
+
+.tab {
+  display: flex;
+  gap: 0 6px;
+  align-items: center;
+  padding: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 143%;
+  color: $text-secondary;
+  transition: background-color 0.3s;
+
+  &.active {
+    background: $bg-main;
+    color: $text-primary;
+  }
+
+  &:not(.active):hover {
+    background: $bg-main;
+  }
+}
+
+.icon {
+  display: flex;
+  svg {
+    path {
+      stroke: $text-secondary;
+    }
+  }
+}
+
+.icon.active {
+  svg {
+    path {
+      stroke: $text-primary;
+    }
+  }
+}

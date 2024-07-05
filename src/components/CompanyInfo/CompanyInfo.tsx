@@ -31,6 +31,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
               alt="Company image"
               width={320}
               height={320}
+              priority
             />
           </div>
           <div className={styles.sectionBlockInfo}>
@@ -71,10 +72,10 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             </div>
           </div>
           <div className={styles.infoIcons}>
-            <Link className={styles.iconsListLink} href={""}>
+            <Link className={styles.iconsListLink} href="">
               <Subtract />
             </Link>
-            <Link className={styles.iconsListLink} href={""}>
+            <Link className={styles.iconsListLink} href="">
               <Telegram />
             </Link>
           </div>

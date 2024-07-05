@@ -25,6 +25,7 @@ const findJobsByCompany = createSlice({
         }
       )
       .addCase(findJobsByCompanyThunk.rejected, (state, action) => {
+        state.foundJobs = [];
         state.loading = false;
         state.error = action.payload as string;
       });
