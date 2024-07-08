@@ -3,10 +3,10 @@ import axios from "axios";
 
 import { axiosBackend } from "@/lib/features/axiosWrapper";
 
-import { Company } from "./findOneCompany.types";
+import { FoundCompany } from "./findOneCompany.types";
 import { ApiEndpointsCompanies } from "@/lib/features/types";
 
-const findOneCompanyThunk = createAsyncThunk<Company, string>(
+const findOneCompanyThunk = createAsyncThunk<FoundCompany, string>(
   "companies/find",
   async (idCompany, { rejectWithValue }) => {
     try {
@@ -15,7 +15,10 @@ const findOneCompanyThunk = createAsyncThunk<Company, string>(
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(axios.isAxiosError(error));
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      }
+      return rejectWithValue("An unknown error occurred");
     }
   }
 );

@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import findOneCompanyThunk from "./findOneCompanyThunk";
 
-import { CompanyState, Company } from "./findOneCompany.types";
+import { CompanyState, FoundCompany } from "./findOneCompany.types";
 
 const findOneCompanySlice = createSlice({
   name: "findOneCompanySlice",
@@ -19,7 +19,7 @@ const findOneCompanySlice = createSlice({
       })
       .addCase(
         findOneCompanyThunk.fulfilled,
-        (state, action: PayloadAction<Company>) => {
+        (state, action: PayloadAction<FoundCompany>) => {
           state.loading = false;
           state.foundCompany = action.payload;
         }

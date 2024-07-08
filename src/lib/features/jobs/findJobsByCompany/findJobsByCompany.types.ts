@@ -14,6 +14,7 @@ export interface Job {
   id: string;
   createdAt: string;
   city: string;
+  published: boolean;
 }
 
 export interface FoundJobs {

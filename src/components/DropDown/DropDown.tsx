@@ -1,20 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
+import { DropdownOption, DropdownTypes } from "./DropDown.types";
+
 import styles from "./dropDown.module.scss";
 
-const DropdownMenu = ({ buttonLogo, options, onOptionSelect }) => {
+const DropDown: React.FC<DropdownTypes> = ({
+  buttonLogo,
+  options,
+  onOptionSelect,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    dropdownRef.current &&
+      !dropdownRef.current.contains(event.target as Node) &&
       setIsOpen(false);
-    }
   };
 
   useEffect(() => {
@@ -24,7 +30,7 @@ const DropdownMenu = ({ buttonLogo, options, onOptionSelect }) => {
     };
   }, []);
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option: DropdownOption) => {
     onOptionSelect(option);
     setIsOpen(false);
   };
@@ -65,4 +71,4 @@ const DropdownMenu = ({ buttonLogo, options, onOptionSelect }) => {
   );
 };
 
-export default DropdownMenu;
+export default DropDown;

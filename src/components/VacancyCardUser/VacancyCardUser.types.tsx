@@ -8,4 +8,11 @@ export interface VacancyCardUserTypes
   salary: number;
   className?: string;
   typeOfEmployment: string;
+  idCompany: string;
+  valueActiveTab: string;
+  activateNotification: (messageNotification: string) => void;
+}
+
+export interface OptionDropDownType {
+  name: string;
 }

@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import { priceRu, transformValueExperience } from "@/helpers/helpers";
-import More from "@/assets/svgs/More.svg";
-import { VacancyCardUserTypes } from "./VacancyCardUser.types";
-import styles from "./vacancyCardUser.module.scss";
-import DropdownMenu from "../DropDown/DropDown";
+import DropDown from "@/components/DropDown/DropDown";
 import {
   optionsDropDownActive,
   optionsDropDownArchived,
@@ -16,10 +13,19 @@ import {
 import updateJobThunk from "@/lib/features/jobs/updateJob/updateJobThunk";
 import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
 import deleteJobThunk from "@/lib/features/jobs/deleteJob/deleteJobThunk";
-import { JobsReducersTypes } from "@/lib/features/jobs/types";
-import Modal from "../Modal/Modal";
-import Button from "../Button/Button";
+import Modal from "@/components/Modal/Modal";
+import Button from "@/components/Button/Button";
 import { AppDispatch } from "@/lib/store";
+
+import { JobsReducersTypes } from "@/lib/features/jobs/types";
+import {
+  OptionDropDownType,
+  VacancyCardUserTypes,
+} from "./VacancyCardUser.types";
+
+import More from "@/assets/svgs/More.svg";
+
+import styles from "./vacancyCardUser.module.scss";
 
 const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
   name,
@@ -31,9 +37,10 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
   id,
   idCompany,
   valueActiveTab,
+  activateNotification,
   ...props
 }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<OptionDropDownType>();
   const [optionsDropDown, setOptionsDropDown] = useState(optionsDropDownActive);
   const [openModal, setOpenModal] = useState(false);
 
@@ -44,21 +51,43 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
     (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany
   );
 
-  const changePublicationStatus = async (status) => {
+  const withdrawPublication = async () => {
     const dataVacancy = foundJobs?.find((item) => item.id === id);
-    const newDataVacancy = { ...dataVacancy, published: status };
 
-    await dispatch(updateJobThunk({ idJob: id, jobData: newDataVacancy }));
+    if (!dataVacancy) {
+      activateNotification("Job not found");
+      return;
+    }
 
-    await dispatch(findJobsByCompanyThunk(dataVacancy.idCompany));
+    const newDataVacancy = { ...dataVacancy, published: false };
+
+    try {
+      await dispatch(
+        updateJobThunk({ idJob: id as string, jobData: newDataVacancy })
+      ).unwrap();
+
+      await dispatch(findJobsByCompanyThunk(dataVacancy.idCompany)).unwrap();
+      activateNotification("Moved to the archives");
+    } catch (error) {
+      const errorMessage =
+        (error as Error).message || "An unknown error occurred";
+      activateNotification(errorMessage);
+    }
   };
 
   const deleteVacancy = async () => {
-    await dispatch(deleteJobThunk(id));
-    await dispatch(findJobsByCompanyThunk(idCompany));
+    try {
+      await dispatch(deleteJobThunk(id as string)).unwrap();
+      await dispatch(findJobsByCompanyThunk(idCompany)).unwrap();
+      activateNotification("Ad deleted");
+    } catch (error) {
+      const errorMessage =
+        (error as Error).message || "An unknown error occurred";
+      activateNotification(errorMessage);
+    }
   };
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option: OptionDropDownType) => {
     setSelectedOption(option);
     option.name === "Publish" || option.name === "Edit"
       ? setOpenModal(false)
@@ -66,15 +95,19 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
   };
 
   const handleModalConfirm = () => {
-    selectedOption?.name === "Withdraw" && changePublicationStatus(false);
+    selectedOption?.name === "Withdraw" && withdrawPublication();
     selectedOption?.name === "Delete" && deleteVacancy();
     setOpenModal(false);
   };
 
   useEffect(() => {
-    selectedOption?.name === "Edit" && router.push(`/vacancy/${id}/edit`);
-    selectedOption?.name === "Publish" && changePublicationStatus(true);
-  }, [selectedOption]);
+    const handleSelectedOption = () => {
+      selectedOption?.name === "Edit" && router.push(`/vacancy/${id}/edit`);
+      selectedOption?.name === "Publish" &&
+        router.push(`/vacancy/${id}/re-posting`);
+    };
+    handleSelectedOption();
+  }, [selectedOption, id, router]);
 
   useEffect(() => {
     setOptionsDropDown(
@@ -95,7 +128,7 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
     <div className={cn(className, styles.cardContainer)} {...props}>
       <div className={styles.cardHeader}>
         <h3 className={styles.vacancyTitle}>{name}</h3>
-        <DropdownMenu
+        <DropDown
           buttonLogo={<Image src={More} alt="More" width={24} height={24} />}
           options={optionsDropDown}
           onOptionSelect={handleOptionSelect}

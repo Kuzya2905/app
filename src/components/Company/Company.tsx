@@ -12,21 +12,25 @@ import Button from "@/components/Button/Button";
 import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
 import { AppDispatch } from "@/lib/store";
+import VacancyCardUser from "@/components/VacancyCardUser/VacancyCardUser";
+import TabSwitcher from "@/components/TabSwitcher/TabSwitcher";
+import { buttonsTabSwitcher } from "./CompanyData";
+import ToastNotification from "@/components/ToastNotification/ToastNotification";
 
 import { CompanyTypes } from "./Company.types";
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 import { JobsReducersTypes } from "@/lib/features/jobs/types";
+import { Job } from "@/lib/features/jobs/findJobsByCompany/findJobsByCompany.types";
+import { FoundCompany } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
 
 import { Vector } from "@/assets/svgs/Vector";
 
 import styles from "./company.module.scss";
-import VacancyCardUser from "../VacancyCardUser/VacancyCardUser";
-import TabSwitcher from "../TabSwitcher/TabSwitcher";
-import { buttonsTabSwitcher } from "./CompanyData";
 
 const Company: React.FC<CompanyTypes> = ({ companyId }) => {
   const [firstLoading, setFirstLoading] = useState(true);
   const [valueActiveTab, setValueActiveTab] = useState("Active");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
   const userAddress = useTonAddress();
@@ -37,8 +41,7 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
       state.companiesReducers.findOneCompany.foundCompany
   );
   const idVacanciesCompany = foundCompany?.vacancy;
-  const isOwner =
-    foundCompany?.walletAddress === userAddress && userAddress !== "";
+  const isOwner = userAddress && foundCompany?.walletAddress === userAddress;
 
   const { foundJobs } = useSelector(
     (state: JobsReducersTypes) => state.jobsReducers.findJobsByCompany
@@ -68,8 +71,12 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
   const handleClickVacancy = (id: string) => router.push(`/vacancy/${id}`);
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = (tab: string) => {
     setValueActiveTab(tab);
+  };
+
+  const activateNotification = (messageNotification: string) => {
+    setNotificationMessage(messageNotification);
   };
 
   const renderJobCard = (
@@ -84,11 +91,11 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
       createdAt,
       published,
       idCompany,
-    },
-    userAddress,
-    valueActiveTab,
-    handleClickVacancy,
-    foundCompany
+    }: Job,
+    userAddress: string,
+    valueActiveTab: string,
+    handleClickVacancy: (id: string) => void,
+    foundCompany: FoundCompany
   ) => {
     const commonProps = {
       id,
@@ -101,12 +108,19 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
       idCompany,
     };
 
-    if (userAddress === foundCompany.walletAddress) {
-      if (
-        (published && valueActiveTab === "Active") ||
-        (!published && valueActiveTab === "Archived")
-      ) {
-        return <VacancyCardUser {...commonProps} key={id} />;
+    const isActiveTab =
+      (published && valueActiveTab === "Active") ||
+      (!published && valueActiveTab === "Archived");
+
+    if (isOwner) {
+      if (isActiveTab) {
+        return (
+          <VacancyCardUser
+            {...commonProps}
+            key={id}
+            activateNotification={activateNotification}
+          />
+        );
       }
     } else {
       return (
@@ -121,9 +135,15 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
         />
       );
     }
-
     return null;
   };
+
+  const handleCloseNotification = () => {
+    setNotificationMessage("");
+  };
+
+  const getNotificationStatus = (message: string) =>
+    /published|archives|deleted/.test(message) ? "positive" : "negative";
 
   return (
     <>
@@ -168,13 +188,14 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
                 <div className={styles.mainBlock}>
                   <div className={styles.blockTotalSort}>
-                    {userAddress === foundCompany.walletAddress && (
-                      <TabSwitcher
-                        buttons={buttonsTabSwitcher}
-                        valueActiveTab={valueActiveTab}
-                        onTabChange={handleTabChange}
-                      />
-                    )}
+                    {userAddress &&
+                      userAddress === foundCompany.walletAddress && (
+                        <TabSwitcher
+                          buttons={buttonsTabSwitcher}
+                          valueActiveTab={valueActiveTab}
+                          onTabChange={handleTabChange}
+                        />
+                      )}
                     <span className={styles.blockSort}>
                       By date of posting
                       <button className={styles.blockSortVector}>
@@ -211,6 +232,13 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
             </div>
           </div>
         </div>
+      )}
+      {notificationMessage && (
+        <ToastNotification
+          message={notificationMessage}
+          status={getNotificationStatus(notificationMessage)}
+          onClose={handleCloseNotification}
+        />
       )}
     </>
   );

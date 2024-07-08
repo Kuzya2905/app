@@ -1,10 +1,16 @@
 import React from "react";
 import cn from "classnames";
 
+import { TabSwitcherTypes } from "./tabSwitcher.types";
+
 import styles from "./tabSwitcher.module.scss";
 
-const TabSwitcher = ({ buttons, valueActiveTab, onTabChange }) => {
-  const handleTabClick = (tab) => {
+const TabSwitcher: React.FC<TabSwitcherTypes> = ({
+  buttons,
+  valueActiveTab,
+  onTabChange,
+}) => {
+  const handleTabClick = (tab: string) => {
     onTabChange(tab);
   };
 
@@ -25,7 +31,6 @@ const TabSwitcher = ({ buttons, valueActiveTab, onTabChange }) => {
           >
             <button.icon />
           </div>
-
           <span>{button.name}</span>
         </button>
       ))}

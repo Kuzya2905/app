@@ -1,0 +1,46 @@
+@import "@/assets/core/_variables.scss";
+
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  border-radius: 12px;
+  background: $text-secondary;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  z-index: 5;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: $bg-white;
+}
+
+.negativeNotification {
+  background-color: $main-error;
+}
+
+.statusSign {
+  margin-right: 8px;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  padding-right: 16px;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  height: 36px;
+}
+
+.closeButton {
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}

@@ -1,0 +1,246 @@
+@import "@/assets/core/_variables.scss";
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px 20px;
+}
+.form.formBackgroundDark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .form {
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+.formData {
+  max-width: 800px;
+  width: 100%;
+}
+
+.baseInfo {
+  padding: 32px;
+  background-color: $bg-card;
+  border-radius: 16px;
+}
+
+.title {
+  font-size: $text-24;
+  line-height: 28.8px;
+  font-weight: $font-semiBold;
+  padding-bottom: 32px;
+}
+
+.label {
+  font-size: $text-14;
+  line-height: 19.6px;
+  font-weight: $font-medium;
+  padding-bottom: 8px;
+}
+
+.labeledField {
+  padding-bottom: 24px;
+}
+
+.labeledFieldOther {
+  padding-bottom: 16px;
+}
+
+.field {
+  height: 56px;
+}
+
+.fieldWrapper {
+  height: 58px;
+}
+
+.checkboxWrapper {
+  margin-top: 16px;
+}
+
+.checkbox {
+  cursor: pointer;
+}
+
+.filedTags {
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 0;
+}
+
+.posInfo {
+  margin-top: 25px;
+  padding: 40px;
+  background-color: $bg-card;
+  border-radius: 16px;
+}
+
+.posInfo .textarea:not(:first-of-type) {
+  margin-top: 24px;
+}
+
+.posInfoTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  color: $text-primary;
+  padding-bottom: 32px;
+}
+
+.textAreaTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 140%;
+}
+
+.formSubmits {
+  flex: 0 0 auto;
+  max-width: 384px;
+  width: 100%;
+  padding: 32px;
+  background-color: $bg-card;
+  border-radius: 16px;
+  height: 100%;
+}
+
+.formSubmitsTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  margin-bottom: 32px;
+  color: $text-primary;
+}
+
+.submitsPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px 0;
+  margin-bottom: 32px;
+}
+
+.previewBasicDisabled {
+  opacity: 0.32;
+}
+
+.previewBasic {
+  opacity: 1;
+}
+
+.previewBasicTitle {
+  color: $text-primary;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.previewBasicText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.previewDescriptionDisabled {
+  opacity: 0.32;
+}
+
+.previewDescription {
+  opacity: 1;
+}
+
+.previewDescriptionTitle {
+  color: $text-primary;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.previewDescriptionText {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.buttonPreview {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.buttonPublish {
+  width: 100%;
+}
+
+.modalDescription {
+  margin-top: 4px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: $text-secondary;
+}
+
+.modalLine {
+  width: 100%;
+  border-top: 1px solid $stroke-card;
+  margin: 24px 0;
+}
+
+.modalWithdraw {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  color: $text-primary;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modalContainer {
+  border: 1.5px solid $stroke-card;
+  border-radius: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.46);
+  margin-top: 24px;
+  display: flex;
+  gap: 0 69px;
+}
+
+.leftBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px 0;
+}
+
+.leftBlockTitle {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  color: $text-secondary;
+}
+
+.leftBlockBalance {
+  display: flex;
+  align-items: center;
+  gap: 0 4px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: $text-primary;
+}
+
+.modalButton {
+  width: 100%;
+  margin-top: 32px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}

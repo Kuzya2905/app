@@ -32,13 +32,6 @@
   cursor: not-allowed;
 }
 
-.primary:disabled {
-  border: 1px solid $stroke-card;
-  color: $text-primary;
-  background-color: $stroke-card;
-  cursor: pointer;
-}
-
 .secondary {
   border: none;
   color: $main-primary;
@@ -64,7 +57,7 @@
   background-color: transparent;
   padding: 0;
   display: flex;
-  color: #1B1E27;
+  color: #1b1e27;
 }
 
 .tertiary {
@@ -233,7 +226,7 @@
   }
 }
 
-@media(max-width: 1025px) {
+@media (max-width: 1025px) {
   .secondary.l {
     width: 100%;
   }

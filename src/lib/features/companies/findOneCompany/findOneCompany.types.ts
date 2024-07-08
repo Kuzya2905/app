@@ -1,4 +1,4 @@
-export interface Company {
+export interface FoundCompany {
   id: string;
   city: string;
   description: string;
@@ -16,7 +16,7 @@ export interface Company {
 }
 
 export interface CompanyState {
-  foundCompany: Company | null;
+  foundCompany: FoundCompany | null;
   loading: boolean;
   error: string | null;
 }

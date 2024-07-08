@@ -13,7 +13,10 @@ export const findAllJobsThunk = createAsyncThunk<Job[]>(
       const response = await axiosBackend(ApiEndpointsJobs.JobApi);
       return response.data;
     } catch (error) {
-      return rejectWithValue(axios.isAxiosError(error));
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      }
+      return rejectWithValue("An unknown error occurred");
     }
   }
 );

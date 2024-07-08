@@ -15,7 +15,10 @@ const findOneJobThunk = createAsyncThunk<Job, string>(
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(axios.isAxiosError(error));
+      if (axios.isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      }
+      return rejectWithValue("An unknown error occurred");
     }
   }
 );

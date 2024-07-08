@@ -1,9 +1,9 @@
-import { Company } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
+import { FoundCompany } from "@/lib/features/companies/findOneCompany/findOneCompany.types";
 import { VacancyFormCreationTypes } from "./VacancyFormCreationTypes";
 
 export const createNewVacancy = (
   dataForm: VacancyFormCreationTypes,
-  dataCompany: Company
+  dataCompany: FoundCompany
 ) => {
   const currentDate = new Date();
   currentDate.setMonth(currentDate.getMonth() + 1);
