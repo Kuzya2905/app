@@ -4,10 +4,12 @@ import { findAllCompaniesThunk } from "./findAllCompaniesThunk";
 
 import { CompaniesState, Company } from "./findAllCompanies.types";
 
+import { data } from "./data";
+
 const findAllCompaniesSlice = createSlice({
   name: "findAllCompaniesSlice",
   initialState: <CompaniesState>{
-    allCompanies: [],
+    allCompanies: data,
     loading: false,
     error: null,
   },

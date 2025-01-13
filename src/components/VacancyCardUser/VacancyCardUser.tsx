@@ -62,11 +62,6 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
     const newDataVacancy = { ...dataVacancy, published: false };
 
     try {
-      await dispatch(
-        updateJobThunk({ idJob: id as string, jobData: newDataVacancy })
-      ).unwrap();
-
-      await dispatch(findJobsByCompanyThunk(dataVacancy.idCompany)).unwrap();
       activateNotification("Moved to the archives");
     } catch (error) {
       const errorMessage =
@@ -77,8 +72,6 @@ const VacancyCardUser: React.FC<VacancyCardUserTypes> = ({
 
   const deleteVacancy = async () => {
     try {
-      await dispatch(deleteJobThunk(id as string)).unwrap();
-      await dispatch(findJobsByCompanyThunk(idCompany)).unwrap();
       activateNotification("Ad deleted");
     } catch (error) {
       const errorMessage =

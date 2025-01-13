@@ -98,7 +98,7 @@ export const VacancyFormEdit = () => {
   );
 
   useEffect(() => {
-    dispatch(findOneJobThunk(idVacancy));
+ 
   }, [dispatch, idVacancy]);
 
   useEffect(() => {
@@ -153,7 +153,6 @@ export const VacancyFormEdit = () => {
     console.log(data);
     const updatedVacancy = editVacancy(data, idVacancy);
 
-    await dispatch(updateJobThunk(updatedVacancy));
     setPermissionGoVacancy(true);
   };
 

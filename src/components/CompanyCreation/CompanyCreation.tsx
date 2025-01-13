@@ -111,7 +111,6 @@ const Company: React.FC = () => {
         site: data.link ?? "",
       },
     };
-    await dispatch(createCompanyThunk(newCompany));
     setPermissionGoCompany(true);
   };
 

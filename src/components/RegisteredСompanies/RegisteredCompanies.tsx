@@ -28,9 +28,6 @@ const RegisteredCompanies: React.FC = () => {
 
   cardsCompanies = cardsCompanies.slice(-6);
 
-  useEffect(() => {
-    dispatch(findAllCompaniesThunk());
-  }, [dispatch]);
 
   const counterVacancies = (idCompany: string) => {
     const company = cardsCompanies.find(({ id }) => id === idCompany);

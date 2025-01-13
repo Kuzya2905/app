@@ -27,7 +27,7 @@ import { IconButton } from "@/assets/svgs/IconButton";
 import styles from "./CompanyEdit.module.scss";
 import { AppDispatch } from "@/lib/store";
 import { useDispatch, useSelector } from "react-redux";
-import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
+
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
 import updateCompanyThunk from "@/lib/features/companies/updateCompany/updateCompanyThunk";
 import updateJobThunk from "@/lib/features/jobs/updateJob/updateJobThunk";
@@ -72,7 +72,7 @@ const CompanyEdit: React.FC = () => {
   );
 
   useEffect(() => {
-    dispatch(findOneCompanyThunk(idCompany));
+
   }, [dispatch, idCompany]);
 
   useEffect(() => {
@@ -146,20 +146,11 @@ const CompanyEdit: React.FC = () => {
         },
       },
     };
-    await dispatch(updateCompanyThunk(newCompany));
+
 
     if (dataCompany) {
       await Promise.all(
         dataCompany.vacancy.map(async (id: string) => {
-          await dispatch(
-            updateJobThunk({
-              idJob: id,
-              jobData: {
-                nameCompany: data.title,
-                logo: data.logo,
-              },
-            })
-          );
         })
       );
     }

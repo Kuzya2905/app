@@ -4,10 +4,12 @@ import { findAllJobsThunk } from "./findAllJobsThunk";
 
 import { JobsState, Job } from "./findAllJobs.types";
 
+import { data } from "./data";
+
 const findAllJobsSlice = createSlice({
   name: "findAllJobsSlice",
   initialState: <JobsState>{
-    allJobs: [],
+    allJobs: data,
     loading: false,
     error: null,
   },

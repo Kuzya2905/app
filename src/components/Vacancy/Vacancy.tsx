@@ -10,7 +10,6 @@ import VacancyInfo from "@/components/VacancyInfo/VacancyInfo";
 import VacancyApply from "@/components/VacancyApply/VacancyApply";
 import { AppDispatch } from "@/lib/store";
 import findOneJobThunk from "@/lib/features/jobs/findOneJob/findOneJobThunk";
-import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 
 import { VacancyTypes } from "./Vacancy.types";
 import { CompaniesReducersTypes } from "@/lib/features/companies/types";
@@ -34,33 +33,14 @@ const Vacancy: React.FC<VacancyTypes> = ({ vacancyId }) => {
       state.companiesReducers.findOneCompany.foundCompany
   );
 
-  useEffect(() => {
-    const getVacancyAndCompany = async () => {
-      const vacancyResponse = await dispatch(findOneJobThunk(vacancyId));
-      const vacancyData = vacancyResponse.payload as Job;
-
-      if (vacancyData && vacancyData.idCompany) {
-        await dispatch(findOneCompanyThunk(vacancyData.idCompany));
-      }
-      setFirstLoading(false);
-    };
-
-    getVacancyAndCompany();
-  }, [vacancyId, dispatch]);
+ 
 
   const isOwner =
     foundCompany?.walletAddress === userAddress && userAddress !== "";
 
   return (
     <>
-      {firstLoading ? (
-        <div className={styles.canvas}>
-          <div className={styles.canvasWrapper}>
-            <div className={styles.loading}>Loading...</div>
-          </div>
-        </div>
-      ) : foundVacancy && foundCompany ? (
-        <div className={styles.canvas}>
+     <div className={styles.canvas}>
           <div className={styles.canvasWrapper}>
             <div className={styles.wrapperBlockLinks}>
               <Link className={styles.blockLink} href="/">
@@ -141,11 +121,6 @@ const Vacancy: React.FC<VacancyTypes> = ({ vacancyId }) => {
             </div>
           </div>
         </div>
-      ) : (
-        <div className={styles.canvas}>
-          <div className={styles.canvasWrapper}>No Vacancy data available</div>
-        </div>
-      )}
     </>
   );
 };

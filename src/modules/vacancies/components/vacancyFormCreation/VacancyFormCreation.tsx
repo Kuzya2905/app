@@ -37,7 +37,6 @@ import CardOption from "@/modules/vacancies/components/CardOption/CardOption";
 import PreviewVacancy from "@/modules/vacancies/components/PreviewVacancy/PreviewVacancy";
 import { createNewVacancy } from "./createNewVacancy";
 import { AppDispatch } from "@/lib/store";
-import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 import { createJobThunk } from "@/lib/features/jobs/createJob/createJobThunk";
 
 import { VacancyFormCreationTypes } from "@/modules/vacancies/components/vacancyFormCreation/VacancyFormCreationTypes";
@@ -164,7 +163,7 @@ export const VacancyFormCreate = () => {
 
   useEffect(() => {
     const getCompany = async () => {
-      await dispatch(findOneCompanyThunk(idCompany));
+
     };
     getCompany();
   }, [idCompany, dispatch]);
@@ -177,7 +176,6 @@ export const VacancyFormCreate = () => {
     if (transactionSuccessful && foundCompany) {
       const newVacancy = createNewVacancy(data, foundCompany);
 
-      await dispatch(createJobThunk(newVacancy));
       setPermissionGoVacancy(true);
     }
   };

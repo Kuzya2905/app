@@ -27,7 +27,6 @@ const Jobs = () => {
   );
 
   useEffect(() => {
-    dispatch(findAllJobsThunk());
   }, [dispatch]);
 
   const handleClickVacancy = (idVacancy: string) =>

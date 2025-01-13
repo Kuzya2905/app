@@ -38,7 +38,7 @@ const CompanyInfo: React.FC<CompanyInfoTypes> = ({ dataCompany }) => {
             <div className={styles.infoTitle}>
               <h1 className={styles.infoTitleH1}>{dataCompany.title}</h1>
               <Link
-                href={`https://${dataCompany.contactLinks.site}`}
+                href={`https://sds`}
                 legacyBehavior
               >
                 <a

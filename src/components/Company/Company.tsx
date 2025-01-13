@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import VacancyCard from "@/components/VacancyCard/VacancyCard";
 import CompanyInfo from "@/components/CompanyInfo/CompanyInfo";
 import Button from "@/components/Button/Button";
-import findOneCompanyThunk from "@/lib/features/companies/findOneCompany/findOneCompanyThunk";
 import findJobsByCompanyThunk from "@/lib/features/jobs/findJobsByCompany/findJobsByCompanyThunk";
 import { AppDispatch } from "@/lib/store";
 import VacancyCardUser from "@/components/VacancyCardUser/VacancyCardUser";
@@ -49,7 +48,6 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
   useEffect(() => {
     const getCompany = async () => {
-      await dispatch(findOneCompanyThunk(companyId));
       setFirstLoading(false);
     };
     if (companyId) {
@@ -59,14 +57,8 @@ const Company: React.FC<CompanyTypes> = ({ companyId }) => {
 
   useEffect(() => {
     if (!idVacanciesCompany) return;
+    
 
-    const getVacancies = async () => {
-      await dispatch(findJobsByCompanyThunk(companyId));
-    };
-
-    if (!firstLoading) {
-      getVacancies();
-    }
   }, [firstLoading, idVacanciesCompany, companyId, dispatch]);
 
   const handleClickVacancy = (id: string) => router.push(`/vacancy/${id}`);

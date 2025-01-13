@@ -24,7 +24,7 @@ const Companies = () => {
   );
 
   useEffect(() => {
-    dispatch(findAllCompaniesThunk());
+    
   }, [dispatch]);
 
   const handleClickCompany = (id: string) => router.push(`/company/${id}`);

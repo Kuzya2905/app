@@ -27,9 +27,6 @@ const RegisteredVacancies: React.FC = () => {
   );
   cardsVacancies = cardsVacancies.slice(-8);
 
-  useEffect(() => {
-    dispatch(findAllJobsThunk());
-  }, [dispatch]);
 
   return (
     <section className={styles.section}>

@@ -96,7 +96,6 @@ const VacancyFormRePost = () => {
   );
 
   useEffect(() => {
-    dispatch(findOneJobThunk(idVacancy));
   }, [dispatch, idVacancy]);
 
   useEffect(() => {
@@ -144,7 +143,6 @@ const VacancyFormRePost = () => {
     const updatedVacancy = RePostVacancy(data, "dsad");
 
     try {
-      await dispatch(updateJobThunk(updatedVacancy)).unwrap();
 
       setAvailablePublications((prev) => prev - 1);
       setPermissionGoVacancy(true);
